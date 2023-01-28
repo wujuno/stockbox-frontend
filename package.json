@@ -2,12 +2,13 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "start": "cross-env NODE_ENV=production node ./server.js",
     "dev": "remix build && run-p \"dev:*\"",
     "dev:node": "cross-env NODE_ENV=development nodemon --require dotenv/config ./server.js --watch ./server.js",
     "dev:remix": "remix watch",
-    "start": "cross-env NODE_ENV=production node ./server.js",
-    "typecheck": "tsc"
+    "build": "npm run clean && remix build && shx mkdir -p dist/frontend && shx cp -r build public package.json package-lock.json dist/frontend && cp -r scripts/. dist",
+    "typecheck": "tsc",
+    "clean": "shx rm -rf dist"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -38,10 +39,12 @@
     "@remix-run/eslint-config": "^1.11.1",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "concurrently": "^7.6.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.27.0",
     "nodemon": "^2.0.20",
     "npm-run-all": "^4.1.5",
+    "shx": "^0.3.4",
     "typescript": "^4.8.4"
   },
   "engines": {
