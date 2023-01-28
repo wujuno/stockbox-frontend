@@ -1,32 +1,15 @@
-export default function Index() {
+import { Page } from '@/components/Layout';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+
+const Index = () => {
+  const { t } = useTranslation();
+
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
+    <Page>
+      <Typography variant="h3">{t('hello')}</Typography>
+    </Page>
   );
-}
+};
+
+export default Index;

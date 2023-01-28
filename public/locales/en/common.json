@@ -1,0 +1,8 @@
+{
+  "hello": "Hello",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "language": "Language",
+  "currentLanguage": "English"
+}
