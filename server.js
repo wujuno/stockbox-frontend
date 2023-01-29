@@ -2,6 +2,7 @@ const express = require('express');
 const compression = require('compression');
 const morgan = require('morgan');
 const { createRequestHandler } = require('@remix-run/express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const { v4: uuidV4 } = require('uuid');
 const path = require('path');
 
@@ -23,9 +24,19 @@ const app = express();
 app.disable('x-powered-by');
 
 app.use(compression());
-app.use('/build', express.static('public/build', { immutable: true, maxAge: '1y' }));
+app.use(
+  '/build',
+  express.static('public/build', { immutable: true, maxAge: '1y' })
+);
 app.use(express.static('public', { maxAge: '1h' }));
 app.use(morgan('tiny'));
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(
+    '/api',
+    createProxyMiddleware({ target: process.env.API_URL, changeOrigin: true })
+  );
+}
 
 app.all(
   '*',
@@ -35,12 +46,12 @@ app.all(
 
         return createRequestHandler({
           build: require(BUILD_DIR),
-          mode: process.env.NODE_ENV,
+          mode: process.env.NODE_ENV
         })(req, res, next);
       }
     : createRequestHandler({
         build: require(BUILD_DIR),
-        mode: process.env.NODE_ENV,
+        mode: process.env.NODE_ENV
       })
 );
 

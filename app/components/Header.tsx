@@ -1,4 +1,11 @@
-import { AppBar, IconButton, Toolbar, Tooltip, Typography, useTheme } from '@mui/material';
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Tooltip,
+  Typography,
+  useTheme
+} from '@mui/material';
 import styled from '@emotion/styled';
 import { Form } from '@remix-run/react';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -36,10 +43,18 @@ const Header = () => {
         </div>
         <div className="header-right">
           <Form method="post" replace action="/?/changeTheme">
-            <input type="hidden" name="themeMode" value={theme.palette.mode === 'light' ? 'dark' : 'light'} />
+            <input
+              type="hidden"
+              name="themeMode"
+              value={theme.palette.mode === 'light' ? 'dark' : 'light'}
+            />
             <Tooltip title={`${t('theme')}: ${t(theme.palette.mode)}`}>
               <IconButton type="submit" color="inherit">
-                {theme.palette.mode === 'dark' ? <DarkModeIcon width={24} height={24} /> : <LightModeIcon width={24} height={24} />}
+                {theme.palette.mode === 'dark' ? (
+                  <DarkModeIcon width={24} height={24} />
+                ) : (
+                  <LightModeIcon width={24} height={24} />
+                )}
               </IconButton>
             </Tooltip>
           </Form>

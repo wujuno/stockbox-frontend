@@ -13,7 +13,7 @@ import i18nConfig from '@/i18n/config';
 
 const ABORT_DELAY = 5000;
 
-const handleBotRequest= (
+const handleBotRequest = (
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
@@ -36,7 +36,7 @@ const handleBotRequest= (
           resolve(
             new Response(body, {
               headers: responseHeaders,
-              status: didError ? 500 : responseStatusCode,
+              status: didError ? 500 : responseStatusCode
             })
           );
 
@@ -49,7 +49,7 @@ const handleBotRequest= (
           didError = true;
 
           console.error(error);
-        },
+        }
       }
     );
 
@@ -80,7 +80,7 @@ const handleBrowserRequest = (
           resolve(
             new Response(body, {
               headers: responseHeaders,
-              status: didError ? 500 : responseStatusCode,
+              status: didError ? 500 : responseStatusCode
             })
           );
 
@@ -93,7 +93,7 @@ const handleBrowserRequest = (
           didError = true;
 
           console.error(error);
-        },
+        }
       }
     );
 
@@ -120,8 +120,14 @@ const handleRequest = async (
       lng,
       ns,
       backend: {
-        loadPath: resolve(process.cwd(), 'public', 'locales', '{{lng}}', '{{ns}}.json'),
-      },
+        loadPath: resolve(
+          process.cwd(),
+          'public',
+          'locales',
+          '{{lng}}',
+          '{{ns}}.json'
+        )
+      }
     });
 
   return isbot(request.headers.get('user-agent'))

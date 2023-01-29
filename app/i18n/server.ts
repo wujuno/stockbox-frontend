@@ -13,10 +13,16 @@ const i18next = new RemixI18Next({
   i18next: {
     ...i18n,
     backend: {
-      loadPath: resolve(process.cwd(), 'public', 'locales', '{{lng}}', '{{ns}}.json'),
-    },
+      loadPath: resolve(
+        process.cwd(),
+        'public',
+        'locales',
+        '{{lng}}',
+        '{{ns}}.json'
+      )
+    }
   },
-  backend: Backend,
+  backend: Backend
 });
 
 export default i18next;

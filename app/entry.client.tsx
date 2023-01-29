@@ -10,10 +10,7 @@ import { getInitialNamespaces } from 'remix-i18next';
 
 const hydrate = () => {
   startTransition(() => {
-    hydrateRoot(
-      document,
-      <RemixBrowser />
-    );
+    hydrateRoot(document, <RemixBrowser />);
   });
 };
 
@@ -25,13 +22,14 @@ i18next
     ...i18nConfig,
     ns: getInitialNamespaces(),
     backend: {
-      loadPath: `/locales/{{lng}}/{{ns}}.json?uuid=${window.cacheUuid}`,
+      loadPath: `/locales/{{lng}}/{{ns}}.json?uuid=${window.cacheUuid}`
     },
     detection: {
       order: ['htmlTag'],
-      caches: [],
-    },
-  }).then(() => {
+      caches: []
+    }
+  })
+  .then(() => {
     if (typeof requestIdleCallback === 'function') requestIdleCallback(hydrate);
     else setTimeout(hydrate, 1);
   });
