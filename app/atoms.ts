@@ -1,4 +1,5 @@
-import {atom ,selector} from 'recoil';
+import { atom } from 'recoil';
+import { v4 as uuidV4 } from 'uuid';
 
 interface IStockChart {
     x:string
@@ -6,7 +7,7 @@ interface IStockChart {
 }
 
 export const stockChartState = atom<IStockChart[]>({
-    key:"chart",
+    key: uuidV4(),
     default: [
         {
             x: '02-05',
@@ -33,4 +34,4 @@ export const stockChartState = atom<IStockChart[]>({
             y: 55
           },
     ]
-})
+});
