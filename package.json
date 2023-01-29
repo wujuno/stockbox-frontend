@@ -6,7 +6,7 @@
     "dev": "remix build && run-p \"dev:*\"",
     "dev:node": "cross-env NODE_ENV=development nodemon --require dotenv/config ./server.js --watch ./server.js",
     "dev:remix": "remix watch",
-    "build": "npm run clean && remix build && cp -r scripts dist && cp .env dist && mkdir -p dist/frontend/app && cp -r build public server.js package.json package-lock.json dist/frontend/app",
+    "build": "npm run clean && remix build && shx cp -r scripts dist && shx cp .env dist && shx mkdir -p dist/frontend/app && shx cp -r build public server.js package.json package-lock.json dist/frontend/app",
     "typecheck": "tsc",
     "clean": "shx rm -rf dist"
   },
