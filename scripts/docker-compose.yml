@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  frontend:
+    build: frontend
+    image: stockbox-frontend:$FRONTEND_VERSION
+    restart: always
+    environment:
+      PORT: 3000
+      TZ: Asia/Seoul
+    networks:
+      custom:
+        ipv4_address: 172.10.1.10
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  nginx:
+    build: nginx
+    image: nginx:$FRONTEND_VERSION
+    restart: always
+    environment:
+      TZ: Asia/Seoul
+    ports:
+    - 80:80
+    - 443:443
+    networks:
+      custom:
+        ipv4_address: 172.10.1.5
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+networks:
+  custom:
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.10.1.0/24
+        gateway: 172.10.1.1
