@@ -20,9 +20,13 @@ const styles = css`
   @import '${roboto700}';
   @import '${roboto900}';
 
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
-  html, body, #root {
+  html,
+  body,
+  #root {
     width: 100%;
     height: 100%;
     margin: 0;
@@ -55,26 +59,26 @@ export const GlobalStyle = () => <Global styles={styles} />;
 export const Page = ({ className, style, children }: DefaultProps) => {
   const themeMode = useContext(ThemeModeContext);
 
-  const theme = useMemo(() => (
-    createTheme({
-      palette: {
-        mode: themeMode
-      },
-      typography: {
-        allVariants: {
-          color: themeMode === 'light' ? '#000' : '#fff'
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: themeMode
+        },
+        typography: {
+          allVariants: {
+            color: themeMode === 'light' ? '#000' : '#fff'
+          }
         }
-      }
-    })
-  ), [themeMode]);
+      }),
+    [themeMode]
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <Main className={className} muiTheme={theme} style={style}>
         <Header />
-        <Box className="contents">
-          {children}
-        </Box>
+        <Box className="contents">{children}</Box>
       </Main>
     </ThemeProvider>
   );

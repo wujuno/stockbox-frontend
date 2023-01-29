@@ -14,7 +14,16 @@ const Index = () => {
     <Page>
       <Typography variant="h3">{t('hello')}</Typography>
       <Suspense>
-        {isHydrated ? <SChart /> : <Skeleton variant="rounded" animation="wave" width={500} height={500} />}
+        {isHydrated ? (
+          <SChart />
+        ) : (
+          <Skeleton
+            variant="rounded"
+            animation="wave"
+            width={500}
+            height={500}
+          />
+        )}
       </Suspense>
     </Page>
   );
