@@ -1,5 +1,10 @@
 import { createContext, useEffect } from 'react';
-import { DataFunctionArgs, json, MetaFunction, redirect } from '@remix-run/node';
+import {
+  DataFunctionArgs,
+  json,
+  MetaFunction,
+  redirect
+} from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -7,7 +12,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
+  useLoaderData
 } from '@remix-run/react';
 import { GlobalStyle } from '@/components/Layout';
 import { langCookie, themeCookie } from '@/cookies';
@@ -20,11 +25,12 @@ import { RecoilRoot } from 'recoil';
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
   title: 'StockBox',
-  viewport: 'width=device-width,initial-scale=1',
+  viewport: 'width=device-width,initial-scale=1'
 });
 
 export const loader = async ({ request }: DataFunctionArgs) => {
-  const theme: PaletteMode | undefined = await themeCookie.parse(request.headers.get('Cookie')) ?? undefined;
+  const theme: PaletteMode | undefined =
+    (await themeCookie.parse(request.headers.get('Cookie'))) ?? undefined;
   const locale = await i18next.getLocale(request);
   const cacheUuid = process.env.CACHE_UUID;
   return json({ theme, locale, cacheUuid });
@@ -52,7 +58,9 @@ export const action = async ({ request }: DataFunctionArgs) => {
         const locale = await i18next.getLocale(request);
         return redirect(referer, {
           headers: {
-            'Set-Cookie': await langCookie.serialize(locale === 'en' ? 'ko' : 'en')
+            'Set-Cookie': await langCookie.serialize(
+              locale === 'en' ? 'ko' : 'en'
+            )
           }
         });
       } catch (err) {
@@ -60,12 +68,14 @@ export const action = async ({ request }: DataFunctionArgs) => {
         return redirect(referer);
       }
     }
-  })
+  });
 };
 
 export const handle = { i18n: 'common' };
 
-export const ThemeModeContext = createContext<PaletteMode | undefined>(undefined);
+export const ThemeModeContext = createContext<PaletteMode | undefined>(
+  undefined
+);
 
 const App = () => {
   const { theme, locale, cacheUuid } = useLoaderData<typeof loader>();
@@ -92,7 +102,7 @@ const App = () => {
           <ScrollRestoration />
           <script
             dangerouslySetInnerHTML={{
-              __html: `window.cacheUuid = '${cacheUuid}';`,
+              __html: `window.cacheUuid = '${cacheUuid}';`
             }}
           />
           <Scripts />

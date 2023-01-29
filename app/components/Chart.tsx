@@ -5,8 +5,8 @@ import ApexCharts from 'react-apexcharts';
 import { useRecoilValue } from 'recoil';
 
 const ChartBox = styled.div`
-  width:500px;
-  height:500px;
+  width: 500px;
+  height: 500px;
 `;
 
 const SChart = () => {
@@ -16,7 +16,7 @@ const SChart = () => {
   return (
     <ChartBox>
       <ApexCharts
-        type='area'
+        type="area"
         width={500}
         height={500}
         series={[
@@ -30,18 +30,18 @@ const SChart = () => {
             mode: theme.palette.mode === 'dark' ? 'dark' : 'light'
           },
           xaxis: {
-            type: 'datetime',
+            type: 'datetime'
           },
           yaxis: {
             title: {
               text: 'Price'
-            },
+            }
           },
           chart: {
             height: '50%',
             width: '50%',
             toolbar: {
-              show: true,
+              show: true
             },
             background: 'transparent'
           },
@@ -60,18 +60,18 @@ const SChart = () => {
               opacityFrom: 0.5,
               opacityTo: 0,
               stops: [0, 90, 100]
-            },
+            }
           },
           dataLabels: {
             enabled: false
           },
           markers: {
-            size: 0,
-          },
+            size: 0
+          }
         }}
       />
     </ChartBox>
-  )
-}
+  );
+};
 
 export default SChart;
