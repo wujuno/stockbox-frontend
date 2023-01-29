@@ -25,7 +25,7 @@ i18next
     ...i18nConfig,
     ns: getInitialNamespaces(),
     backend: {
-      loadPath: `/locales/{{lng}}/{{ns}}.json?ver=${window.frontendVersion}`,
+      loadPath: `/locales/{{lng}}/{{ns}}.json?uuid=${window.cacheUuid}`,
     },
     detection: {
       order: ['htmlTag'],

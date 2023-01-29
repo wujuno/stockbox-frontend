@@ -4,11 +4,12 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       FRONTEND_VERSION?: string
+      CACHE_UUID?: string
     }
   }
 
   interface Window {
-    frontendVersion?: string
+    cacheUuid?: string
   }
 
   interface DefaultProps {

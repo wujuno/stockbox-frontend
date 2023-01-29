@@ -1,8 +1,11 @@
-const path = require('path');
 const express = require('express');
 const compression = require('compression');
 const morgan = require('morgan');
 const { createRequestHandler } = require('@remix-run/express');
+const { v4: uuidV4 } = require('uuid');
+const path = require('path');
+
+process.env.CACHE_UUID = uuidV4();
 
 const purgeRequireCache = () => {
   for (const key in require.cache) {
