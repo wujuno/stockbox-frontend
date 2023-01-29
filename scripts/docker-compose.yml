@@ -15,7 +15,7 @@ services:
     - /etc/localtime:/etc/localtime:ro
   nginx:
     build: nginx
-    image: nginx:$FRONTEND_VERSION
+    image: stockbox-nginx:$FRONTEND_VERSION
     restart: always
     environment:
       TZ: Asia/Seoul
