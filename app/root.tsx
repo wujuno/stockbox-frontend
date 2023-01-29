@@ -26,8 +26,8 @@ export const meta: MetaFunction = () => ({
 export const loader = async ({ request }: DataFunctionArgs) => {
   const theme: PaletteMode | undefined = await themeCookie.parse(request.headers.get('Cookie')) ?? undefined;
   const locale = await i18next.getLocale(request);
-  console.log('locale', locale);
-  return json({ theme, locale });
+  const frontendVersion = process.env.FRONTEND_VERSION;
+  return json({ theme, locale, frontendVersion });
 };
 
 export const action = async ({ request }: DataFunctionArgs) => {
@@ -68,7 +68,7 @@ export const handle = { i18n: 'common' };
 export const ThemeModeContext = createContext<PaletteMode | undefined>(undefined);
 
 const App = () => {
-  const { theme, locale } = useLoaderData<typeof loader>();
+  const { theme, locale, frontendVersion } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -90,6 +90,11 @@ const App = () => {
             </div>
           </ThemeModeContext.Provider>
           <ScrollRestoration />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.frontendVersion = '${frontendVersion}';`,
+            }}
+          />
           <Scripts />
           <LiveReload />
         </body>
