@@ -15,6 +15,7 @@ import { PaletteMode } from '@mui/material';
 import { namedAction } from 'remix-utils';
 import i18next from '@/i18n/server';
 import { useTranslation } from 'react-i18next';
+import { RecoilRoot } from 'recoil';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -75,23 +76,25 @@ const App = () => {
   }, [locale, i18n]);
 
   return (
-    <html lang={locale} dir={i18n.dir()}>
-      <head>
-        <Meta />
-        <Links />
-        <GlobalStyle />
-      </head>
-      <body>
-        <ThemeModeContext.Provider value={theme}>
-          <div id="root">
-            <Outlet />
-          </div>
-        </ThemeModeContext.Provider>
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
+    <RecoilRoot>
+      <html lang={locale} dir={i18n.dir()}>
+        <head>
+          <Meta />
+          <Links />
+          <GlobalStyle />
+        </head>
+        <body>
+          <ThemeModeContext.Provider value={theme}>
+            <div id="root">
+              <Outlet />
+            </div>
+          </ThemeModeContext.Provider>
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </body>
+      </html>
+    </RecoilRoot>
   );
 };
 
