@@ -13,7 +13,7 @@ const purgeRequireCache = () => {
       delete require.cache[key];
     }
   }
-}
+};
 
 const BUILD_DIR = path.join(process.cwd(), 'build');
 const PORT = Number(process.env.PORT) || 3000;
