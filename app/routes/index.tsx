@@ -1,8 +1,9 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Page } from '@/components/Layout';
 import { Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
+import { useNavigate } from '@remix-run/react';
 
 const SChart = React.lazy(() => import('@/components/Chart'));
 

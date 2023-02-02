@@ -58,6 +58,7 @@ export const GlobalStyle = () => <Global styles={styles} />;
 
 export const Page = ({ className, style, children }: DefaultProps) => {
   const themeMode = useContext(ThemeModeContext);
+  console.log({ themeMode });
 
   const theme = useMemo(
     () =>
@@ -67,7 +68,7 @@ export const Page = ({ className, style, children }: DefaultProps) => {
         },
         typography: {
           allVariants: {
-            color: themeMode === 'light' ? '#000' : '#fff'
+            color: themeMode === 'dark' ? '#fff' : '#000'
           }
         }
       }),
