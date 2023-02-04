@@ -15,7 +15,7 @@ import {
   useLoaderData
 } from '@remix-run/react';
 import { GlobalStyle } from '@/components/Layout';
-import { langCookie, themeCookie } from '@/cookies';
+import { langCookie, themeCookie, tokenCookie } from '@/cookies';
 import { PaletteMode } from '@mui/material';
 import { namedAction } from 'remix-utils';
 import i18next from '@/i18n/server';
@@ -29,6 +29,22 @@ export const meta: MetaFunction = () => ({
 });
 
 export const loader = async ({ request }: DataFunctionArgs) => {
+  const token: TokenCookie = await tokenCookie.parse(
+    request.headers.get('Cookie')
+  );
+  const needLogin = !/^\/(login).*/.test(
+    request.url
+      .replace(/https?:\/\//, '')
+      .replace(request.headers.get('Host') ?? '', '')
+  );
+  if (needLogin && (!token || !token.accessToken)) {
+    return redirect('/login', {
+      headers: {
+        'Set-Cookie': await tokenCookie.serialize(null)
+      }
+    });
+  }
+
   const theme: PaletteMode | undefined =
     (await themeCookie.parse(request.headers.get('Cookie'))) ?? undefined;
   const locale = await i18next.getLocale(request);

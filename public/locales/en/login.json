@@ -1,0 +1,10 @@
+{
+  "email": "Email",
+  "password": "Password",
+  "login": "Sign In",
+  "maintainLoginStatus": "Maintain login status",
+  "findAccount": "Forgot your Email or Password",
+  "createAccount": "Create Stockbox Account",
+  "googleLogin": "Sign in with Google",
+  "kakaoLogin": "Login with Kakao"
+}
