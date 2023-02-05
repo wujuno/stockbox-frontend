@@ -2,7 +2,7 @@ version: '3.9'
 services:
   frontend:
     build: frontend
-    image: stockbox-frontend:$FRONTEND_VERSION
+    image: $COMPOSE_PROJECT_NAME-frontend:$FRONTEND_VERSION
     restart: always
     environment:
       PORT: 3000
@@ -15,7 +15,7 @@ services:
     - /etc/localtime:/etc/localtime:ro
   nginx:
     build: nginx
-    image: stockbox-nginx:$FRONTEND_VERSION
+    image: $COMPOSE_PROJECT_NAME-nginx:$FRONTEND_VERSION
     restart: always
     environment:
       TZ: Asia/Seoul
