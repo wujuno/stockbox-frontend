@@ -68,7 +68,7 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState('');
   const [nameState, setNameState] = useState('');
   const [nameError, setNameError] = useState('');
-  const [nicknameState, setNicknameState] = useState('');
+  const [nicknameState, setNicknameState] = useState(false);
   const [submitPossible, setSubmitPossible] = useState(true);
   const { t } = useTranslation('signup');
 
@@ -88,7 +88,10 @@ const SignUp = () => {
   const nicknameChangeHanddler = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNicknameState(event.currentTarget.value);
+    setNicknameState(
+      Boolean(event.currentTarget.value) &&
+        event.currentTarget.value.length < 31
+    );
   };
   // 이메일 유효성 체크
   const emailChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -218,6 +221,7 @@ const SignUp = () => {
             label={t('nickname')}
             name="nickname"
             variant="standard"
+            helperText={t('nicknameRule')}
             required
             fullWidth
             onChange={nicknameChangeHanddler}

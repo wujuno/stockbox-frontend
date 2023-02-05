@@ -16,5 +16,6 @@
   "checkTerms": "회원가입 약관 확인",
   "terms": "약관동의",
   "disagree": "거부",
-  "agree": "동의"
+  "agree": "동의",
+  "nicknameRule": "별명은 30자 이내여야 합니다."
 }

@@ -16,5 +16,6 @@
   "checkTerms": "Membership terms and conditions",
   "terms": "Terms and conditions",
   "disagree": "Disagree",
-  "agree": "Agree"
+  "agree": "Agree",
+  "nicknameRule": "Nickname must be 30 characters or less."
 }
