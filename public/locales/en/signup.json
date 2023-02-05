@@ -1,0 +1,20 @@
+{
+  "join": "Join us",
+  "email": "Email",
+  "name": "Name",
+  "nickname": "Nickname",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "tel": "Tel",
+  "adress": "Adress",
+  "birth": "Birth",
+  "signup": "Sign up",
+  "back": "Back",
+  "nameError": "This is not a valid name format.",
+  "emailError": "This is not a valid email format.",
+  "confirmPasswordError": "Passwords do not match.",
+  "checkTerms": "Membership terms and conditions",
+  "terms": "Terms and conditions",
+  "disagree": "Disagree",
+  "agree": "Agree"
+}
