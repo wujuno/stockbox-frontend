@@ -8,7 +8,8 @@
     "dev:remix": "remix watch",
     "build": "npm run clean && remix build && shx cp -r scripts dist && shx cp .env dist && shx mkdir -p dist/frontend/app && shx cp -r build public server.js package.json package-lock.json dist/frontend/app",
     "typecheck": "tsc",
-    "clean": "shx rm -rf dist"
+    "clean": "shx rm -rf dist",
+    "postinstall": "remix-esbuild-override"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -53,6 +54,7 @@
     "nodemon": "^2.0.20",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
+    "remix-esbuild-override": "^3.0.4",
     "shx": "^0.3.4",
     "typescript": "^4.8.4"
   },

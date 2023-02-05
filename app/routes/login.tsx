@@ -1,12 +1,6 @@
 import { Page } from '@/components/Layout';
 import styled from '@emotion/styled';
-import {
-  Button,
-  Checkbox,
-  Divider,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Button, Checkbox, Divider, TextField, Typography } from '@mui/material';
 import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 import GoogleSymbolImg from '@/assets/img/google_symbol.png';
@@ -137,29 +131,10 @@ const Login = () => {
         <Typography className="login-title" variant="h4">
           Stockbox
         </Typography>
-        <TextField
-          type="email"
-          variant="standard"
-          id="email"
-          name="email"
-          label={t('email')}
-          required
-        />
-        <TextField
-          type="password"
-          variant="standard"
-          id="pwd"
-          name="pwd"
-          label={t('password')}
-          required
-        />
+        <TextField type="email" variant="standard" id="email" name="email" label={t('email')} required />
+        <TextField type="password" variant="standard" id="pwd" name="pwd" label={t('password')} required />
         <div className="auto-login-wrapper">
-          <Checkbox
-            name="autoLogin"
-            id="auto-login"
-            size="small"
-            classes={{ root: 'auto-login-chkbox-root' }}
-          />
+          <Checkbox name="autoLogin" id="auto-login" size="small" classes={{ root: 'auto-login-chkbox-root' }} />
           <Typography variant="caption" component="label" htmlFor="auto-login">
             {t('maintainLoginStatus')}
           </Typography>
