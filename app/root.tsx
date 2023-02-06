@@ -1,21 +1,8 @@
 import { createContext, useEffect } from 'react';
-import {
-  DataFunctionArgs,
-  json,
-  MetaFunction,
-  redirect
-} from '@remix-run/node';
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData
-} from '@remix-run/react';
+import { DataFunctionArgs, json, MetaFunction, redirect } from '@remix-run/node';
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
 import { GlobalStyle } from '@/components/Layout';
-import { langCookie, themeCookie } from '@/cookies';
+import { langCookie, themeCookie, tokenCookie } from '@/cookies';
 import { PaletteMode } from '@mui/material';
 import { namedAction } from 'remix-utils';
 import i18next from '@/i18n/server';
@@ -29,8 +16,24 @@ export const meta: MetaFunction = () => ({
 });
 
 export const loader = async ({ request }: DataFunctionArgs) => {
-  const theme: PaletteMode | undefined =
-    (await themeCookie.parse(request.headers.get('Cookie'))) ?? undefined;
+  // const token: TokenCookie = await tokenCookie.parse(
+  //   request.headers.get('Cookie')
+  // );
+  // console.log(request.url);
+  // const needLogin = !/^\/(signin|signup).*/.test(
+  //   request.url
+  //     .replace(/https?:\/\//, '')
+  //     .replace(request.headers.get('Host') ?? '', '')
+  // );
+  // if (needLogin && (!token || !token.accessToken)) {
+  //   return redirect('/signin', {
+  //     headers: {
+  //       'Set-Cookie': await tokenCookie.serialize(null)
+  //     }
+  //   });
+  // }
+
+  const theme: PaletteMode | undefined = (await themeCookie.parse(request.headers.get('Cookie'))) ?? undefined;
   const locale = await i18next.getLocale(request);
   const cacheUuid = process.env.CACHE_UUID;
   return json({ theme, locale, cacheUuid });
@@ -58,9 +61,7 @@ export const action = async ({ request }: DataFunctionArgs) => {
         const locale = await i18next.getLocale(request);
         return redirect(referer, {
           headers: {
-            'Set-Cookie': await langCookie.serialize(
-              locale === 'en' ? 'ko' : 'en'
-            )
+            'Set-Cookie': await langCookie.serialize(locale === 'en' ? 'ko' : 'en')
           }
         });
       } catch (err) {
@@ -73,9 +74,7 @@ export const action = async ({ request }: DataFunctionArgs) => {
 
 export const handle = { i18n: 'common' };
 
-export const ThemeModeContext = createContext<PaletteMode | undefined>(
-  undefined
-);
+export const ThemeModeContext = createContext<PaletteMode | undefined>(undefined);
 
 const App = () => {
   const { theme, locale, cacheUuid } = useLoaderData<typeof loader>();

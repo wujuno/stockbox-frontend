@@ -26,6 +26,21 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Dayjs } from 'dayjs';
+import { DataFunctionArgs, json } from '@remix-run/node';
+import { loaderCommonInit } from '@/lib/loaderCommon';
+
+export const loader = async ({ request }: DataFunctionArgs) => {
+  try {
+    const result = await loaderCommonInit(request);
+    if (result) return result;
+  } catch (err) {
+    console.error(err);
+  } finally {
+    return json(null);
+  }
+};
+
+export const handle = { i18n: 'signup' };
 
 const FormHelperTexts = styled(FormHelperText)`
   display: flex !important;
@@ -80,9 +95,7 @@ const SignUp = () => {
   // 비밀번호 visible handdler
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
   // 이름 변경 체크
@@ -90,18 +103,12 @@ const SignUp = () => {
     setNameState(event.currentTarget.value);
   };
   // 별명 변경 체크
-  const nicknameChangeHanddler = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNicknameState(
-      Boolean(event.currentTarget.value) &&
-        event.currentTarget.value.length < 31
-    );
+  const nicknameChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNicknameState(Boolean(event.currentTarget.value) && event.currentTarget.value.length < 31);
   };
   // 이메일 유효성 체크
   const emailChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const emailRegex =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
     if (!emailRegex.test(event.currentTarget.value)) {
       setEmailState('');
     } else {
@@ -109,15 +116,11 @@ const SignUp = () => {
     }
   };
   // 비밀번호 변경 체크
-  const passwordChangeHanddler = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const passwordChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordState(event.currentTarget.value);
   };
   // 확인 비밀번호 변경 체크
-  const confirmPasswordChangeHanddler = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const confirmPasswordChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPasswordState(event.currentTarget.value);
   };
   // 동의 체크
@@ -131,24 +134,8 @@ const SignUp = () => {
   };
   // submit possible handdler
   useEffect(() => {
-    setSubmitPossible(
-      !(
-        nameState &&
-        nicknameState &&
-        emailState &&
-        passwordState &&
-        confirmPasswordState &&
-        checked
-      )
-    );
-  }, [
-    nameState,
-    nicknameState,
-    emailState,
-    passwordState,
-    confirmPasswordState,
-    checked
-  ]);
+    setSubmitPossible(!(nameState && nicknameState && emailState && passwordState && confirmPasswordState && checked));
+  }, [nameState, nicknameState, emailState, passwordState, confirmPasswordState, checked]);
 
   // form Handdler
   const submitHanddler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -166,8 +153,7 @@ const SignUp = () => {
       birth: data.get('birth')
     };
     console.log(joinData);
-    const { email, name, password, confirmPassword, tel, adress, birth } =
-      joinData;
+    const { email, name, password, confirmPassword, tel, adress, birth } = joinData;
 
     // 이름 유효성 검사
     const nameRegex = /^[가-힣a-zA-Z]+$/;
@@ -179,8 +165,7 @@ const SignUp = () => {
     // 별명 중복 검사
 
     // 이메일 유효성 검사
-    const emailRegex =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
     if (!emailRegex.test(email)) {
       setEmailError(`${t('emailError')}`);
     } else {
@@ -212,40 +197,13 @@ const SignUp = () => {
           <LinearProgress />
         </Box>
         <Form onSubmit={submitHanddler} noValidate>
-          <TextField
-            label={t('name')}
-            name="name"
-            variant="standard"
-            autoFocus
-            required
-            fullWidth
-            onChange={nameChangeHanddler}
-          />
+          <TextField label={t('name')} name="name" variant="standard" autoFocus required fullWidth onChange={nameChangeHanddler} />
           <FormHelperTexts>{nameError}</FormHelperTexts>
-          <TextField
-            label={t('nickname')}
-            name="nickname"
-            variant="standard"
-            helperText={t('nicknameRule')}
-            required
-            fullWidth
-            onChange={nicknameChangeHanddler}
-          />
-          <TextField
-            label={t('email')}
-            name="email"
-            variant="standard"
-            type="email"
-            required
-            fullWidth
-            onChange={emailChangeHanddler}
-            error={emailError !== '' || false}
-          />
+          <TextField label={t('nickname')} name="nickname" variant="standard" helperText={t('nicknameRule')} required fullWidth onChange={nicknameChangeHanddler} />
+          <TextField label={t('email')} name="email" variant="standard" type="email" required fullWidth onChange={emailChangeHanddler} error={emailError !== '' || false} />
           <FormHelperTexts>{emailError}</FormHelperTexts>
           <FormControl sx={{ m: 0, width: '100%' }} variant="standard">
-            <InputLabel htmlFor="standard-adornment-password">
-              {t('password')} *
-            </InputLabel>
+            <InputLabel htmlFor="standard-adornment-password">{t('password')} *</InputLabel>
             <Input
               id="standard-adornment-password"
               required
@@ -255,11 +213,7 @@ const SignUp = () => {
               type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
+                  <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
@@ -267,9 +221,7 @@ const SignUp = () => {
             />
           </FormControl>
           <FormControl sx={{ m: 0, width: '100%' }} variant="standard">
-            <InputLabel htmlFor="standard-adornment-confirmPassword">
-              {t('confirmPassword')} *
-            </InputLabel>
+            <InputLabel htmlFor="standard-adornment-confirmPassword">{t('confirmPassword')} *</InputLabel>
             <Input
               id="standard-adornment-confirmPassword"
               required
@@ -280,21 +232,8 @@ const SignUp = () => {
             />
             <FormHelperTexts>{passwordError}</FormHelperTexts>
           </FormControl>
-          <TextField
-            label={t('tel')}
-            name="tel"
-            variant="standard"
-            type="tel"
-            fullWidth
-          />
-          <TextField
-            sx={{ mb: 1 }}
-            label={t('adress')}
-            name="adress"
-            variant="standard"
-            type="adress"
-            fullWidth
-          />
+          <TextField label={t('tel')} name="tel" variant="standard" type="tel" fullWidth />
+          <TextField sx={{ mb: 1 }} label={t('adress')} name="adress" variant="standard" type="adress" fullWidth />
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -307,26 +246,14 @@ const SignUp = () => {
             />
           </LocalizationProvider>
           <div>
-            <Button
-              variant="text"
-              color={checked ? 'success' : 'info'}
-              onClick={handleClickOpen}
-              fullWidth
-            >
+            <Button variant="text" color={checked ? 'success' : 'info'} onClick={handleClickOpen} fullWidth>
               {t('checkTerms')}
             </Button>
-            <Dialog
-              open={modalOpen}
-              onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
+            <Dialog open={modalOpen} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
               <DialogTitle id="alert-dialog-title">{t('terms')}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  제 1장 총칙 제 1 조(목적) 본 약관은 스톡박스 웹사이트(이하
-                  "스톡박스")가 제공하는 모든 서비스(이하 "서비스")의 이용조건
-                  및 절차, 회원과 스톡박스의 권리, 의무, 책임사항과 기타 필요한
+                  제 1장 총칙 제 1 조(목적) 본 약관은 스톡박스 웹사이트(이하 "스톡박스")가 제공하는 모든 서비스(이하 "서비스")의 이용조건 및 절차, 회원과 스톡박스의 권리, 의무, 책임사항과 기타 필요한
                   사항을 규정함을 목적으로 합니다.
                 </DialogContentText>
               </DialogContent>
@@ -340,15 +267,7 @@ const SignUp = () => {
               </DialogActions>
             </Dialog>
           </div>
-          <Button
-            className="submit-button"
-            type="submit"
-            variant="contained"
-            color="primary"
-            size="large"
-            fullWidth
-            disabled={submitPossible}
-          >
+          <Button className="submit-button" type="submit" variant="contained" color="primary" size="large" fullWidth disabled={submitPossible}>
             {t('signup')}
           </Button>
         </Form>

@@ -18,4 +18,9 @@ declare global {
     style?: React.CSSProperties;
     children?: React.ReactNode;
   }
+
+  interface TokenCookie {
+    accessToken?: string;
+    refreshToken?: string;
+  }
 }

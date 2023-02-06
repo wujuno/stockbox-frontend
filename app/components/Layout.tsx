@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import styled from '@emotion/styled';
 import { css, Global } from '@emotion/react';
 import roboto100 from '@fontsource/roboto/100.css';
@@ -8,9 +8,10 @@ import roboto500 from '@fontsource/roboto/500.css';
 import roboto700 from '@fontsource/roboto/700.css';
 import roboto900 from '@fontsource/roboto/900.css';
 import Header from '@/components/Header';
-import { createTheme, Theme, ThemeProvider } from '@mui/material';
+import { createTheme, PaletteMode, Theme, ThemeProvider } from '@mui/material';
 import { Box } from '@mui/system';
 import { ThemeModeContext } from '@/root';
+import { Form, useSubmit } from '@remix-run/react';
 
 const styles = css`
   @import '${roboto100}';
@@ -58,7 +59,9 @@ export const GlobalStyle = () => <Global styles={styles} />;
 
 export const Page = ({ className, style, children }: DefaultProps) => {
   const themeMode = useContext(ThemeModeContext);
-  console.log({ themeMode });
+  const submit = useSubmit();
+
+  const themeFormRef = useRef<HTMLFormElement>(null);
 
   const theme = useMemo(
     () =>
@@ -75,12 +78,23 @@ export const Page = ({ className, style, children }: DefaultProps) => {
     [themeMode]
   );
 
+  useEffect(() => {
+    const themeForm = themeFormRef.current;
+    if (themeMode || !themeForm) return;
+    const systemTheme: PaletteMode | undefined = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    themeForm.themeMode.value = systemTheme;
+    submit(themeForm);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Main className={className} muiTheme={theme} style={style}>
         <Header />
         <Box className="contents">{children}</Box>
       </Main>
+      <Form ref={themeFormRef} method="post" action="/?/changeTheme" replace>
+        <input type="hidden" name="themeMode" />
+      </Form>
     </ThemeProvider>
   );
 };

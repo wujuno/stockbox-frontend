@@ -9,3 +9,8 @@ export const langCookie = createCookie('lng', {
   maxAge: 604800,
   httpOnly: true
 });
+
+export const tokenCookie = createCookie('token', {
+  maxAge: 604800,
+  httpOnly: true
+});

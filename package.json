@@ -8,7 +8,8 @@
     "dev:remix": "remix watch",
     "build": "npm run clean && remix build && shx cp -r scripts dist && shx cp .env dist && shx mkdir -p dist/frontend/app && shx cp -r build public server.js package.json package-lock.json dist/frontend/app",
     "typecheck": "tsc",
-    "clean": "shx rm -rf dist"
+    "clean": "shx rm -rf dist",
+    "postinstall": "remix-esbuild-override"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -38,6 +39,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^12.1.4",
     "recoil": "^0.7.6",
+    "remix-esbuild-override": "^3.0.4",
     "remix-i18next": "^5.0.0",
     "remix-utils": "^6.0.0",
     "uuid": "^9.0.0"
