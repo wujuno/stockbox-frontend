@@ -144,7 +144,7 @@ const SignIn = () => {
         <Typography className="signin-title" variant="h4">
           Stockbox
         </Typography>
-        <TextField type="email" variant="standard" id="email" name="email" label={t('email')} required />
+        <TextField type="email" variant="standard" id="email" name="email" label={t('email')} autoFocus required />
         <TextField type="password" variant="standard" id="pwd" name="pwd" label={t('password')} required />
         <div className="auto-signin-wrapper">
           <Checkbox name="autosignin" id="auto-signin" size="small" classes={{ root: 'auto-signin-chkbox-root' }} />
