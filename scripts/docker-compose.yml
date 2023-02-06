@@ -30,6 +30,7 @@ services:
     volumes:
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
+    - /etc/letsencrypt/archive/stockbox.kro.kr:/etc/letsencrypt/archive/stockbox.kro.kr:ro
 networks:
   custom:
     ipam:
