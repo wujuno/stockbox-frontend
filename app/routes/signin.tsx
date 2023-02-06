@@ -142,7 +142,7 @@ const SignIn = () => {
     <Container>
       <form className="signin-form">
         <Typography className="signin-title" variant="h4">
-          Stockbox
+          StockBox
         </Typography>
         <TextField type="email" variant="standard" id="email" name="email" label={t('email')} autoFocus required />
         <TextField type="password" variant="standard" id="pwd" name="pwd" label={t('password')} required />
