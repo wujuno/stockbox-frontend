@@ -22,6 +22,10 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Dayjs } from 'dayjs';
 
 const FormHelperTexts = styled(FormHelperText)`
   display: flex !important;
@@ -70,6 +74,7 @@ const SignUp = () => {
   const [nameError, setNameError] = useState('');
   const [nicknameState, setNicknameState] = useState(false);
   const [submitPossible, setSubmitPossible] = useState(true);
+  const [value, setValue] = useState<Dayjs | null>(null);
   const { t } = useTranslation('signup');
 
   // 비밀번호 visible handdler
@@ -283,27 +288,27 @@ const SignUp = () => {
             fullWidth
           />
           <TextField
+            sx={{ mb: 1 }}
             label={t('adress')}
             name="adress"
             variant="standard"
             type="adress"
             fullWidth
           />
-          <TextField
-            label={t('birth')}
-            name="birth"
-            variant="standard"
-            type="date"
-            fullWidth
-            InputLabelProps={{
-              shrink: true
-            }}
-            margin="dense"
-          />
 
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label={t('birth')}
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} name="birth" />}
+            />
+          </LocalizationProvider>
           <div>
             <Button
-              variant="outlined"
+              variant="text"
               color={checked ? 'success' : 'info'}
               onClick={handleClickOpen}
               fullWidth
