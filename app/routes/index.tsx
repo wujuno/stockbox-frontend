@@ -9,7 +9,6 @@ import { loaderCommonInit } from '@/lib/loaderCommon';
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
     const result = await loaderCommonInit(request);
-    console.log(result);
     if (result !== null) return result;
   } catch (err) {
     console.error(err);
