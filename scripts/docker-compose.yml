@@ -3,6 +3,7 @@ services:
   frontend:
     build: frontend
     image: $COMPOSE_PROJECT_NAME-frontend:$FRONTEND_VERSION
+    container_name: $COMPOSE_PROJECT_NAME-frontend
     restart: always
     environment:
       PORT: 3000
@@ -16,6 +17,7 @@ services:
   nginx:
     build: nginx
     image: $COMPOSE_PROJECT_NAME-nginx:$FRONTEND_VERSION
+    container_name: $COMPOSE_PROJECT_NAME-nginx
     restart: always
     environment:
       TZ: Asia/Seoul
