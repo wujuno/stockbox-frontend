@@ -7,7 +7,7 @@ import {
   useTheme
 } from '@mui/material';
 import styled from '@emotion/styled';
-import { Form } from '@remix-run/react';
+import { Form, useNavigate } from '@remix-run/react';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +24,13 @@ const StyledToolbar = styled(Toolbar)`
     gap: 10px;
   }
 
+  .header-left {
+    .header-logo {
+      user-select: none;
+      cursor: pointer;
+    }
+  }
+
   .header-right {
     justify-content: flex-end;
   }
@@ -32,12 +39,13 @@ const StyledToolbar = styled(Toolbar)`
 const Header = () => {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <AppBar position="static">
       <StyledToolbar variant="dense">
         <div className="header-left">
-          <Typography variant="h6" component="div" color="inherit">
+          <Typography className="header-logo" variant="h6" component="div" color="inherit" onClick={() => navigate('/')}>
             StockBox
           </Typography>
         </div>

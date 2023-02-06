@@ -1,10 +1,10 @@
 {
   "email": "이메일",
   "password": "비밀번호",
-  "login": "로그인",
-  "maintainLoginStatus": "로그인 상태 유지",
+  "signin": "로그인",
+  "maintainSignInStatus": "로그인 상태 유지",
   "findAccount": "이메일 또는 비밀번호를 잊으셨나요?",
   "createAccount": "Stockbox 계정이 없으신가요?",
-  "googleLogin": "Google 계정으로 로그인",
-  "kakaoLogin": "카카오 로그인"
+  "googleSignIn": "Google 계정으로 로그인",
+  "kakaoSignIn": "카카오 로그인"
 }

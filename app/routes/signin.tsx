@@ -5,8 +5,21 @@ import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 import GoogleSymbolImg from '@/assets/img/google_symbol.png';
 import KakaoSymbolImg from '@/assets/img/kakao_symbol.png';
+import { loaderCommonInit } from '@/lib/loaderCommon';
+import { DataFunctionArgs, json } from '@remix-run/node';
 
-export const handle = { i18n: 'login' };
+export const loader = async ({ request }: DataFunctionArgs) => {
+  try {
+    const result = await loaderCommonInit(request);
+    if (result) return result;
+  } catch (err) {
+    console.error(err);
+  } finally {
+    return json(null);
+  }
+};
+
+export const handle = { i18n: 'signin' };
 
 const Container = styled(Page)`
   .contents {
@@ -15,23 +28,23 @@ const Container = styled(Page)`
     justify-content: center;
     align-items: center;
 
-    .login-form {
+    .signin-form {
       display: flex;
       flex-direction: column;
       min-width: 300px;
       gap: 20px;
 
-      .login-title {
+      .signin-title {
         text-align: center;
         margin: 0;
       }
 
-      .auto-login-wrapper {
+      .auto-signin-wrapper {
         position: relative;
         display: flex;
         align-items: center;
 
-        .auto-login-chkbox-root {
+        .auto-signin-chkbox-root {
           position: absolute;
           transform: translate(-9px, 0);
         }
@@ -59,13 +72,13 @@ const Container = styled(Page)`
         }
       }
 
-      .social-login-wrapper {
+      .social-signin-wrapper {
         position: relative;
         display: flex;
         flex-direction: column;
         gap: 10px;
 
-        .social-login-btn {
+        .social-signin-btn {
           display: flex;
           align-items: center;
           height: 36px;
@@ -122,46 +135,46 @@ const Container = styled(Page)`
   }
 `;
 
-const Login = () => {
-  const { t } = useTranslation('login');
+const SignIn = () => {
+  const { t } = useTranslation('signin');
 
   return (
     <Container>
-      <form className="login-form">
-        <Typography className="login-title" variant="h4">
+      <form className="signin-form">
+        <Typography className="signin-title" variant="h4">
           Stockbox
         </Typography>
         <TextField type="email" variant="standard" id="email" name="email" label={t('email')} required />
         <TextField type="password" variant="standard" id="pwd" name="pwd" label={t('password')} required />
-        <div className="auto-login-wrapper">
-          <Checkbox name="autoLogin" id="auto-login" size="small" classes={{ root: 'auto-login-chkbox-root' }} />
-          <Typography variant="caption" component="label" htmlFor="auto-login">
-            {t('maintainLoginStatus')}
+        <div className="auto-signin-wrapper">
+          <Checkbox name="autosignin" id="auto-signin" size="small" classes={{ root: 'auto-signin-chkbox-root' }} />
+          <Typography variant="caption" component="label" htmlFor="auto-signin">
+            {t('maintainSignInStatus')}
           </Typography>
         </div>
         <Button type="submit" variant="outlined">
-          {t('login')}
+          {t('signin')}
         </Button>
         <div className="link-wrapper">
           <Link to="#">
             <Typography variant="caption">{t('findAccount')}</Typography>
           </Link>
-          <Link to="/register">
+          <Link to="/signup">
             <Typography variant="caption">{t('createAccount')}</Typography>
           </Link>
         </div>
         <Divider />
-        <div className="social-login-wrapper">
-          <button type="button" className="social-login-btn google-btn">
-            <img src={GoogleSymbolImg} alt="Kakao Login Symbol" />
+        <div className="social-signin-wrapper">
+          <button type="button" className="social-signin-btn google-btn">
+            <img src={GoogleSymbolImg} alt="Kakao signin Symbol" />
             <Typography color="#000" component="span">
-              {t('googleLogin')}
+              {t('googleSignIn')}
             </Typography>
           </button>
-          <button type="button" className="social-login-btn kakao-btn">
-            <img src={KakaoSymbolImg} alt="Kakao Login Symbol" />
+          <button type="button" className="social-signin-btn kakao-btn">
+            <img src={KakaoSymbolImg} alt="Kakao signin Symbol" />
             <Typography color="#000" component="span">
-              {t('kakaoLogin')}
+              {t('kakaoSignIn')}
             </Typography>
           </button>
         </div>
@@ -170,4 +183,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn;
