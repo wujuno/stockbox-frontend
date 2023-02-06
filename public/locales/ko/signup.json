@@ -1,0 +1,21 @@
+{
+  "join": "가입하기",
+  "email": "이메일",
+  "name": "이름",
+  "nickname": "별명",
+  "password": "비밀번호",
+  "confirmPassword": "비밀번호 확인",
+  "tel": "전화번호",
+  "adress": "주소",
+  "birth": "생년월일",
+  "signup": "가입하기",
+  "back": "뒤로가기",
+  "nameError": "올바른 이름 형식이 아닙니다.",
+  "emailError": "올바른 이메일 형식이 아닙니다.",
+  "confirmPasswordError": "비밀번호가 일치하지 않습니다.",
+  "checkTerms": "회원가입 약관 확인",
+  "terms": "약관동의",
+  "disagree": "거부",
+  "agree": "동의",
+  "nicknameRule": "별명은 30자 이내여야 합니다."
+}
