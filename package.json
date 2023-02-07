@@ -9,7 +9,8 @@
     "build": "npm run clean && remix build && shx cp -r scripts dist && shx cp .env dist && shx mkdir -p dist/frontend/app && shx cp -r build public server.js package.json package-lock.json dist/frontend/app",
     "typecheck": "tsc",
     "clean": "shx rm -rf dist",
-    "postinstall": "remix-esbuild-override"
+    "postinstall": "remix-esbuild-override",
+    "prettier": "prettier -w -u --config prettier.config.cjs --ignore-path .prettierignore **/*"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",

@@ -94,7 +94,7 @@ const SignUp = () => {
 
   // 비밀번호 visible handdler
   const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword = () => setShowPassword(show => !show);
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
@@ -239,10 +239,10 @@ const SignUp = () => {
             <DatePicker
               label={t('birth')}
               value={value}
-              onChange={(newValue) => {
+              onChange={newValue => {
                 setValue(newValue);
               }}
-              renderInput={(params) => <TextField {...params} name="birth" />}
+              renderInput={params => <TextField {...params} name="birth" />}
             />
           </LocalizationProvider>
           <div>

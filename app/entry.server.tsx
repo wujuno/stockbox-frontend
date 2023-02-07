@@ -13,13 +13,7 @@ import i18nConfig from '@/i18n/config';
 
 const ABORT_DELAY = 5000;
 
-const handleBotRequest = (
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext,
-  i18nInstance: i18n
-) => {
+const handleBotRequest = (request: Request, responseStatusCode: number, responseHeaders: Headers, remixContext: EntryContext, i18nInstance: i18n) => {
   return new Promise((resolve, reject) => {
     let didError = false;
 
@@ -57,13 +51,7 @@ const handleBotRequest = (
   });
 };
 
-const handleBrowserRequest = (
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext,
-  i18nInstance: i18n
-) => {
+const handleBrowserRequest = (request: Request, responseStatusCode: number, responseHeaders: Headers, remixContext: EntryContext, i18nInstance: i18n) => {
   return new Promise((resolve, reject) => {
     let didError = false;
 
@@ -101,12 +89,7 @@ const handleBrowserRequest = (
   });
 };
 
-const handleRequest = async (
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext
-) => {
+const handleRequest = async (request: Request, responseStatusCode: number, responseHeaders: Headers, remixContext: EntryContext) => {
   const instance = createInstance();
 
   const lng = await i18next.getLocale(request);
@@ -120,31 +103,13 @@ const handleRequest = async (
       lng,
       ns,
       backend: {
-        loadPath: resolve(
-          process.cwd(),
-          'public',
-          'locales',
-          '{{lng}}',
-          '{{ns}}.json'
-        )
+        loadPath: resolve(process.cwd(), 'public', 'locales', '{{lng}}', '{{ns}}.json')
       }
     });
 
   return isbot(request.headers.get('user-agent'))
-    ? handleBotRequest(
-        request,
-        responseStatusCode,
-        responseHeaders,
-        remixContext,
-        instance
-      )
-    : handleBrowserRequest(
-        request,
-        responseStatusCode,
-        responseHeaders,
-        remixContext,
-        instance
-      );
+    ? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext, instance)
+    : handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext, instance);
 };
 
 export default handleRequest;

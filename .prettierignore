@@ -1,1 +1,6 @@
+/node_modules
+/build
+/dist
+/public
+/app/assets
 /scripts/**/*
