@@ -2,8 +2,8 @@ import { atom } from 'recoil';
 import { v4 as uuidV4 } from 'uuid';
 
 interface IStockChart {
-  x: string
-  y: number
+  x: string;
+  y: number;
 }
 
 export const stockChartState = atom<IStockChart[]>({
@@ -32,6 +32,6 @@ export const stockChartState = atom<IStockChart[]>({
     {
       x: '02-10',
       y: 55
-    },
+    }
   ]
 });
