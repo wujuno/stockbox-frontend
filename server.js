@@ -3,10 +3,11 @@ const compression = require('compression');
 const morgan = require('morgan');
 const { createRequestHandler } = require('@remix-run/express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const { v4: uuidV4 } = require('uuid');
+const { v4: uuidV4, parse: parseUUID } = require('uuid');
 const path = require('path');
 
 process.env.CACHE_UUID = uuidV4();
+process.env.COOKIE_SECRET = process.env.NODE_ENV === 'production' ? Buffer.from(parseUUID(uuidV4())).toString('utf8').toUpperCase() : 'B015E55C3DA9408B9388A12FBF9D4EC8';
 
 const purgeRequireCache = () => {
   for (const key in require.cache) {

@@ -12,5 +12,6 @@ export const loaderCommonInit = async (request: Request) => {
       }
     });
   }
+
   return null;
 };
