@@ -6,6 +6,7 @@ const { createRequestHandler } = require('@remix-run/express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { v4: uuidV4, parse: parseUUID } = require('uuid');
 const path = require('path');
+const http = require('http');
 
 const isDevEnv = process.env.NODE_ENV !== 'production';
 
@@ -28,8 +29,6 @@ const purgeRequireCache = () => {
 const allowHosts = isDevEnv ? ['localhost', '127.0.0.1'] : ['stockbox.kro.kr'];
 const allowURLs = allowHosts.map(d => `${isDevEnv ? 'http' : 'https'}://${d}${isDevEnv ? `:${PORT}` : ''}`);
 
-const app = express();
-
 /** @type {import('helmet').HelmetOptions} */
 const helmetOptions = {
   contentSecurityPolicy: {
@@ -41,6 +40,9 @@ const helmetOptions = {
   hidePoweredBy: !isDevEnv,
   referrerPolicy: false
 };
+
+const app = express();
+const server = http.createServer(app);
 
 app.use(helmet(helmetOptions));
 app.use(compression());
@@ -69,4 +71,4 @@ app.all(
       })
 );
 
-app.listen(PORT, HOST, () => console.log(`Express server listening on port ${PORT}`));
+server.listen(PORT, HOST, () => console.log(`Express server listening on port ${PORT}`));
