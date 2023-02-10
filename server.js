@@ -15,7 +15,7 @@ const PORT = Number(process.env.PORT) || 3000;
 const HOST = (isDevEnv ? '0.0.0.0' : process.env.HOST) || '0.0.0.0';
 
 process.env.CACHE_UUID = uuidV4();
-process.env.COOKIE_SECRET = process.env.NODE_ENV === 'production' ? Buffer.from(parseUUID(uuidV4())).toString('utf8').toUpperCase() : 'B015E55C3DA9408B9388A12FBF9D4EC8';
+process.env.COOKIE_SECRET = isDevEnv ? 'B015E55C3DA9408B9388A12FBF9D4EC8' : Buffer.from(parseUUID(uuidV4())).toString('utf8').toUpperCase();
 process.env.API_URL = isDevEnv ? `http://${process.env.HOST}:${process.env.BACKEND_PORT}` : '/';
 
 const purgeRequireCache = () => {
@@ -26,7 +26,7 @@ const purgeRequireCache = () => {
   }
 };
 
-const allowHosts = isDevEnv ? ['localhost', '127.0.0.1'] : ['stockbox.kro.kr'];
+const allowHosts = isDevEnv ? ['localhost', '127.0.0.1'] : [HOST];
 const allowURLs = allowHosts.map(d => `${isDevEnv ? 'http' : 'https'}://${d}${isDevEnv ? `:${PORT}` : ''}`);
 
 /** @type {import('helmet').HelmetOptions} */
@@ -34,7 +34,7 @@ const helmetOptions = {
   contentSecurityPolicy: {
     directives: {
       'script-src': [`'unsafe-inline'`, ...allowURLs],
-      'connect-src': [...(process.env.NODE_ENV !== 'production' ? allowHosts.map(d => `ws://${d}:${require('./remix.config')?.devServerPort || 8002}`) : []), ...allowURLs]
+      'connect-src': [...(isDevEnv ? allowHosts.map(d => `ws://${d}:${require('./remix.config')?.devServerPort || 8002}`) : []), ...allowURLs]
     }
   },
   hidePoweredBy: !isDevEnv,
@@ -50,13 +50,13 @@ app.use('/build', express.static('public/build', { immutable: true, maxAge: '1y'
 app.use(express.static('public', { maxAge: '1h' }));
 app.use(morgan('tiny'));
 
-if (process.env.NODE_ENV !== 'production') {
+if (isDevEnv) {
   app.use('/api', createProxyMiddleware({ target: process.env.API_URL, changeOrigin: true }));
 }
 
 app.all(
   '*',
-  process.env.NODE_ENV === 'development'
+  isDevEnv
     ? (req, res, next) => {
         purgeRequireCache();
 
