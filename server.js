@@ -6,7 +6,6 @@ const { createRequestHandler } = require('@remix-run/express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { v4: uuidV4, parse: parseUUID } = require('uuid');
 const path = require('path');
-const remixConfig = require('./remix.config');
 
 process.env.CACHE_UUID = uuidV4();
 process.env.COOKIE_SECRET = process.env.NODE_ENV === 'production' ? Buffer.from(parseUUID(uuidV4())).toString('utf8').toUpperCase() : 'B015E55C3DA9408B9388A12FBF9D4EC8';
@@ -33,7 +32,7 @@ const helmetOptions = {
   contentSecurityPolicy: {
     directives: {
       'script-src': [`'unsafe-inline'`, ...allowURLs],
-      'connect-src': [...(process.env.NODE_ENV !== 'production' ? allowHosts.map(d => `ws://${d}:${remixConfig.devServerPort || 8002}`) : []), ...allowURLs]
+      'connect-src': [...(process.env.NODE_ENV !== 'production' ? allowHosts.map(d => `ws://${d}:${require('./remix.config')?.devServerPort || 8002}`) : []), ...allowURLs]
     }
   },
   referrerPolicy: false
