@@ -7,8 +7,15 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const { v4: uuidV4, parse: parseUUID } = require('uuid');
 const path = require('path');
 
+const isDevEnv = process.env.NODE_ENV !== 'production';
+
+const BUILD_DIR = path.join(process.cwd(), 'build');
+const PORT = Number(process.env.PORT) || 3000;
+const HOST = (isDevEnv ? '0.0.0.0' : process.env.HOST) || '0.0.0.0';
+
 process.env.CACHE_UUID = uuidV4();
 process.env.COOKIE_SECRET = process.env.NODE_ENV === 'production' ? Buffer.from(parseUUID(uuidV4())).toString('utf8').toUpperCase() : 'B015E55C3DA9408B9388A12FBF9D4EC8';
+process.env.API_URL = isDevEnv ? `http://${process.env.HOST}:${process.env.BACKEND_PORT}` : '/';
 
 const purgeRequireCache = () => {
   for (const key in require.cache) {
@@ -18,10 +25,6 @@ const purgeRequireCache = () => {
   }
 };
 
-const BUILD_DIR = path.join(process.cwd(), 'build');
-const PORT = Number(process.env.PORT) || 3000;
-
-const isDevEnv = process.env.NODE_ENV !== 'production';
 const allowHosts = isDevEnv ? ['localhost', '127.0.0.1'] : ['stockbox.kro.kr'];
 const allowURLs = allowHosts.map(d => `${isDevEnv ? 'http' : 'https'}://${d}${isDevEnv ? `:${PORT}` : ''}`);
 
@@ -35,10 +38,10 @@ const helmetOptions = {
       'connect-src': [...(process.env.NODE_ENV !== 'production' ? allowHosts.map(d => `ws://${d}:${require('./remix.config')?.devServerPort || 8002}`) : []), ...allowURLs]
     }
   },
+  hidePoweredBy: !isDevEnv,
   referrerPolicy: false
 };
 
-// app.disable('x-powered-by');
 app.use(helmet(helmetOptions));
 app.use(compression());
 app.use('/build', express.static('public/build', { immutable: true, maxAge: '1y' }));
@@ -66,4 +69,4 @@ app.all(
       })
 );
 
-app.listen(PORT, () => console.log(`Express server listening on port ${PORT}`));
+app.listen(PORT, HOST, () => console.log(`Express server listening on port ${PORT}`));
