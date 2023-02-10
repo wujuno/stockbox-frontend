@@ -23,8 +23,8 @@ const BUILD_DIR = path.join(process.cwd(), 'build');
 const PORT = Number(process.env.PORT) || 3000;
 
 const isDevEnv = process.env.NODE_ENV !== 'production';
-const allowHosts = ['localhost', '127.0.0.1'];
-const allowURLs = allowHosts.map(d => `${isDevEnv ? 'http' : 'https'}://${d}:${PORT}`);
+const allowHosts = isDevEnv ? ['localhost', '127.0.0.1'] : ['stockbox.kro.kr'];
+const allowURLs = allowHosts.map(d => `${isDevEnv ? 'http' : 'https'}://${d}${isDevEnv ? `:${PORT}` : ''}`);
 
 const app = express();
 
