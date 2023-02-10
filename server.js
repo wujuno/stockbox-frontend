@@ -15,7 +15,7 @@ const PORT = Number(process.env.PORT) || 3000;
 const HOST = (isDevEnv ? '0.0.0.0' : process.env.HOST) || '0.0.0.0';
 
 process.env.CACHE_UUID = uuidV4();
-process.env.COOKIE_SECRET = isDevEnv ? 'B015E55C3DA9408B9388A12FBF9D4EC8' : Buffer.from(parseUUID(uuidV4())).toString('utf8').toUpperCase();
+process.env.COOKIE_SECRET = isDevEnv ? 'B015E55C3DA9408B9388A12FBF9D4EC8' : Buffer.from(parseUUID(uuidV4())).toString('hex').toUpperCase();
 process.env.API_URL = isDevEnv ? `http://${process.env.HOST}:${process.env.BACKEND_PORT}` : '/';
 
 const purgeRequireCache = () => {
