@@ -1,12 +1,13 @@
-import { Page } from '@/components/Layout';
+import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { DataFunctionArgs, json } from '@remix-run/node';
+import { Link } from '@remix-run/react';
 import styled from '@emotion/styled';
 import { Button, Checkbox, Divider, TextField, Typography } from '@mui/material';
-import { Link } from '@remix-run/react';
-import { useTranslation } from 'react-i18next';
+import { loaderCommonInit } from '@/lib/loaderCommon';
+import { Page } from '@/components/Layout';
 import GoogleSymbolImg from '@/assets/img/google_symbol.png';
 import KakaoSymbolImg from '@/assets/img/kakao_symbol.png';
-import { loaderCommonInit } from '@/lib/loaderCommon';
-import { DataFunctionArgs, json } from '@remix-run/node';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -136,11 +137,19 @@ const Container = styled(Page)`
 `;
 
 const SignIn = () => {
+  const [isValidForm, setIsValidForm] = useState(false);
+
+  const formRef = useRef<HTMLFormElement>(null);
+
   const { t } = useTranslation('signin');
+
+  const handleFormChange = () => setIsValidForm(formRef.current?.checkValidity() ?? false);
+
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = e => e.preventDefault();
 
   return (
     <Container>
-      <form className="signin-form">
+      <form ref={formRef} className="signin-form" onChange={handleFormChange} onSubmit={handleFormSubmit}>
         <Typography className="signin-title" variant="h4">
           StockBox
         </Typography>
@@ -152,11 +161,11 @@ const SignIn = () => {
             {t('maintainSignInStatus')}
           </Typography>
         </div>
-        <Button type="submit" variant="outlined">
+        <Button type="submit" variant="outlined" disabled={!isValidForm}>
           {t('signin')}
         </Button>
         <div className="link-wrapper">
-          <Link to="#">
+          <Link to="/findaccount">
             <Typography variant="caption">{t('findAccount')}</Typography>
           </Link>
           <Link to="/signup">

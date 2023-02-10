@@ -6,6 +6,8 @@ import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { loaderCommonInit } from '@/lib/loaderCommon';
 
+const SChart = React.lazy(() => import('@/components/Chart'));
+
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
     const result = await loaderCommonInit(request);
@@ -15,8 +17,6 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   }
   return json(null);
 };
-
-const SChart = React.lazy(() => import('@/components/Chart'));
 
 const Index = () => {
   const isHydrated = useHydrated();
