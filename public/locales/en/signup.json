@@ -6,7 +6,7 @@
   "password": "Password",
   "confirmPassword": "Confirm Password",
   "tel": "Tel",
-  "adress": "Adress",
+  "address": "Adress",
   "birth": "Birth",
   "signup": "Sign up",
   "back": "Back",
@@ -17,5 +17,10 @@
   "terms": "Terms and conditions",
   "disagree": "Disagree",
   "agree": "Agree",
-  "nicknameRule": "Nickname must be 30 characters or less."
+  "nicknameRule": "Nickname must be 30 characters or less.",
+  "dbcheck":"Double check",
+  "extraAddr":"Extra adress",
+  "adressBtnInfo": "Please click next button.",
+  "searchPost":"Search post",
+  "extraAddrError":"Please write shortly."
 }
