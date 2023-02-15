@@ -3,7 +3,7 @@ import { redirect } from '@remix-run/node';
 
 export const loaderCommonInit = async (request: Request) => {
   const token: TokenCookie = await tokenCookie.parse(request.headers.get('Cookie'));
-  const needLogin = !/^\/(signin|signup).*/.test(request.url.replace(/https?:\/\//, '').replace(request.headers.get('Host') ?? '', ''));
+  const needLogin = !/^\/(signin|signup|findaccount).*/.test(request.url.replace(/https?:\/\//, '').replace(request.headers.get('Host') ?? '', ''));
 
   if (needLogin && (!token || !token.accessToken)) {
     return redirect('/signin', {
