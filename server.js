@@ -13,11 +13,9 @@ const isDevEnv = process.env.NODE_ENV !== 'production';
 
 const BUILD_DIR = path.join(process.cwd(), 'build');
 const PORT = Number(process.env.PORT) || 3000;
-const HOST = (isDevEnv ? '0.0.0.0' : process.env.HOST) || '0.0.0.0';
 
 process.env.CACHE_UUID = uuidV4();
 process.env.COOKIE_SECRET = isDevEnv ? 'B015E55C3DA9408B9388A12FBF9D4EC8' : Buffer.from(parseUUID(uuidV4())).toString('hex').toUpperCase();
-process.env.API_URL = isDevEnv ? `http://${process.env.HOST}:${process.env.BACKEND_PORT}` : '/';
 
 const purgeRequireCache = () => {
   for (const key in require.cache) {
@@ -27,7 +25,7 @@ const purgeRequireCache = () => {
   }
 };
 
-const allowHosts = isDevEnv ? ['localhost', '127.0.0.1'] : [HOST];
+const allowHosts = isDevEnv ? ['localhost', '127.0.0.1'] : [process.env.HOST];
 const allowURLs = allowHosts.map(d => `${isDevEnv ? 'http' : 'https'}://${d}${isDevEnv ? `:${PORT}` : ''}`);
 
 /** @type {import('helmet').HelmetOptions} */
@@ -72,4 +70,4 @@ app.all(
       })
 );
 
-server.listen(PORT, HOST, () => console.log(`Express server listening on port ${PORT}`));
+server.listen(PORT, '0.0.0.0', () => console.log(`Express server listening on port ${PORT}`));
