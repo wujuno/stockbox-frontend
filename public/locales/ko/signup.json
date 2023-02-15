@@ -6,7 +6,7 @@
   "password": "비밀번호",
   "confirmPassword": "비밀번호 확인",
   "tel": "전화번호",
-  "adress": "주소",
+  "address": "주소",
   "birth": "생년월일",
   "signup": "가입하기",
   "back": "뒤로가기",
@@ -17,5 +17,10 @@
   "terms": "약관동의",
   "disagree": "거부",
   "agree": "동의",
-  "nicknameRule": "별명은 30자 이내여야 합니다."
+  "nicknameRule": "별명은 30자 이내여야 합니다.",
+  "dbcheck": "중복확인",
+  "extraAddr":"상세주소",
+  "adressBtnInfo":"우편주소 검색을 클릭해주세요.",
+  "searchPost":"우편주소 검색",
+  "extraAddrError":"간략히 적어주세요."
 }
