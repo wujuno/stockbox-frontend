@@ -8,7 +8,6 @@ declare global {
       COOKIE_SECRET: string;
       HOST?: string;
       BACKEND_PORT?: string;
-      API_URL?: string;
     }
   }
 
