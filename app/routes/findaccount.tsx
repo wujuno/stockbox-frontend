@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
 import { DataFunctionArgs, json } from '@remix-run/node';
@@ -36,6 +36,16 @@ const FindAccount = () => {
           <Tab label={t('findPassword')} />
         </Tabs>
       </Box>
+      {tabNum === 0 && (
+        <Box>
+          <Typography>Email</Typography>
+        </Box>
+      )}
+      {tabNum === 1 && (
+        <Box>
+          <Typography>Password</Typography>
+        </Box>
+      )}
     </Container>
   );
 };
