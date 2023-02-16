@@ -4,7 +4,7 @@ const compression = require('compression');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const { createRequestHandler } = require('@remix-run/express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
+// const { createProxyMiddleware } = require('http-proxy-middleware');
 const { v4: uuidV4, parse: parseUUID } = require('uuid');
 const path = require('path');
 const http = require('http');
@@ -49,9 +49,9 @@ app.use('/build', express.static('public/build', { immutable: true, maxAge: '1y'
 app.use(express.static('public', { maxAge: '1h' }));
 app.use(morgan('tiny'));
 
-if (isDevEnv) {
-  app.use('/api', createProxyMiddleware({ target: process.env.API_URL, changeOrigin: true }));
-}
+// if (isDevEnv) {
+//   app.use('/api', createProxyMiddleware({ target: process.env.API_URL, changeOrigin: true }));
+// }
 
 app.all(
   '*',
