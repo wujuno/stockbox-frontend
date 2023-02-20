@@ -9,6 +9,8 @@ const { v4: uuidV4, parse: parseUUID } = require('uuid');
 const path = require('path');
 const http = require('http');
 
+const daumPostCodeUrls = ['https://t1.daumcdn.net', 'https://postcode.map.daum.net'];
+
 const isDevEnv = process.env.NODE_ENV !== 'production';
 
 const BUILD_DIR = path.join(process.cwd(), 'build');
@@ -26,14 +28,19 @@ const purgeRequireCache = () => {
 };
 
 const allowHosts = isDevEnv ? ['localhost', '127.0.0.1'] : [process.env.HOST];
-const allowURLs = allowHosts.map(d => `${isDevEnv ? 'http' : 'https'}://${d}${isDevEnv ? `:${PORT}` : ''}`);
+const allowURLs = allowHosts.map(d => `${isDevEnv ? 'http' : 'https'}://${d}${isDevEnv ? `:${PORT}` : ''}`).concat(daumPostCodeUrls);
 
 /** @type {import('helmet').HelmetOptions} */
 const helmetOptions = {
+  crossOriginResourcePolicy: {
+    policy: 'cross-origin'
+  },
+  crossOriginEmbedderPolicy: false,
   contentSecurityPolicy: {
     directives: {
       'script-src': [`'unsafe-inline'`, ...allowURLs],
-      'connect-src': [...(isDevEnv ? allowHosts.map(d => `ws://${d}:${require('./remix.config')?.devServerPort || 8002}`) : []), ...allowURLs]
+      'connect-src': [...(isDevEnv ? allowHosts.map(d => `ws://${d}:${require('./remix.config')?.devServerPort || 8002}`) : []), ...allowURLs],
+      'frame-src': daumPostCodeUrls
     }
   },
   hidePoweredBy: !isDevEnv,
