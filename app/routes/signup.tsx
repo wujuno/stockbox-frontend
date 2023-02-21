@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
   FormControl,
   FormHelperText,
   IconButton,
@@ -16,6 +17,7 @@ import {
   InputAdornment,
   InputLabel,
   LinearProgress,
+  Stack,
   TextField,
   Typography
 } from '@mui/material';
@@ -30,6 +32,7 @@ import { loaderCommonInit } from '@/lib/loaderCommon';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import { LoadingButton } from '@mui/lab';
+import Terms from '@/components/auth/Terms';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -369,6 +372,7 @@ const SignUp = () => {
                   </Button>
                   <Dialog fullWidth open={postModalOpen} onClose={postHandleClose} aria-labelledby="title">
                     <DialogTitle id="title">{t('searchPost')}</DialogTitle>
+                    <Divider />
                     <DialogContent>
                       <DaumPostcodeEmbed onComplete={handleComplete} onClose={postHandleClose} />
                     </DialogContent>
@@ -395,10 +399,10 @@ const SignUp = () => {
             </Button>
             <Dialog open={modalOpen} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
               <DialogTitle id="alert-dialog-title">{t('terms')}</DialogTitle>
+              <Divider />
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  제 1장 총칙 제 1 조(목적) 본 약관은 스톡박스 웹사이트(이하 "스톡박스")가 제공하는 모든 서비스(이하 "서비스")의 이용조건 및 절차, 회원과 스톡박스의 권리, 의무, 책임사항과 기타 필요한
-                  사항을 규정함을 목적으로 합니다.
+                <DialogContentText id="usage terms">
+                  <Terms />
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
