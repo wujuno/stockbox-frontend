@@ -20,7 +20,7 @@
   "nicknameRule": "별명은 30자 이내여야 합니다.",
   "dbcheck": "중복확인",
   "extraAddr":"상세주소",
-  "adressBtnInfo":"우편주소 검색을 클릭해주세요.",
-  "searchPost":"우편주소 검색",
+  "adressBtnInfo":"주소 검색을 클릭해주세요.",
+  "searchPost":"주소 검색",
   "extraAddrError":"간략히 적어주세요."
 }
