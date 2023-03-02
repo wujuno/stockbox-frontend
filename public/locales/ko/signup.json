@@ -22,5 +22,7 @@
   "extraAddr":"상세주소",
   "adressBtnInfo":"주소 검색을 클릭해주세요.",
   "searchPost":"주소 검색",
-  "extraAddrError":"간략히 적어주세요."
+  "extraAddrError":"간략히 적어주세요.",
+  "passworkOk":"가능한 비밀번호 입니다.",
+  "passwordRegex":"영문 대소문자, 숫자, 특수문자 중 2가지 이상을 사용하여 8자이상을 작성해주세요."
 }
