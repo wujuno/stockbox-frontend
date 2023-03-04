@@ -1,17 +1,21 @@
-import { stockChartState } from '@/atoms';
+import ApexCharts from 'react-apexcharts';
 import styled from '@emotion/styled';
 import { useTheme } from '@mui/material';
-import ApexCharts from 'react-apexcharts';
-import { useRecoilValue } from 'recoil';
+
+interface ChartProps {
+  data: {
+    x: string;
+    y: number;
+  }[];
+}
 
 const ChartBox = styled.div`
   width: 500px;
   height: 500px;
 `;
 
-const SChart = () => {
+const SChart: React.FC<DefaultProps & ChartProps> = ({ data }) => {
   const theme = useTheme();
-  const data = useRecoilValue(stockChartState);
 
   return (
     <ChartBox>
