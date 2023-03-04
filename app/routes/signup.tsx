@@ -17,7 +17,6 @@ import {
   InputAdornment,
   InputLabel,
   LinearProgress,
-  Stack,
   TextField,
   Typography
 } from '@mui/material';
@@ -33,6 +32,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import { LoadingButton } from '@mui/lab';
 import Terms from '@/components/auth/Terms';
+import PasswordRegx from '@/components/auth/RegExp';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -46,12 +46,6 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 };
 
 export const handle = { i18n: 'signup' };
-
-const FormHelperTexts = styled(FormHelperText)`
-  display: flex !important;
-  justify-content: flex-start !important;
-  color: red;
-`;
 
 const Container = styled(Page)`
   .contents {
@@ -96,8 +90,8 @@ const SignUp = () => {
   const [emailError, setEmailError] = useState('');
   const [emailState, setEmailState] = useState(false);
   const [emailDbcheckState, setEmailDbcheckState] = useState(false);
-  const [passwordState, setPasswordState] = useState('');
-  const [confirmPasswordState, setConfirmPasswordState] = useState('');
+  const [passwordState, setPasswordState] = useState(false);
+  const [confirmPasswordState, setConfirmPasswordState] = useState(false);
   const [passwordError, setPasswordError] = useState('');
   const [nameState, setNameState] = useState('');
   const [nameError, setNameError] = useState('');
@@ -163,13 +157,23 @@ const SignUp = () => {
       setEmailError('')
     } */
   };
-  // 비밀번호 변경 체크
+  // 비밀번호 변경 및 정규식 체크
   const passwordChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordState(event.currentTarget.value);
+    setPasswordError('');
+    if (!PasswordRegx(event.currentTarget.value)) {
+      setPasswordState(false);
+    } else {
+      setPasswordState(true);
+    }
   };
-  // 확인 비밀번호 변경 체크
+  // 확인 비밀번호 변경 및 정규식 체크
   const confirmPasswordChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPasswordState(event.currentTarget.value);
+    setPasswordError('');
+    if (!PasswordRegx(event.currentTarget.value)) {
+      setConfirmPasswordState(false);
+    } else {
+      setConfirmPasswordState(true);
+    }
   };
   // 동의 체크
   const agreeHanddler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -242,6 +246,7 @@ const SignUp = () => {
   const handleClose = () => {
     setModalOpen(false);
   };
+
   // Daum PostCode
   const handleComplete = (data: any) => {
     let fullAddress = data.address;
@@ -270,7 +275,7 @@ const SignUp = () => {
         </Box>
         <Form onSubmit={submitHanddler} noValidate>
           <TextField label={t('name')} name="name" variant="standard" autoFocus required fullWidth onChange={nameChangeHanddler} />
-          <FormHelperTexts>{nameError}</FormHelperTexts>
+          <FormHelperText sx={{ color: 'red' }}>{nameError}</FormHelperText>
           <FormControl sx={{ width: '100%' }} variant="standard">
             <InputLabel htmlFor="standard-adornment-nickname">{t('nickname')} *</InputLabel>
             <Input
@@ -297,7 +302,7 @@ const SignUp = () => {
             />
             <FormHelperText id="nicknameRule-helper-text">{t('nicknameRule')}</FormHelperText>
           </FormControl>
-          <FormHelperTexts>{nicknameError}</FormHelperTexts>
+          <FormHelperText sx={{ color: 'red' }}>{nicknameError}</FormHelperText>
           <FormControl sx={{ mt: -0.4, width: '100%' }} variant="standard">
             <InputLabel htmlFor="standard-adornment-email">{t('email')} *</InputLabel>
             <Input
@@ -324,7 +329,7 @@ const SignUp = () => {
               }
             />
           </FormControl>
-          <FormHelperTexts>{emailError}</FormHelperTexts>
+          <FormHelperText sx={{ color: 'red' }}>{emailError}</FormHelperText>
           <FormControl sx={{ width: '100%' }} variant="standard">
             <InputLabel htmlFor="standard-adornment-password">{t('password')} *</InputLabel>
             <Input
@@ -332,6 +337,7 @@ const SignUp = () => {
               required
               name="password"
               onChange={passwordChangeHanddler}
+              color={passwordState ? 'success' : 'primary'}
               error={passwordError !== '' || false}
               type={showPassword ? 'text' : 'password'}
               endAdornment={
@@ -342,6 +348,8 @@ const SignUp = () => {
                 </InputAdornment>
               }
             />
+            <FormHelperText id="passwordRule-helper-text">{t('passwordRegex')}</FormHelperText>
+            <FormHelperText sx={{ color: 'green' }}>{passwordState && `${t('passworkOk')}`}</FormHelperText>
           </FormControl>
           <FormControl sx={{ width: '100%' }} variant="standard">
             <InputLabel htmlFor="standard-adornment-confirmPassword">{t('confirmPassword')} *</InputLabel>
@@ -353,7 +361,7 @@ const SignUp = () => {
               type={showPassword ? 'text' : 'password'}
               error={passwordError !== '' || false}
             />
-            <FormHelperTexts>{passwordError}</FormHelperTexts>
+            <FormHelperText sx={{ color: 'red' }}>{passwordError}</FormHelperText>
           </FormControl>
           <TextField label={t('tel')} name="tel" variant="standard" type="tel" fullWidth />
           <FormControl sx={{ width: '100%' }} variant="standard">
@@ -382,7 +390,7 @@ const SignUp = () => {
             />
           </FormControl>
           <TextField sx={{ mb: 1 }} label={t('extraAddr')} name="extraAddr" error={Boolean(extraAddrError)} onChange={extraAddrHandler} variant="standard" size="small" />
-          <FormHelperTexts>{extraAddrError}</FormHelperTexts>
+          <FormHelperText sx={{ color: 'red' }}>{extraAddrError}</FormHelperText>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label={t('birth')}
