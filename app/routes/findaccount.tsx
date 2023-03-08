@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { Page } from '@/components/Layout';
 import { loaderCommonInit } from '@/lib/loaderCommon';
+import SMS from '@/components/SMS';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -39,6 +40,7 @@ const FindAccount = () => {
       {tabNum === 0 && (
         <Box>
           <Typography>Email</Typography>
+          <SMS />
         </Box>
       )}
       {tabNum === 1 && (

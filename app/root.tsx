@@ -8,6 +8,7 @@ import { GlobalStyle } from '@/components/Layout';
 import { langCookie, themeCookie } from '@/cookies';
 import { PaletteMode } from '@mui/material';
 import i18next from '@/i18n/server';
+import { sendMessage } from './lib/utils.server';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -52,6 +53,18 @@ export const action = async ({ request }: DataFunctionArgs) => {
         return redirect(referer);
       }
     }
+    // async sendSMS() {
+    //   try {
+    //     const formData = await request.formData();
+    //     const to = formData.get('phone');
+    //     const countryCode = formData.get('countryCode');
+    //     if (!to || !countryCode) return json(false, { status: 200 });
+    //     return json(await sendMessage('Test', `${to}`, Number(countryCode)), { status: 200 });
+    //   } catch (err) {
+    //     console.error(err);
+    //     return json(false, { status: 200 });
+    //   }
+    // }
   });
 };
 

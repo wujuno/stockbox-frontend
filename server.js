@@ -6,8 +6,9 @@ const morgan = require('morgan');
 const { createRequestHandler } = require('@remix-run/express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { v4: uuidV4, parse: parseUUID } = require('uuid');
-const path = require('path');
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
 const daumPostCodeUrls = ['https://t1.daumcdn.net', 'https://postcode.map.daum.net'];
 
@@ -18,6 +19,16 @@ const PORT = Number(process.env.PORT) || 3000;
 
 process.env.CACHE_UUID = uuidV4();
 process.env.COOKIE_SECRET = isDevEnv ? 'B015E55C3DA9408B9388A12FBF9D4EC8' : Buffer.from(parseUUID(uuidV4())).toString('hex').toUpperCase();
+
+if (isDevEnv) {
+  const ncpConfigPath = path.resolve(process.cwd(), 'ncp.json');
+  const ncpConfig = fs.existsSync(ncpConfigPath) ? JSON.parse(fs.readFileSync(ncpConfigPath).toString('utf8')) : {};
+
+  process.env.NCP_ACCESS_KEY = ncpConfig?.accessKey;
+  process.env.NCP_SECRET_KEY = ncpConfig?.secretKey;
+  process.env.NCP_SMS_SERVICE_ID = ncpConfig?.serviceId;
+  process.env.NCP_SMS_PHONE = ncpConfig?.phone;
+}
 
 const purgeRequireCache = () => {
   for (const key in require.cache) {

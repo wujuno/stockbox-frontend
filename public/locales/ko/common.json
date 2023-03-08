@@ -4,5 +4,6 @@
   "light": "라이트",
   "dark": "다크",
   "language": "언어",
-  "currentLanguage": "한국어"
+  "currentLanguage": "한국어",
+  "verify": "인증"
 }

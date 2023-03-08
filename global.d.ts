@@ -9,6 +9,10 @@ declare global {
       HOST?: string;
       BACKEND_PORT?: string;
       DEV_API_URL?: string;
+      NCP_ACCESS_KEY?: string;
+      NCP_SECRET_KEY?: string;
+      NCP_SMS_SERVICE_ID?: string;
+      NCP_SMS_PHONE?: string;
     }
   }
 

@@ -1,0 +1,470 @@
+[
+  {
+    "region": "아시아",
+    "country": "대한민국",
+    "countryEnglish": "Korea",
+    "countryCode": 82
+  },
+  {
+    "region": "아메리카",
+    "country": "미국/캐나다",
+    "countryEnglish": "USA/Canada",
+    "countryCode": 1
+  },
+  {
+    "region": "아시아",
+    "country": "대만",
+    "countryEnglish": "Taiwan",
+    "countryCode": 886
+  },
+  {
+    "region": "아시아",
+    "country": "일본",
+    "countryEnglish": "Japan",
+    "countryCode": 81
+  },
+  {
+    "region": "아시아",
+    "country": "중국",
+    "countryEnglish": "China",
+    "countryCode": 86
+  },
+  {
+    "region": "아시아",
+    "country": "싱가포르",
+    "countryEnglish": "Singapore",
+    "countryCode": 65
+  },
+  {
+    "region": "아시아",
+    "country": "홍콩",
+    "countryEnglish": "HongKong",
+    "countryCode": 852
+  },
+  {
+    "region": "아시아",
+    "country": "인도네시아",
+    "countryEnglish": "Indonesia",
+    "countryCode": 62
+  },
+  {
+    "region": "아시아",
+    "country": "말레이시아",
+    "countryEnglish": "Malaysia",
+    "countryCode": 60
+  },
+  {
+    "region": "아시아",
+    "country": "필리핀",
+    "countryEnglish": "Philippines",
+    "countryCode": 63
+  },
+  {
+    "region": "아시아",
+    "country": "태국",
+    "countryEnglish": "Thailand",
+    "countryCode": 66
+  },
+  {
+    "region": "아시아",
+    "country": "브루나이",
+    "countryEnglish": "Brunei Darussalam",
+    "countryCode": 673
+  },
+  {
+    "region": "아시아",
+    "country": "베트남",
+    "countryEnglish": "Vietnam",
+    "countryCode": 84
+  },
+  {
+    "region": "아시아",
+    "country": "라오스",
+    "countryEnglish": "Laos",
+    "countryCode": 856
+  },
+  {
+    "region": "아시아",
+    "country": "미얀마",
+    "countryEnglish": "Myanmar",
+    "countryCode": 95
+  },
+  {
+    "region": "아시아",
+    "country": "캄보디아",
+    "countryEnglish": "Cambodia",
+    "countryCode": 855
+  },
+  {
+    "region": "아시아",
+    "country": "마카오",
+    "countryEnglish": "Macau",
+    "countryCode": 853
+  },
+  {
+    "region": "아시아",
+    "country": "방글라데시",
+    "countryEnglish": "Bangladesh",
+    "countryCode": 880
+  },
+  {
+    "region": "아시아",
+    "country": "인도",
+    "countryEnglish": "India",
+    "countryCode": 91
+  },
+  {
+    "region": "아시아",
+    "country": "파키스탄",
+    "countryEnglish": "Pakistan",
+    "countryCode": 92
+  },
+  {
+    "region": "아시아",
+    "country": "사우디아라비아",
+    "countryEnglish": "Saudi Arabia",
+    "countryCode": 966
+  },
+  {
+    "region": "아시아",
+    "country": "아랍에미리트",
+    "countryEnglish": "United Arab Emirates",
+    "countryCode": 971
+  },
+  {
+    "region": "아시아",
+    "country": "아르메니아",
+    "countryEnglish": "Armenia",
+    "countryCode": 374
+  },
+  {
+    "region": "아시아",
+    "country": "아제르바이잔",
+    "countryEnglish": "Azerbaijan",
+    "countryCode": 994
+  },
+  {
+    "region": "아시아",
+    "country": "아프가니스탄",
+    "countryEnglish": "Afghanistan",
+    "countryCode": 93
+  },
+  {
+    "region": "아시아",
+    "country": "알바니아",
+    "countryEnglish": "Albania",
+    "countryCode": 355
+  },
+  {
+    "region": "아시아",
+    "country": "예멘",
+    "countryEnglish": "Yemen",
+    "countryCode": 967
+  },
+  {
+    "region": "아시아",
+    "country": "오만",
+    "countryEnglish": "Oman",
+    "countryCode": 968
+  },
+  {
+    "region": "아시아",
+    "country": "요르단",
+    "countryEnglish": "Jordan",
+    "countryCode": 962
+  },
+  {
+    "region": "아시아",
+    "country": "우즈베키스탄",
+    "countryEnglish": "Uzbekistan",
+    "countryCode": 998
+  },
+  {
+    "region": "아시아",
+    "country": "우크라이나",
+    "countryEnglish": "Ukraine",
+    "countryCode": 380
+  },
+  {
+    "region": "아시아",
+    "country": "이스라엘",
+    "countryEnglish": "Israel",
+    "countryCode": 972
+  },
+  {
+    "region": "아시아",
+    "country": "이집트",
+    "countryEnglish": "Egypt",
+    "countryCode": 20
+  },
+  {
+    "region": "아시아",
+    "country": "쿠웨이트",
+    "countryEnglish": "Kuwait",
+    "countryCode": 965
+  },
+  {
+    "region": "아시아",
+    "country": "키르기스스탄",
+    "countryEnglish": "Kyrgyzstan",
+    "countryCode": 996
+  },
+  {
+    "region": "아시아",
+    "country": "타지키스탄",
+    "countryEnglish": "Tajikistan",
+    "countryCode": 992
+  },
+  {
+    "region": "아시아",
+    "country": "터키",
+    "countryEnglish": "Turkey",
+    "countryCode": 90
+  },
+  {
+    "region": "아시아",
+    "country": "투르크메니스탄",
+    "countryEnglish": "Turkmenistan",
+    "countryCode": 993
+  },
+  {
+    "region": "오세아니아",
+    "country": "뉴질랜드",
+    "countryEnglish": "New Zealand",
+    "countryCode": 64
+  },
+  {
+    "region": "오세아니아",
+    "country": "호주",
+    "countryEnglish": "Australia",
+    "countryCode": 61
+  },
+  {
+    "region": "오세아니아",
+    "country": "파푸아 뉴기니",
+    "countryEnglish": "Papua New Guinea",
+    "countryCode": 675
+  },
+  {
+    "region": "유럽",
+    "country": "그리스",
+    "countryEnglish": "Greece",
+    "countryCode": 30
+  },
+  {
+    "region": "유럽",
+    "country": "네덜란드",
+    "countryEnglish": "Netherlands",
+    "countryCode": 31
+  },
+  {
+    "region": "유럽",
+    "country": "덴마크",
+    "countryEnglish": "Denmark",
+    "countryCode": 45
+  },
+  {
+    "region": "유럽",
+    "country": "독일",
+    "countryEnglish": "Germany",
+    "countryCode": 49
+  },
+  {
+    "region": "유럽",
+    "country": "라트비아",
+    "countryEnglish": "Latvia",
+    "countryCode": 371
+  },
+  {
+    "region": "유럽",
+    "country": "루마니아",
+    "countryEnglish": "Romania",
+    "countryCode": 40
+  },
+  {
+    "region": "유럽",
+    "country": "룩셈부르크",
+    "countryEnglish": "Luxembourg",
+    "countryCode": 352
+  },
+  {
+    "region": "유럽",
+    "country": "리투아니아",
+    "countryEnglish": "Lithuania",
+    "countryCode": 370
+  },
+  {
+    "region": "유럽",
+    "country": "몰타",
+    "countryEnglish": "Malta",
+    "countryCode": 356
+  },
+  {
+    "region": "유럽",
+    "country": "벨기에",
+    "countryEnglish": "Belgium",
+    "countryCode": 32
+  },
+  {
+    "region": "유럽",
+    "country": "불가리아",
+    "countryEnglish": "Bulgaria",
+    "countryCode": 359
+  },
+  {
+    "region": "유럽",
+    "country": "스웨덴",
+    "countryEnglish": "Sweden",
+    "countryCode": 46
+  },
+  {
+    "region": "유럽",
+    "country": "스페인",
+    "countryEnglish": "Spain",
+    "countryCode": 34
+  },
+  {
+    "region": "유럽",
+    "country": "슬로바키아",
+    "countryEnglish": "Slovakia",
+    "countryCode": 421
+  },
+  {
+    "region": "유럽",
+    "country": "슬로베니아",
+    "countryEnglish": "Slovenia",
+    "countryCode": 386
+  },
+  {
+    "region": "유럽",
+    "country": "아일랜드",
+    "countryEnglish": "Ireland",
+    "countryCode": 353
+  },
+  {
+    "region": "유럽",
+    "country": "에스토니아",
+    "countryEnglish": "Estonia",
+    "countryCode": 372
+  },
+  {
+    "region": "유럽",
+    "country": "영국",
+    "countryEnglish": "United Kingdom",
+    "countryCode": 44
+  },
+  {
+    "region": "유럽",
+    "country": "오스트리아",
+    "countryEnglish": "Austria",
+    "countryCode": 43
+  },
+  {
+    "region": "유럽",
+    "country": "이탈리아",
+    "countryEnglish": "Italy",
+    "countryCode": 39
+  },
+  {
+    "region": "유럽",
+    "country": "체코",
+    "countryEnglish": "Czech Republic",
+    "countryCode": 420
+  },
+  {
+    "region": "유럽",
+    "country": "크로아티아",
+    "countryEnglish": "Croatia",
+    "countryCode": 385
+  },
+  {
+    "region": "유럽",
+    "country": "키프로스",
+    "countryEnglish": "Cyprus",
+    "countryCode": 357
+  },
+  {
+    "region": "유럽",
+    "country": "포르투갈",
+    "countryEnglish": "Portugal",
+    "countryCode": 351
+  },
+  {
+    "region": "유럽",
+    "country": "폴란드",
+    "countryEnglish": "Poland",
+    "countryCode": 48
+  },
+  {
+    "region": "유럽",
+    "country": "프랑스",
+    "countryEnglish": "France",
+    "countryCode": 33
+  },
+  {
+    "region": "유럽",
+    "country": "핀란드",
+    "countryEnglish": "Finland",
+    "countryCode": 358
+  },
+  {
+    "region": "유럽",
+    "country": "헝가리",
+    "countryEnglish": "Hungary",
+    "countryCode": 36
+  },
+  {
+    "region": "유럽",
+    "country": "노르웨이",
+    "countryEnglish": "Norway",
+    "countryCode": 47
+  },
+  {
+    "region": "유럽",
+    "country": "러시아",
+    "countryEnglish": "Russia",
+    "countryCode": 7
+  },
+  {
+    "region": "유럽",
+    "country": "레바논",
+    "countryEnglish": "Lebanon",
+    "countryCode": 961
+  },
+  {
+    "region": "유럽",
+    "country": "마케도니아",
+    "countryEnglish": "Macedonia",
+    "countryCode": 389
+  },
+  {
+    "region": "유럽",
+    "country": "바레인",
+    "countryEnglish": "Bahrain",
+    "countryCode": 973
+  },
+  {
+    "region": "유럽",
+    "country": "벨라루스",
+    "countryEnglish": "Belarus",
+    "countryCode": 375
+  },
+  {
+    "region": "유럽",
+    "country": "보스니아",
+    "countryEnglish": "Bosnia",
+    "countryCode": 387
+  },
+  {
+    "region": "유럽",
+    "country": "세르비아",
+    "countryEnglish": "Serbia",
+    "countryCode": 381
+  },
+  {
+    "region": "유럽",
+    "country": "스위스",
+    "countryEnglish": "Switzerland",
+    "countryCode": 41
+  }
+]

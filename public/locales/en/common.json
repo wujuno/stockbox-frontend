@@ -4,5 +4,6 @@
   "light": "Light",
   "dark": "Dark",
   "language": "Language",
-  "currentLanguage": "English"
+  "currentLanguage": "English",
+  "verify": "Verify"
 }
