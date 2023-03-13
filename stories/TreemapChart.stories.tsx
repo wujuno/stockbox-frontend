@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import TreeMapChart from '@/components/TreeMapChart';
+import TreeMapChart from '@/components/chart/TreeMapChart';
 
 export default {
   title: 'Chart/TreemapChart',
