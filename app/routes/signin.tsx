@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataFunctionArgs, json } from '@remix-run/node';
-import { Link } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import styled from '@emotion/styled';
 import { Button, Checkbox, Divider, TextField, Typography } from '@mui/material';
 import { loaderCommonInit } from '@/lib/loaderCommon';
@@ -15,9 +15,8 @@ export const loader = async ({ request }: DataFunctionArgs) => {
     if (result) return result;
   } catch (err) {
     console.error(err);
-  } finally {
-    return json(null);
   }
+  return json({ env: process.env.NODE_ENV });
 };
 
 export const handle = { i18n: 'signin' };
@@ -137,6 +136,8 @@ const Container = styled(Page)`
 `;
 
 const SignIn = () => {
+  const { env } = useLoaderData<typeof loader>();
+
   const [isValidForm, setIsValidForm] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -180,7 +181,7 @@ const SignIn = () => {
               {t('googleSignIn')}
             </Typography>
           </button>
-          <button type="button" className="social-signin-btn kakao-btn">
+          <button type="button" className="social-signin-btn kakao-btn" onClick={() => (window.location.href = `/api/auth/login/kakao?env=${env !== 'production' ? 'dev' : 'prod'}`)}>
             <img src={KakaoSymbolImg} alt="Kakao signin Symbol" />
             <Typography color="#000" component="span">
               {t('kakaoSignIn')}
