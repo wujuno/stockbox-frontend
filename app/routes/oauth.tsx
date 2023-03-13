@@ -7,7 +7,7 @@ import { getQsObjFromURL } from '@/lib/utils';
 
 const getTokens = async (code: string) => {
   const query = qs.stringify({ code }, { addQueryPrefix: false });
-  const { access, refresh } = await axios.get(`http://127.0.0.1:3000/api/auth/redirect/kakao?${query}`).then(({ data }) => data);
+  const { access, refresh } = await axios.get(`${process.env.API_URL}/auth/redirect/kakao?${query}`).then(({ data }) => data);
   return { accessToken: access, refreshToken: refresh };
 };
 
@@ -26,7 +26,7 @@ export const loader = async ({ request }: DataFunctionArgs) => {
       }
     });
   } catch (err) {
-    console.error(err);
+    console.error(err + '');
     return redirect('/');
   }
 };
