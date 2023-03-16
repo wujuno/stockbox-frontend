@@ -35,6 +35,7 @@ const TextEditor = () => {
             content: data
           });
         }}
+        config={{ removePlugins: ['CKFinder', 'Image'] }}
       />
       <Button sx={{ mt: 1 }} variant="contained" onClick={() => console.log(contents)}>
         등록하기
