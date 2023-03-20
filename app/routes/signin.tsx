@@ -179,7 +179,7 @@ const SignIn = () => {
               {t('googleSignIn')}
             </Typography>
           </button>
-          <button type="button" className="social-signin-btn kakao-btn" onClick={() => (window.location.href = `/api/auth/login/kakao`)}>
+          <button type="button" className="social-signin-btn kakao-btn" onClick={() => (window.location.href = `/api/auth/login/kakao?env=production`)}>
             <img src={KakaoSymbolImg} alt="Kakao signin Symbol" />
             <Typography color="#000" component="span">
               {t('kakaoSignIn')}
