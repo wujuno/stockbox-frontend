@@ -4,7 +4,8 @@ services:
     build: frontend
     image: $COMPOSE_PROJECT_NAME-frontend:$FRONTEND_VERSION
     container_name: $COMPOSE_PROJECT_NAME-frontend
-    restart: always
+    ports:
+    - 3000:3000
     environment:
       PORT: 3000
       TZ: Asia/Seoul
@@ -15,16 +16,16 @@ services:
     - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
+    restart: always
   nginx:
     build: nginx
     image: $COMPOSE_PROJECT_NAME-nginx:$FRONTEND_VERSION
     container_name: $COMPOSE_PROJECT_NAME-nginx
-    restart: always
-    environment:
-      TZ: Asia/Seoul
     ports:
     - 80:80
     - 443:443
+    environment:
+      TZ: Asia/Seoul
     networks:
       custom:
         ipv4_address: 172.10.1.5
@@ -33,6 +34,7 @@ services:
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
     - /etc/letsencrypt/archive/stockbox.kro.kr:/etc/letsencrypt/archive/stockbox.kro.kr:ro
+    restart: always
 networks:
   custom:
     ipam:

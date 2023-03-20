@@ -5,8 +5,8 @@ import { loaderCommonInit } from '@/lib/loaderCommon';
 import { tokenCookie } from '@/cookies';
 import { getQsObjFromURL } from '@/lib/utils';
 
-const getTokens = async (code: string) => {
-  const query = qs.stringify({ code }, { addQueryPrefix: false });
+const getTokens = async (code: string, isDevEnv: boolean) => {
+  const query = qs.stringify(isDevEnv ? { code, env: 'development' } : { code }, { addQueryPrefix: false });
   console.log(`${process.env.API_URL}/api/auth/redirect/kakao?${query}`);
   const { access, refresh } = await axios.get(`${process.env.API_URL}/api/auth/redirect/kakao?${query}`).then(({ data }) => data);
   return { accessToken: access, refreshToken: refresh };
@@ -20,7 +20,7 @@ export const loader = async ({ request }: DataFunctionArgs) => {
     const { code } = getQsObjFromURL(request.url);
     if (!code) return redirect('/signin');
 
-    const tokens = await getTokens(code as string);
+    const tokens = await getTokens(code as string, process.env.NODE_ENV !== 'production');
     console.log(tokens);
     return redirect('/', {
       headers: {
