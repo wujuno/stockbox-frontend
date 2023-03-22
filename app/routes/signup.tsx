@@ -209,12 +209,13 @@ const SignUp = () => {
       email: String(data.get('email')),
       password: data.get('password'),
       confirmPassword: data.get('confirmPassword'),
-      tel: data.get('tel'),
-      adress: data.get('adress'),
-      birth: data.get('birth')
+      phone: data.get('tel'),
+      address: data.get('address'),
+      address_detail: data.get('extraAddr'),
+      birthday: data.get('birth')
     };
     console.log(joinData);
-    const { email, name, password, confirmPassword, tel, adress, birth } = joinData;
+    const { email, name, nickname, password, confirmPassword, phone, address, address_detail, birthday } = joinData;
 
     // 이름 유효성 검사
     const nameRegex = /^[가-힣a-zA-Z]+$/;
