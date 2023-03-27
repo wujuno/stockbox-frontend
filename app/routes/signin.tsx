@@ -176,7 +176,7 @@ const SignIn = () => {
         </div>
         <Divider />
         <div className="social-signin-wrapper">
-          <button type="button" className="social-signin-btn google-btn">
+          <button type="button" className="social-signin-btn google-btn" onClick={() => (window.location.href = `/api/auth/login/google${signinQueryString}`)}>
             <img src={GoogleSymbolImg} alt="Kakao signin Symbol" />
             <Typography color="#000" component="span">
               {t('googleSignIn')}
