@@ -233,7 +233,6 @@ const SignUp = () => {
       address_detail: data.get('extraAddr'),
       birthday: data.get('birth')
     };
-    console.log(joinData);
     const { email, name, nickname, password, confirmPassword, phone, address, address_detail, birthday } = joinData;
 
     // 이름 유효성 검사
