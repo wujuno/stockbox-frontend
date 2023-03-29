@@ -34,6 +34,7 @@ import { LoadingButton } from '@mui/lab';
 import Terms from '@/components/auth/Terms';
 import PasswordRegx from '@/components/auth/RegExp';
 import axios from 'axios';
+import { useNavigate } from '@remix-run/react';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -109,6 +110,7 @@ const SignUp = () => {
   const [emailBtn, setEmailBtn] = useState(true);
   const [btnLoading, setBtnLoading] = useState(false);
   const { t } = useTranslation('signup');
+  const navigate = useNavigate();
 
   // 우편주소 구현
 
@@ -249,23 +251,28 @@ const SignUp = () => {
       setPasswordError('');
     }
 
-    await axios
-      .post('/api/auth/signup/stock', {
-        name,
-        nickname,
-        email,
-        password,
-        phone,
-        address,
-        address_detail,
-        birthday
-      })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (!nameError && !passwordError) {
+      await axios
+        .post('/api/auth/signup/stock', {
+          name,
+          nickname,
+          email,
+          password,
+          phone,
+          address,
+          address_detail,
+          birthday
+        })
+        .then(response => {
+          console.log(response.data);
+          console.log('회원가입완료');
+          navigate('/signin', { replace: true });
+        })
+        .catch(error => {
+          console.log(error);
+          console.log('회원가입 불가');
+        });
+    }
   };
   // post 모달 창 open/close
   const postClickOpen = () => {
