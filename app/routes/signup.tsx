@@ -33,6 +33,7 @@ import DaumPostcodeEmbed from 'react-daum-postcode';
 import { LoadingButton } from '@mui/lab';
 import Terms from '@/components/auth/Terms';
 import PasswordRegx from '@/components/auth/RegExp';
+import axios from 'axios';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -87,6 +88,7 @@ const SignUp = () => {
   const [checked, setChecked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [postModalOpen, setPostModalOpen] = useState(false);
+  const [sEmail, setSEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [emailState, setEmailState] = useState(false);
   const [emailDbcheckState, setEmailDbcheckState] = useState(false);
@@ -95,10 +97,11 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState('');
   const [nameState, setNameState] = useState('');
   const [nameError, setNameError] = useState('');
+  const [sNickname, setSNickname] = useState('');
   const [nicknameState, setNicknameState] = useState(false);
   const [nicknameError, setNicknameError] = useState('');
-  const [extraAddrError, setExtraAddrError] = useState('');
   const [nicknameDbcheckState, setNicknameDbcheckState] = useState(false);
+  const [extraAddrError, setExtraAddrError] = useState('');
   const [tfValue, setTfValue] = useState('');
   const [value, setValue] = useState<Dayjs | null>(null);
   const [submitPossible, setSubmitPossible] = useState(true);
@@ -125,20 +128,28 @@ const SignUp = () => {
     setNicknameDbcheckState(false);
     setNicknameError('');
     setNicknameBtn(Boolean(!event.currentTarget.value));
+    setSNickname(event.currentTarget.value);
   };
   //별명 중복 체크 중복시 setError
-  const nicknameDbcheckHandler = () => {
-    setNicknameDbcheckState(nicknameState);
-    /* if(별명중복){
-      setNicknameError('중복된 별명 입니다.')
-    } else {
-      setNicknameError('')
-    } */
+  const nicknameDbcheckHandler = async () => {
+    await axios
+      .get(`/api/auth/duplicate/nickname/${sNickname}`)
+      .then(response => {
+        console.log(response.data);
+        setNicknameError('');
+        setNicknameDbcheckState(nicknameState);
+      })
+      .catch(error => {
+        console.log(error);
+        setNicknameError('중복된 별명 입니다.');
+        setNicknameDbcheckState(false);
+      });
   };
   // 이메일 변경 및 유효성 체크
   const emailChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmailDbcheckState(false);
     setEmailError('');
+    setSEmail(event.currentTarget.value);
     const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
     if (!emailRegex.test(event.currentTarget.value)) {
       setEmailState(false);
@@ -149,13 +160,19 @@ const SignUp = () => {
     }
   };
   //이메일 중복 체크 중복시 setError
-  const emailDbcheckHandler = () => {
-    setEmailDbcheckState(emailState);
-    /* if(이메일중복){
-      setEmailError('중복된 이메일 입니다.')
-    } else {
-      setEmailError('')
-    } */
+  const emailDbcheckHandler = async () => {
+    await axios
+      .get(`/api/auth/duplicate/email/${sEmail}`)
+      .then(response => {
+        console.log(response.data);
+        setEmailError('');
+        setEmailDbcheckState(true);
+      })
+      .catch(error => {
+        console.log(error);
+        setEmailError('중복된 이메일 입니다.');
+        setEmailDbcheckState(false);
+      });
   };
   // 비밀번호 변경 및 정규식 체크
   const passwordChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -199,7 +216,7 @@ const SignUp = () => {
   }, [nameState, nicknameState, nicknameDbcheckState, emailState, emailDbcheckState, passwordState, confirmPasswordState, extraAddrError, checked]);
 
   // form Handdler
-  const submitHanddler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHanddler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -231,6 +248,24 @@ const SignUp = () => {
     } else {
       setPasswordError('');
     }
+
+    await axios
+      .post('/api/auth/signup/stock', {
+        name,
+        nickname,
+        email,
+        password,
+        phone,
+        address,
+        address_detail,
+        birthday
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   // post 모달 창 open/close
   const postClickOpen = () => {
@@ -280,7 +315,7 @@ const SignUp = () => {
           <FormControl sx={{ width: '100%' }} variant="standard">
             <InputLabel htmlFor="standard-adornment-nickname">{t('nickname')} *</InputLabel>
             <Input
-              id="standard-adornment-email"
+              id="standard-adornment-nickname"
               required
               name="nickname"
               onChange={nicknameChangeHanddler}
