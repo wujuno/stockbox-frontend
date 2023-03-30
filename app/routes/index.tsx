@@ -41,10 +41,10 @@ const Index = () => {
   const { t } = useTranslation();
 
   axios.get('/api/pairtrading/heatmap/?country=US&limit=50').then(response => {
-    setUsData(JSON.parse(response));
+    setUsData(JSON.parse(response as any));
   });
   axios.get('/api/pairtrading/heatmap/?country=KOR&limit=50').then(response => {
-    setKData(JSON.parse(response));
+    setKData(JSON.parse(response as any));
   });
 
   return (
