@@ -1,4 +1,4 @@
-import React, { JSXElementConstructor, Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Page } from '@/components/Layout';
 import { Divider, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -43,9 +43,11 @@ const Index = () => {
   useEffect(() => {
     axios.get('/api/pairtrading/heatmap/?country=US&limit=50').then(response => {
       setUsData(JSON.parse(response.data));
+      console.log(response.data);
     });
     axios.get('/api/pairtrading/heatmap/?country=KOR&limit=50').then(response => {
       setKData(JSON.parse(response.data));
+      console.log(response.data);
     });
   }, [usData, kData]);
 
