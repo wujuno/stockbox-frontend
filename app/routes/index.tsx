@@ -10,7 +10,7 @@ import { stockChartState } from '@/atoms';
 
 const SChart = React.lazy(() => import('@/components/Chart'));
 
-export const loader = async ({ request }: DataFunctionArgs) => {
+/* export const loader = async ({ request }: DataFunctionArgs) => {
   try {
     const result = await loaderCommonInit(request);
     if (result !== null) return result;
@@ -18,7 +18,7 @@ export const loader = async ({ request }: DataFunctionArgs) => {
     console.error(err);
   }
   return json(null);
-};
+}; */
 
 const Index = () => {
   const data = useRecoilValue(stockChartState);
