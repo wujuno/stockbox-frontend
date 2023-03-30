@@ -25,8 +25,7 @@ enum colors {
 }
 
 type TreemapProps = {
-  data: ICPData;
-  colors: string[];
+  data?: ICPData;
   height?: number;
   width?: number;
   title?: string;
