@@ -21,10 +21,21 @@ const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'))
   return json(null);
 }; */
 
+interface ICPData {
+  BEFORE_PRICE: object;
+  COMNAME: object;
+  EXCHNAME: object;
+  MARKETCAP: object;
+  MARKETDATE: object;
+  PRICE: object;
+  SECURITYMASTERX_ID: object;
+  YIELD: object;
+}
+
 const Index = () => {
   const data = useRecoilValue(stockChartState);
-  const [usData, setUsData] = useState();
-  const [kData, setKData] = useState();
+  const [usData, setUsData] = useState<ICPData | undefined>();
+  const [kData, setKData] = useState<ICPData | undefined>();
 
   const isHydrated = useHydrated();
   const { t } = useTranslation();
@@ -45,7 +56,7 @@ const Index = () => {
       <Divider />
       <Typography variant="h3">국내 주식</Typography>
       <Suspense>
-        {isHydrated ? <TreemapChart data={kData} width={1200} colors={500} title={'국내 주식'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
+        {isHydrated ? <TreemapChart data={kData} width={1200} height={500} title={'국내 주식'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
       </Suspense>
     </Page>
   );
