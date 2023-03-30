@@ -42,10 +42,10 @@ const Index = () => {
 
   useEffect(() => {
     axios.get('/api/pairtrading/heatmap/?country=US&limit=50').then(response => {
-      setUsData(JSON.parse(String(response)));
+      setUsData(JSON.parse(response.data));
     });
     axios.get('/api/pairtrading/heatmap/?country=KOR&limit=50').then(response => {
-      setKData(JSON.parse(String(response)));
+      setKData(JSON.parse(response.data));
     });
   }, [usData, kData]);
 
