@@ -63,7 +63,7 @@ const Index = () => {
       .get('/api/pairtrading/heatmap/?country=KOR&limit=50')
       .then(response => {
         const parsedData: ICPData = JSON.parse(response.data);
-        setKData(parsedData);
+        setKData({ ...parsedData });
       })
       .catch(error => {
         console.log(error);
@@ -72,12 +72,8 @@ const Index = () => {
   return (
     <Page>
       <Wrapper>
-        <Suspense>
-          {isHydrated ? <TreemapChart data={usData} width={1400} height={500} title={'해외'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
-        </Suspense>
-        <Suspense>
-          {isHydrated ? <TreemapChart data={kData} width={1400} height={500} title={'국내'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
-        </Suspense>
+        <Suspense>{isHydrated ? <TreemapChart data={usData} width={1400} height={500} title={'해외'} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+        <Suspense>{isHydrated ? <TreemapChart data={kData} width={1400} height={500} title={'국내'} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
       </Wrapper>
     </Page>
   );
