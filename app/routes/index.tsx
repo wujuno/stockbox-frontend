@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { JSXElementConstructor, Suspense, useEffect, useState } from 'react';
 import { Page } from '@/components/Layout';
 import { Divider, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -34,8 +34,8 @@ interface ICPData {
 
 const Index = () => {
   const data = useRecoilValue(stockChartState);
-  const [usData, setUsData] = useState<ICPData | undefined>();
-  const [kData, setKData] = useState<ICPData | undefined>();
+  const [usData, setUsData] = useState<ICPData>();
+  const [kData, setKData] = useState<ICPData>();
 
   const isHydrated = useHydrated();
   const { t } = useTranslation();
