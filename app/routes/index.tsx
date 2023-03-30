@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Page } from '@/components/Layout';
 import { Divider, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -40,12 +40,14 @@ const Index = () => {
   const isHydrated = useHydrated();
   const { t } = useTranslation();
 
-  axios.get('/api/pairtrading/heatmap/?country=US&limit=50').then(response => {
-    setUsData(JSON.parse(response as any));
-  });
-  axios.get('/api/pairtrading/heatmap/?country=KOR&limit=50').then(response => {
-    setKData(JSON.parse(response as any));
-  });
+  useEffect(() => {
+    axios.get('/api/pairtrading/heatmap/?country=US&limit=50').then(response => {
+      setUsData(JSON.parse(response as any));
+    });
+    axios.get('/api/pairtrading/heatmap/?country=KOR&limit=50').then(response => {
+      setKData(JSON.parse(response as any));
+    });
+  }, [usData, kData]);
 
   return (
     <Page>
