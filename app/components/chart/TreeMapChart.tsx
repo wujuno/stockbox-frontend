@@ -34,8 +34,8 @@ type TreemapProps = {
 
 const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, width, title, dark }) => {
   //data는 parsed 된 형태로 전달.
-  const cpNameArr: string[] = Object.values(data.COMNAME);
-  const cpCapArr: number[] = Object.values(data.MARKETCAP);
+  const cpNameArr: string[] = Object.values(data?.COMNAME as string[]);
+  const cpCapArr: number[] = Object.values(data?.MARKETCAP as number[]);
   const obj = { x: '', y: 0 };
   const sArr: IxyObj[] = [];
   // xyData 배열에 obj가 순서대로 나열되도록 한다. 중첩 배열이므로 평탄화해야함.
@@ -47,7 +47,7 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
   //xyData 배열의 각 객체의 y의 값을 추가한다.
   cpCapArr.map((cap, index) => (xyData[index].y = cap));
 
-  const yieldVlaue: number[] = Object.values(data.YIELD);
+  const yieldVlaue: number[] = Object.values(data?.YIELD as number[]);
   //YIELD 퍼센트 값을 소숫점 둘째 자리까지 나타낸다.
   const yieldData = yieldVlaue.map(x => +(x * 100).toFixed(2));
   //  yieldData를 enum colors의 index값에 맞게 조정한다.
