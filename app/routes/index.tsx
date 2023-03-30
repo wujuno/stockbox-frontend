@@ -32,6 +32,10 @@ interface ICPData {
   YIELD: object;
 }
 
+interface ServerData {
+  data: string;
+}
+
 const Index = () => {
   const [usData, setUsData] = useState({} as ICPData);
   const [kData, setKData] = useState({} as ICPData);
@@ -42,15 +46,15 @@ const Index = () => {
   useEffect(() => {
     axios
       .get('/api/pairtrading/heatmap/?country=US&limit=50')
-      .then(response => {
-        const parsedData = JSON.parse(response.data);
+      .then((response: ServerData) => {
+        const parsedData: ICPData = JSON.parse(response.data);
         setUsData(parsedData);
         console.log(parsedData);
       })
       .catch(error => {
         console.log(error);
       });
-    axios
+    /* axios
       .get('/api/pairtrading/heatmap/?country=KOR&limit=50')
       .then(response => {
         const parsedData = JSON.parse(response.data);
@@ -59,7 +63,7 @@ const Index = () => {
       })
       .catch(error => {
         console.log(error);
-      });
+      }); */
   }, []);
 
   return (
@@ -69,10 +73,10 @@ const Index = () => {
         {isHydrated ? <TreemapChart data={usData} width={1200} height={500} title={'해외 주식'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
       </Suspense>
       <Divider />
-      <Typography variant="h3">국내 주식</Typography>
+      {/* <Typography variant="h3">국내 주식</Typography>
       <Suspense>
         {isHydrated ? <TreemapChart data={kData} width={1200} height={500} title={'국내 주식'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
-      </Suspense>
+      </Suspense> */}
     </Page>
   );
 };
