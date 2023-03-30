@@ -33,9 +33,8 @@ interface ICPData {
 }
 
 const Index = () => {
-  const data = useRecoilValue(stockChartState);
-  const [usData, setUsData] = useState<ICPData>();
-  const [kData, setKData] = useState<ICPData>();
+  const [usData, setUsData] = useState({} as ICPData);
+  const [kData, setKData] = useState({} as ICPData);
 
   const isHydrated = useHydrated();
   const { t } = useTranslation();
@@ -45,10 +44,8 @@ const Index = () => {
       .get('/api/pairtrading/heatmap/?country=US&limit=50')
       .then(response => {
         const parsedData = JSON.parse(response.data);
-        if (parsedData !== undefined && parsedData !== null) {
-          setUsData(parsedData);
-          console.log(parsedData);
-        }
+        setUsData(parsedData);
+        console.log(parsedData);
       })
       .catch(error => {
         console.log(error);
@@ -57,10 +54,8 @@ const Index = () => {
       .get('/api/pairtrading/heatmap/?country=KOR&limit=50')
       .then(response => {
         const parsedData = JSON.parse(response.data);
-        if (parsedData !== undefined && parsedData !== null) {
-          setKData(parsedData);
-          console.log(parsedData);
-        }
+        setKData(parsedData);
+        console.log(parsedData);
       })
       .catch(error => {
         console.log(error);
