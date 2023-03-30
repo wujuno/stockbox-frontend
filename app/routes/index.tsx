@@ -41,15 +41,31 @@ const Index = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    axios.get('/api/pairtrading/heatmap/?country=US&limit=50').then(response => {
-      setUsData(JSON.parse(response.data));
-      console.log(response.data);
-    });
-    axios.get('/api/pairtrading/heatmap/?country=KOR&limit=50').then(response => {
-      setKData(JSON.parse(response.data));
-      console.log(response.data);
-    });
-  }, [usData, kData]);
+    axios
+      .get('/api/pairtrading/heatmap/?country=US&limit=50')
+      .then(response => {
+        const parsedData = JSON.parse(response.data);
+        if (parsedData !== undefined && parsedData !== null) {
+          setUsData(parsedData);
+          console.log(parsedData);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    axios
+      .get('/api/pairtrading/heatmap/?country=KOR&limit=50')
+      .then(response => {
+        const parsedData = JSON.parse(response.data);
+        if (parsedData !== undefined && parsedData !== null) {
+          setKData(parsedData);
+          console.log(parsedData);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <Page>
