@@ -1,13 +1,14 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Page } from '@/components/Layout';
 import { Divider, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { loaderCommonInit } from '@/lib/loaderCommon';
-import { useRecoilValue } from 'recoil';
-import { stockChartState } from '@/atoms';
+import { useRecoilState } from 'recoil';
+import { kTreeMapDataState, usTreeMapDataState } from '@/atoms';
 import axios from 'axios';
+import styled from '@emotion/styled';
 
 const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'));
 
@@ -20,7 +21,12 @@ const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'))
   }
   return json(null);
 }; */
-
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 interface ICPData {
   BEFORE_PRICE: object;
   COMNAME: object;
@@ -37,8 +43,8 @@ interface ServerData {
 }
 
 const Index = () => {
-  const [usData, setUsData] = useState({} as ICPData);
-  const [kData, setKData] = useState({} as ICPData);
+  const [usData, setUsData] = useRecoilState(usTreeMapDataState);
+  const [kData, setKData] = useRecoilState(kTreeMapDataState);
 
   const isHydrated = useHydrated();
   const { t } = useTranslation();
@@ -48,35 +54,31 @@ const Index = () => {
       .get('/api/pairtrading/heatmap/?country=US&limit=50')
       .then((response: ServerData) => {
         const parsedData: ICPData = JSON.parse(response.data);
-        setUsData(parsedData);
-        console.log(parsedData);
+        setUsData({ ...parsedData });
       })
       .catch(error => {
         console.log(error);
       });
-    /* axios
+    axios
       .get('/api/pairtrading/heatmap/?country=KOR&limit=50')
       .then(response => {
-        const parsedData = JSON.parse(response.data);
+        const parsedData: ICPData = JSON.parse(response.data);
         setKData(parsedData);
-        console.log(parsedData);
       })
       .catch(error => {
         console.log(error);
-      }); */
+      });
   }, []);
-
   return (
     <Page>
-      <Typography variant="h3">미국 주식</Typography>
-      <Suspense>
-        {isHydrated ? <TreemapChart data={usData} width={1200} height={500} title={'해외 주식'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
-      </Suspense>
-      <Divider />
-      {/* <Typography variant="h3">국내 주식</Typography>
-      <Suspense>
-        {isHydrated ? <TreemapChart data={kData} width={1200} height={500} title={'국내 주식'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
-      </Suspense> */}
+      <Wrapper>
+        <Suspense>
+          {isHydrated ? <TreemapChart data={usData} width={1400} height={500} title={'해외'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
+        </Suspense>
+        <Suspense>
+          {isHydrated ? <TreemapChart data={kData} width={1400} height={500} title={'국내'} dark={false} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}
+        </Suspense>
+      </Wrapper>
     </Page>
   );
 };
