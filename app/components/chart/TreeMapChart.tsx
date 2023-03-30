@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import ApexCharts from 'react-apexcharts';
 
 interface ICPData {
@@ -29,10 +30,9 @@ type TreemapProps = {
   height?: number;
   width?: number;
   title?: string;
-  dark?: boolean;
 };
 
-const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, width, title, dark }) => {
+const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, width, title }) => {
   //data는 parsed 된 형태로 전달.
   const cpNameArr: string[] = Object.values(data.COMNAME);
   const cpCapArr: number[] = Object.values(data.MARKETCAP);
@@ -71,14 +71,14 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
   });
 
   const series = [{ name: title, data: xyData }];
-  const mode = dark ? 'dark' : 'light';
+  const theme = useTheme();
 
   return (
     <ApexCharts
       type="treemap"
       options={{
         theme: {
-          mode
+          mode: theme.palette.mode === 'dark' ? 'dark' : 'light'
         },
         legend: {
           show: false
