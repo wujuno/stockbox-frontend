@@ -29,10 +29,9 @@ type TreemapProps = {
   data: ICPData;
   height?: number;
   width?: number;
-  title?: string;
 };
 
-const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, width, title }) => {
+const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, width }) => {
   //data는 parsed 된 형태로 전달.
   const cpNameArr: string[] = Object.values(data.COMNAME);
   const cpCapArr: number[] = Object.values(data.MARKETCAP);
@@ -70,7 +69,7 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
     return text;
   });
 
-  const series = [{ name: title, data: xyData }];
+  const series = [{ data: xyData }];
   const theme = useTheme();
 
   return (
@@ -82,10 +81,6 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
         },
         legend: {
           show: false
-        },
-        title: {
-          text: title,
-          align: 'left'
         },
         xaxis: {
           type: 'category'
