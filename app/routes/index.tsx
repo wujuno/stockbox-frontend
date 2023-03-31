@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { Page } from '@/components/Layout';
-import { Divider, Skeleton, Typography } from '@mui/material';
+import { Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 interface ICPData {
   BEFORE_PRICE: object;
   COMNAME: object;
@@ -47,7 +48,7 @@ const Index = () => {
   const [kData, setKData] = useRecoilState(kTreeMapDataState);
 
   const isHydrated = useHydrated();
-  const { t } = useTranslation();
+  const { t } = useTranslation('index');
 
   useEffect(() => {
     axios
@@ -72,8 +73,14 @@ const Index = () => {
   return (
     <Page>
       <Wrapper>
-        <Suspense>{isHydrated ? <TreemapChart data={usData} width={1400} height={500} title={'해외'} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
-        <Suspense>{isHydrated ? <TreemapChart data={kData} width={1400} height={500} title={'국내'} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+        <div>
+          <Typography variant="h5">{t('USA')}</Typography>
+          <Suspense>{isHydrated ? <TreemapChart data={usData} width={1400} height={500} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+        </div>
+        <div>
+          <Typography variant="h5">{t('KOR')}</Typography>
+          <Suspense>{isHydrated ? <TreemapChart data={kData} width={1400} height={500} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+        </div>
       </Wrapper>
     </Page>
   );
