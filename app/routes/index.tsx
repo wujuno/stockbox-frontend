@@ -12,7 +12,7 @@ import styled from '@emotion/styled';
 
 const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'));
 
-/* export const loader = async ({ request }: DataFunctionArgs) => {
+export const loader = async ({ request }: DataFunctionArgs) => {
   try {
     const result = await loaderCommonInit(request);
     if (result !== null) return result;
@@ -20,7 +20,8 @@ const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'))
     console.error(err);
   }
   return json(null);
-}; */
+};
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
