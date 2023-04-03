@@ -16,9 +16,7 @@ const Template: ComponentStory<typeof TreeMapChart> = args => <TreeMapChart {...
 export const Treemap = Template.bind({});
 
 Treemap.args = {
-  title: 'USA TOP 100 CP',
   data: parsed,
   height: 500,
-  width: 1200,
-  dark: false
+  width: 1200
 };
