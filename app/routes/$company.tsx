@@ -1,6 +1,7 @@
 import { kCoDataState } from '@/atoms';
 import { Page } from '@/components/Layout';
-import { Skeleton } from '@mui/material';
+import styled from '@emotion/styled';
+import { Button, ButtonGroup, Skeleton } from '@mui/material';
 import { useParams } from '@remix-run/react';
 import axios from 'axios';
 import React, { Suspense } from 'react';
@@ -9,6 +10,19 @@ import { useRecoilState } from 'recoil';
 import { useHydrated } from 'remix-utils';
 
 const LineChart = React.lazy(() => import('@/components/chart/LineChart'));
+
+interface PeriodOption {
+  [key: string]: number;
+}
+
+const ChartBox = styled.div`
+  position: relative;
+`;
+const PeriodBox = styled.div`
+  position: absolute;
+  right: 160px;
+  top: 0;
+`;
 
 const Company = () => {
   const [kCoData, setKCoData] = useRecoilState(kCoDataState);
@@ -43,14 +57,27 @@ const Company = () => {
     }
   }, [period]);
 
-  const periodEx = ['1 주', '1 달', '3 달', '1 년'];
-  // 날짜 선택 -> state 저장, default 값 한 달
+  const periodOpt: PeriodOption = { '1 주': 7, '1 달': 30, '3 달': 90, '1년': 365 };
+  const IperiodOpt: Map<string, number> = new Map(Object.entries(periodOpt));
+
+  const periodHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setPeriod(Number(event.currentTarget.value));
+  };
 
   return (
     <Page>
-      <div>
+      <ChartBox>
         <Suspense>{isHydrated ? <LineChart data={kCoData} /> : <Skeleton variant="rounded" animation="wave" height={450} />}</Suspense>
-      </div>
+        <PeriodBox>
+          <ButtonGroup variant="outlined" size="small" aria-label="outlined button group">
+            {Array.from(IperiodOpt).map(([key, value]) => (
+              <Button id={key} key={key} value={value} onClick={periodHandler}>
+                {key}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </PeriodBox>
+      </ChartBox>
     </Page>
   );
 };
