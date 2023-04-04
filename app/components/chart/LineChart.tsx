@@ -14,11 +14,10 @@ const LineChart = ({ data }: ICPData) => {
     const day = ('0' + d.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   });
-  const prices = Object.values(data.PRICE);
+  const prices = Object.values(data.PRICE).map(price => price.toFixed(2));
   const title = Object.values(data.COMNAME)[0];
   const series = [{ name: title, data: prices }];
   const theme = useTheme();
-
   return (
     <ApexCharts
       type="line"
@@ -29,7 +28,8 @@ const LineChart = ({ data }: ICPData) => {
         chart: {
           zoom: {
             enabled: true
-          }
+          },
+          background: theme.palette.mode === 'dark' ? 'dark' : 'light'
         },
         dataLabels: {
           enabled: false
@@ -38,7 +38,8 @@ const LineChart = ({ data }: ICPData) => {
           curve: 'smooth'
         },
         xaxis: {
-          categories: convertedDates
+          categories: convertedDates,
+          type: 'datetime'
         },
         yaxis: {
           title: {
