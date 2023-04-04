@@ -40,10 +40,6 @@ interface ICPData {
   YIELD: object;
 }
 
-interface ServerData {
-  data: string;
-}
-
 const Index = () => {
   const [usData, setUsData] = useRecoilState(usTreeMapDataState);
   const [kData, setKData] = useRecoilState(kTreeMapDataState);
@@ -54,7 +50,7 @@ const Index = () => {
   useEffect(() => {
     axios
       .get('/api/pairtrading/heatmap/?country=US&limit=50')
-      .then((response: ServerData) => {
+      .then(response => {
         const parsedData: ICPData = JSON.parse(response.data);
         setUsData({ ...parsedData });
       })

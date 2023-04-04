@@ -38,3 +38,12 @@ export const kTreeMapDataState = atom<ICPData>({
     YIELD: {}
   }
 });
+
+export const kCoDataState = atom({
+  key: uuidV4(),
+  default: {
+    COMNAME: {},
+    MARKETDATE: {},
+    PRICE: {}
+  }
+});
