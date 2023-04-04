@@ -12,7 +12,7 @@ const LineChart = React.lazy(() => import('@/components/chart/LineChart'));
 
 const Company = () => {
   const [kCoData, setKCoData] = useRecoilState(kCoDataState);
-  const [period, setPeriod] = useState(30);
+  const [period, setPeriod] = useState(90);
   const { company } = useParams();
 
   const isHydrated = useHydrated();

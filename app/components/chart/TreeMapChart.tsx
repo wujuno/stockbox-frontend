@@ -115,7 +115,8 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
           },
           events: {
             click: clickHandler
-          }
+          },
+          background: theme.palette.mode === 'dark' ? 'dark' : 'light'
         }
       }}
       series={series}
