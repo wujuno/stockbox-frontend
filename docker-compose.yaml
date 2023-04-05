@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  frontend:
+    build: .
+    container_name: sb-frontend
+    hostname: sb-frontend
+    restart: always
+    command:
+      - 'bash'
+      - '-c'
+      - "'tail -f /dev/null'"
