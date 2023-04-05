@@ -1,11 +1,14 @@
+import { coTitleState } from '@/atoms';
 import { useTheme } from '@mui/material';
 import ApexCharts from 'react-apexcharts';
+import { useRecoilState } from 'recoil';
 
 interface ICPData {
   data: { COMNAME: object; MARKETDATE: object; PRICE: object };
 }
 
 const LineChart = ({ data }: ICPData) => {
+  const [title, setTitle] = useRecoilState(coTitleState);
   const dates = Object.values(data.MARKETDATE);
   const convertedDates = dates.map(date => {
     const d = new Date(date);
@@ -15,7 +18,7 @@ const LineChart = ({ data }: ICPData) => {
     return `${year}-${month}-${day}`;
   });
   const prices = Object.values(data.PRICE).map(price => price.toFixed(2));
-  const title = Object.values(data.COMNAME)[0];
+  setTitle(Object.values(data.COMNAME)[0]);
   const series = [{ name: title, data: prices }];
   const theme = useTheme();
   return (
