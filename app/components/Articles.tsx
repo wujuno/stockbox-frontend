@@ -24,7 +24,9 @@ const Articles = () => {
       {isSame ? (
         articleArr.map(obj => (
           <Typography key={obj.id} variant="subtitle2">
-            <Link to={obj.url}>{obj.title}</Link>
+            <a href={obj.url} target="_blank" rel="noopener noreferrer">
+              {obj.title}
+            </a>
           </Typography>
         ))
       ) : (
