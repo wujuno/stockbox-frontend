@@ -7,8 +7,8 @@ import { getQsObjFromURL } from '@/lib/utils';
 
 const getTokens = async (code: string, isDevEnv: boolean) => {
   const query = qs.stringify(isDevEnv ? { code, env: 'development' } : { code }, { addQueryPrefix: false });
-  console.log(`${process.env.API_URL}/api/auth/redirect/kakao?${query}`);
-  const { access, refresh } = await axios.get(`${process.env.API_URL}/api/auth/redirect/kakao?${query}`).then(({ data }) => data);
+  console.log(`${process.env.API_URL}/api/auth/redirect/google?${query}`);
+  const { access, refresh } = await axios.get(`${process.env.API_URL}/api/auth/redirect/google?${query}`).then(({ data }) => data);
   return { accessToken: access, refreshToken: refresh };
 };
 
@@ -33,5 +33,5 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   }
 };
 
-const KakaoOAuthCheck = () => null;
-export default KakaoOAuthCheck;
+const GoogleOAuthCheck = () => null;
+export default GoogleOAuthCheck;
