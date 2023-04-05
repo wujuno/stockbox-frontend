@@ -5,7 +5,5 @@ services:
     container_name: sb-frontend
     hostname: sb-frontend
     restart: always
-    command:
-      - 'bash'
-      - '-c'
-      - "'tail -f /dev/null'"
+    entrypoint: ''
+    command: bash -c 'tail -f /dev/null'
