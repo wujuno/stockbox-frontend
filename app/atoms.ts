@@ -12,6 +12,12 @@ interface ICPData {
   YIELD: object;
 }
 
+interface IOneCPData {
+  COMNAME: object;
+  MARKETDATE: object;
+  PRICE: object;
+}
+
 export const usTreeMapDataState = atom<ICPData>({
   key: uuidV4(),
   default: {
@@ -39,11 +45,29 @@ export const kTreeMapDataState = atom<ICPData>({
   }
 });
 
-export const kCoDataState = atom({
+export const coDataState = atom<IOneCPData>({
   key: uuidV4(),
   default: {
     COMNAME: {},
     MARKETDATE: {},
     PRICE: {}
   }
+});
+
+export const coArticleState = atom({
+  key: uuidV4(),
+  default: {
+    title: {},
+    url: {}
+  }
+});
+
+export const coNameState = atom<string>({
+  key: uuidV4(),
+  default: ''
+});
+
+export const coTitleState = atom<string>({
+  key: uuidV4(),
+  default: ''
 });
