@@ -1,3 +1,5 @@
+import { useTheme } from '@mui/material';
+import { useNavigate } from '@remix-run/react';
 import ApexCharts from 'react-apexcharts';
 
 interface ICPData {
@@ -26,17 +28,17 @@ enum colors {
 
 type TreemapProps = {
   data: ICPData;
-  colors: string[];
   height?: number;
   width?: number;
-  title?: string;
-  dark?: boolean;
 };
 
-const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, width, title, dark }) => {
+const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, width }) => {
+  const navigate = useNavigate();
+
   //data는 parsed 된 형태로 전달.
   const cpNameArr: string[] = Object.values(data.COMNAME);
   const cpCapArr: number[] = Object.values(data.MARKETCAP);
+  const cpIdArr: string[] = Object.values(data.SECURITYMASTERX_ID);
   const obj = { x: '', y: 0 };
   const sArr: IxyObj[] = [];
   // xyData 배열에 obj가 순서대로 나열되도록 한다. 중첩 배열이므로 평탄화해야함.
@@ -71,25 +73,24 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
     return text;
   });
 
-  const series = [{ name: title, data: xyData }];
-  const mode = dark ? 'dark' : 'light';
+  const series = [{ data: xyData }];
+  const theme = useTheme();
+
+  //종목 클릭 시 해당 티커 ID 가 파라미터인 페이지로 이동
+  const clickHandler = (event: React.MouseEvent<SVGElement>) => {
+    const index = Number(event.target.getAttribute('j'));
+    navigate(`/${cpIdArr[index]}`);
+  };
 
   return (
     <ApexCharts
       type="treemap"
       options={{
         theme: {
-          mode
+          mode: theme.palette.mode === 'dark' ? 'dark' : 'light'
         },
         legend: {
           show: false
-        },
-        title: {
-          text: title,
-          align: 'left'
-        },
-        xaxis: {
-          type: 'category'
         },
         colors: sColor,
         plotOptions: {
@@ -111,7 +112,11 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
               enabled: true,
               speed: 250
             }
-          }
+          },
+          events: {
+            click: clickHandler
+          },
+          background: theme.palette.mode === 'dark' ? 'dark' : 'light'
         }
       }}
       series={series}

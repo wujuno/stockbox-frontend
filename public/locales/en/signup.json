@@ -24,5 +24,5 @@
   "searchPost":"Search post",
   "extraAddrError":"Please write shortly.",
   "passworkOk": "The password is possible.",
-  "passwordRegex":"Please write at least 8 characters using at least two of uppercase and lowercase letters, numbers, and special characters."
+  "passwordRegex":"8-16 characters including letters, numbers, and special characters"
 }

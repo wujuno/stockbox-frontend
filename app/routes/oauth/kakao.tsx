@@ -17,10 +17,10 @@ export const loader = async ({ request }: DataFunctionArgs) => {
     const result = await loaderCommonInit(request);
     if (result !== null) return result;
 
-    const { code } = getQsObjFromURL(request.url);
+    const { code, env } = getQsObjFromURL(request.url);
     if (!code) return redirect('/signin');
 
-    const tokens = await getTokens(code as string, process.env.NODE_ENV !== 'production');
+    const tokens = await getTokens(code as string, env === 'development');
     console.log(tokens);
     return redirect('/', {
       headers: {

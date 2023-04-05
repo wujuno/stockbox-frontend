@@ -1,27 +1,38 @@
+import { coTitleState } from '@/atoms';
+import { useTheme } from '@mui/material';
 import ApexCharts from 'react-apexcharts';
+import { useRecoilState } from 'recoil';
 
-type LineChartProps = {
-  data: number[];
-  categories: string[];
-  title?: string;
-  dark?: boolean;
-};
+interface ICPData {
+  data: { COMNAME: object; MARKETDATE: object; PRICE: object };
+}
 
-const LineChart: React.FC<DefaultProps & LineChartProps> = ({ data, categories, title, dark }) => {
-  const series = [{ name: 'Line_Chart', data }];
-  const mode = dark ? 'dark' : 'light';
-
+const LineChart = ({ data }: ICPData) => {
+  const [title, setTitle] = useRecoilState(coTitleState);
+  const dates = Object.values(data.MARKETDATE);
+  const convertedDates = dates.map(date => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  });
+  const prices = Object.values(data.PRICE).map(price => price.toFixed(2));
+  setTitle(Object.values(data.COMNAME)[0]);
+  const series = [{ name: title, data: prices }];
+  const theme = useTheme();
   return (
     <ApexCharts
       type="line"
       options={{
         theme: {
-          mode
+          mode: theme.palette.mode === 'dark' ? 'dark' : 'light'
         },
         chart: {
           zoom: {
-            enabled: false
-          }
+            enabled: true
+          },
+          background: theme.palette.mode === 'dark' ? 'dark' : 'light'
         },
         dataLabels: {
           enabled: false
@@ -30,7 +41,8 @@ const LineChart: React.FC<DefaultProps & LineChartProps> = ({ data, categories, 
           curve: 'smooth'
         },
         xaxis: {
-          categories
+          categories: convertedDates,
+          type: 'datetime'
         },
         yaxis: {
           title: {
@@ -43,7 +55,7 @@ const LineChart: React.FC<DefaultProps & LineChartProps> = ({ data, categories, 
         }
       }}
       series={series}
-      height={350}
+      height={450}
     />
   );
 };
