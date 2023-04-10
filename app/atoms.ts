@@ -18,6 +18,15 @@ interface IOneCPData {
   PRICE: object;
 }
 
+interface IBoardListData {
+  id: number;
+  title: string;
+  content: string;
+  data_updated: string;
+  user_id: number;
+}
+//////chart//////
+
 export const usTreeMapDataState = atom<ICPData>({
   key: uuidV4(),
   default: {
@@ -70,4 +79,10 @@ export const coNameState = atom<string>({
 export const coTitleState = atom<string>({
   key: uuidV4(),
   default: ''
+});
+
+/////board/////
+
+export const postListState = atom<IBoardListData[]>({
+  key: uuidV4()
 });
