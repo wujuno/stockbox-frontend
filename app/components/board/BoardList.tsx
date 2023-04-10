@@ -2,8 +2,9 @@ interface BoardListProps {
   data: {
     id: number;
     title: string;
-    createdAt: string;
-    watchCount: number;
+    content: string;
+    data_updated: string;
+    user_id: number;
   }[];
 }
 
