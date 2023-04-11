@@ -84,5 +84,6 @@ export const coTitleState = atom<string>({
 /////board/////
 
 export const postListState = atom<IBoardListData[]>({
-  key: uuidV4()
+  key: uuidV4(),
+  default: []
 });
