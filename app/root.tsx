@@ -5,7 +5,7 @@ import { namedAction } from 'remix-utils';
 import { useTranslation } from 'react-i18next';
 import { RecoilRoot } from 'recoil';
 import { GlobalStyle } from '@/components/Layout';
-import { langCookie, themeCookie } from '@/cookies';
+import { langCookie, themeCookie, tokenCookie } from '@/cookies';
 import { PaletteMode } from '@mui/material';
 import i18next from '@/i18n/server';
 
@@ -16,7 +16,8 @@ export const meta: MetaFunction = () => ({
 });
 
 export const loader = async ({ request }: DataFunctionArgs) => {
-  const theme: PaletteMode | undefined = (await themeCookie.parse(request.headers.get('Cookie'))) ?? undefined;
+  const cookieHeader = request.headers.get('Cookie');
+  const theme: PaletteMode | undefined = (await themeCookie.parse(cookieHeader)) ?? undefined;
   const locale = await i18next.getLocale(request);
   const cacheUuid = process.env.CACHE_UUID;
   return json({ theme, locale, cacheUuid });
@@ -45,6 +46,18 @@ export const action = async ({ request }: DataFunctionArgs) => {
         return redirect(referer, {
           headers: {
             'Set-Cookie': await langCookie.serialize(locale === 'en' ? 'ko' : 'en')
+          }
+        });
+      } catch (err) {
+        console.error(err);
+        return redirect(referer);
+      }
+    },
+    async signOut() {
+      try {
+        return redirect('/signin', {
+          headers: {
+            'Set-Cookie': await tokenCookie.serialize(null)
           }
         });
       } catch (err) {

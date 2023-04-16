@@ -3,13 +3,14 @@ import axios from 'axios';
 import qs from 'qs';
 import { loaderCommonInit } from '@/lib/loaderCommon';
 import { tokenCookie } from '@/cookies';
-import { getQsObjFromURL } from '@/lib/utils';
+import { getQsObjFromURL, getTokenBody } from '@/lib/utils';
 
 const getTokens = async (code: string, isDevEnv: boolean) => {
   const query = qs.stringify(isDevEnv ? { code, env: 'development' } : { code }, { addQueryPrefix: false });
   console.log(`${process.env.API_URL}/api/auth/redirect/kakao?${query}`);
   const { access, refresh } = await axios.get(`${process.env.API_URL}/api/auth/redirect/kakao?${query}`).then(({ data }) => data);
-  return { accessToken: access, refreshToken: refresh };
+  const body: TokenBody = getTokenBody(access);
+  return { accessToken: access, refreshToken: refresh, body };
 };
 
 export const loader = async ({ request }: DataFunctionArgs) => {

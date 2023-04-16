@@ -22,8 +22,19 @@ declare global {
     children?: React.ReactNode;
   }
 
+  interface TokenBody {
+    user_id: number;
+    platform: string;
+    nickname: string;
+    token_type: string;
+    exp: number;
+    iat: number;
+    jti: string;
+  }
+
   interface TokenCookie {
-    accessToken?: string;
-    refreshToken?: string;
+    accessToken: string;
+    refreshToken: string;
+    body: TokenBody;
   }
 }

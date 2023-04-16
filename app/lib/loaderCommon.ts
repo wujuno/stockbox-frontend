@@ -15,3 +15,8 @@ export const loaderCommonInit = async (request: Request) => {
 
   return null;
 };
+
+export const getUser = async (request: Request) => {
+  const token: TokenCookie = await tokenCookie.parse(request.headers.get('Cookie'));
+  return token.body;
+};
