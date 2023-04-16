@@ -1,7 +1,6 @@
 import { coArticleState, coNameState, coTitleState } from '@/atoms';
 import { Stack, Typography } from '@mui/material';
-import { Link } from '@remix-run/react';
-import axios, { isAxiosError } from 'axios';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 

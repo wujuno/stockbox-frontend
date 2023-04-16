@@ -34,7 +34,6 @@ const Company = () => {
   const [coData, setCoData] = useRecoilState(coDataState);
   const [period, setPeriod] = useState(90);
   const [coName, setCoName] = useRecoilState(coNameState);
-  const [aData, setAdata] = useRecoilState(coArticleState);
 
   const { company } = useParams();
 

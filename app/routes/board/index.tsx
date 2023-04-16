@@ -1,6 +1,7 @@
 import { postListState } from '@/atoms';
 import { Page } from '@/components/Layout';
 import BoardList from '@/components/board/BoardList';
+import { Button, Container, Typography } from '@mui/material';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
@@ -17,7 +18,13 @@ const PostMain = () => {
 
   return (
     <Page>
-      <BoardList data={postData} />
+      <Container maxWidth="md">
+        <Typography sx={{ mb: 5 }} variant="h3">
+          Board
+        </Typography>
+        <Button variant="contained">게시물 등록</Button>
+        <BoardList data={postData} />
+      </Container>
     </Page>
   );
 };
