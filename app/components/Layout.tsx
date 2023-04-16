@@ -11,7 +11,7 @@ import Header from '@/components/Header';
 import { createTheme, PaletteMode, Theme, ThemeProvider } from '@mui/material';
 import { Box } from '@mui/system';
 import { ThemeModeContext } from '@/root';
-import { Form, useSubmit } from '@remix-run/react';
+import { Form, useLoaderData, useSubmit } from '@remix-run/react';
 
 const styles = css`
   @import '${roboto100}';
@@ -58,6 +58,8 @@ const Main = styled.main<{ muiTheme: Theme }>`
 export const GlobalStyle = () => <Global styles={styles} />;
 
 export const Page = ({ className, style, children }: DefaultProps) => {
+  const { user } = useLoaderData();
+
   const themeMode = useContext(ThemeModeContext);
   const submit = useSubmit();
 
@@ -89,7 +91,7 @@ export const Page = ({ className, style, children }: DefaultProps) => {
   return (
     <ThemeProvider theme={theme}>
       <Main className={className} muiTheme={theme} style={style}>
-        <Header />
+        <Header user={user} />
         <Box className="contents">{children}</Box>
       </Main>
       <Form ref={themeFormRef} method="post" action="/?/changeTheme" replace>

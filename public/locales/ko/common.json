@@ -4,5 +4,9 @@
   "light": "라이트",
   "dark": "다크",
   "language": "언어",
-  "currentLanguage": "한국어"
+  "currentLanguage": "한국어",
+  "signOut": "로그아웃",
+  "signOutMessage": "로그아웃하시겠습니까?",
+  "confirm": "확인",
+  "cancel": "닫기"
 }

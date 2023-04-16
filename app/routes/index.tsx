@@ -4,11 +4,12 @@ import { Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
-import { loaderCommonInit } from '@/lib/loaderCommon';
+import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import { useRecoilState } from 'recoil';
 import { kTreeMapDataState, usTreeMapDataState } from '@/atoms';
 import axios from 'axios';
 import styled from '@emotion/styled';
+import { useLoaderData } from '@remix-run/react';
 
 const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'));
 
@@ -16,6 +17,8 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   try {
     const result = await loaderCommonInit(request);
     if (result !== null) return result;
+    const user = await getUser(request);
+    return { user };
   } catch (err) {
     console.error(err);
   }
@@ -41,6 +44,8 @@ interface ICPData {
 }
 
 const Index = () => {
+  const loaderData = useLoaderData();
+
   const [usData, setUsData] = useRecoilState(usTreeMapDataState);
   const [kData, setKData] = useRecoilState(kTreeMapDataState);
 
@@ -48,6 +53,7 @@ const Index = () => {
   const { t } = useTranslation('index');
 
   useEffect(() => {
+    console.log(loaderData);
     axios
       .get('/api/pairtrading/heatmap/?country=US&limit=50')
       .then(response => {
@@ -67,6 +73,7 @@ const Index = () => {
         console.log(error);
       });
   }, []);
+
   return (
     <Page>
       <Wrapper>
