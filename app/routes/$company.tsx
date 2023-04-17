@@ -1,16 +1,16 @@
-import { coDataState, coNameState } from '@/atoms';
+import { coDataState, coNameState, kNameDataState, kTickerDataState, usNameDataState, usTickerDataState } from '@/atoms';
 import Articles from '@/components/Articles';
 import { Page } from '@/components/Layout';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import styled from '@emotion/styled';
 import { Box, Button, ButtonGroup, Grid, Link, List, ListItem, Skeleton, Typography } from '@mui/material';
 import { DataFunctionArgs, json } from '@remix-run/node';
-import { useParams } from '@remix-run/react';
+import { useNavigate, useParams } from '@remix-run/react';
 import axios from 'axios';
 import React, { Suspense } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useHydrated } from 'remix-utils';
 
 const LineChart = React.lazy(() => import('@/components/chart/LineChart'));
@@ -50,14 +50,17 @@ const Company = () => {
   const [coName, setCoName] = useRecoilState(coNameState);
 
   //Local Storage data state
-  const [usNameData, setUsNameData] = useState([]);
-  const [usTickerData, setUsTickerData] = useState([]);
-  const [kNameData, setKNameData] = useState([]);
-  const [kTickerData, setKTickerData] = useState([]);
+  const usNameData = useRecoilValue(usNameDataState);
+  const usTickerData = useRecoilValue(usTickerDataState);
+  const kNameData = useRecoilValue(kNameDataState);
+  const kTickerData = useRecoilValue(kTickerDataState);
+  //
+  const [selected, setSelected] = useState<'해외' | '국내'>('해외');
 
   const { company } = useParams();
   const isHydrated = useHydrated();
   const { t } = useTranslation('index');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const today = new Date();
@@ -91,11 +94,10 @@ const Company = () => {
         setCoName(Object.values(originalData.COMNAME)[0]);
       });
     }
-    setUsNameData(Object.values(JSON.parse(localStorage.getItem('usNameData') as string)));
-    setUsTickerData(Object.values(JSON.parse(localStorage.getItem('usTickerData') as string)));
-    setKNameData(Object.values(JSON.parse(localStorage.getItem('kNameData') as string)));
-    setKTickerData(Object.values(JSON.parse(localStorage.getItem('kTickerData') as string)));
-  }, [period]);
+
+    // 사이드 메뉴 상태 설정
+    company?.charAt(0) === '@' ? setSelected('국내') : setSelected('해외');
+  }, [period, company]);
 
   const periodOpt: PeriodOption = { '1 주': 7, '1 달': 30, '3 달': 90, '1년': 365 };
   const IperiodOpt: Map<string, number> = new Map(Object.entries(periodOpt));
@@ -104,11 +106,10 @@ const Company = () => {
     setPeriod(Number(event.currentTarget.value));
   };
 
-  const [selected, setSelected] = useState<'해외' | '국내'>('해외');
-
-  const handleClick = (value: '해외' | '국내') => {
+  const handleBarOption = (value: '해외' | '국내') => {
     setSelected(value);
   };
+
   return (
     <Page>
       <Grid container spacing={2}>
@@ -116,7 +117,7 @@ const Company = () => {
           <Box>
             <ButtonGroup fullWidth>
               <Button
-                onClick={() => handleClick('해외')}
+                onClick={() => handleBarOption('해외')}
                 sx={{
                   fontWeight: selected === '해외' ? 'bold' : 'normal'
                 }}
@@ -125,7 +126,7 @@ const Company = () => {
                 {t('USA')}
               </Button>
               <Button
-                onClick={() => handleClick('국내')}
+                onClick={() => handleBarOption('국내')}
                 sx={{
                   fontWeight: selected === '국내' ? 'bold' : 'normal'
                 }}
@@ -139,19 +140,31 @@ const Company = () => {
                 {selected === '해외'
                   ? usNameData
                     ? usNameData.map((n, i) => (
-                        <ListItem key={i}>
-                          <Link href={`/${usTickerData[i]}`} underline="hover">
+                        <ListItem key={i} sx={{ pl: 0 }}>
+                          <Button
+                            fullWidth
+                            onClick={() => {
+                              navigate(`/${usTickerData[i]}`);
+                            }}
+                            variant="text"
+                          >
                             <Typography variant="subtitle2">{n}</Typography>
-                          </Link>
+                          </Button>
                         </ListItem>
                       ))
                     : null
                   : kNameData
                   ? kNameData.map((n, i) => (
-                      <ListItem key={i}>
-                        <Link href={`/${kTickerData[i]}`} underline="hover">
+                      <ListItem key={i} sx={{ pl: 0 }}>
+                        <Button
+                          fullWidth
+                          onClick={() => {
+                            navigate(`/${kTickerData[i]}`);
+                          }}
+                          variant="text"
+                        >
                           <Typography variant="subtitle2">{n}</Typography>
-                        </Link>
+                        </Button>
                       </ListItem>
                     ))
                   : null}

@@ -26,6 +26,25 @@ interface IBoardListData {
   user_id: number;
 }
 
+/////sideBar/////
+
+export const usNameDataState = atom<string[]>({
+  key: uuidV4(),
+  default: []
+});
+export const kNameDataState = atom<string[]>({
+  key: uuidV4(),
+  default: []
+});
+export const usTickerDataState = atom<string[]>({
+  key: uuidV4(),
+  default: []
+});
+export const kTickerDataState = atom<string[]>({
+  key: uuidV4(),
+  default: []
+});
+
 //////chart//////
 
 export const usTreeMapDataState = atom<ICPData>({
