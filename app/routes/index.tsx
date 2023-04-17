@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
-import { useRecoilState } from 'recoil';
-import { kTreeMapDataState, usTreeMapDataState } from '@/atoms';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { kNameDataState, kTickerDataState, kTreeMapDataState, usNameDataState, usTickerDataState, usTreeMapDataState } from '@/atoms';
 import axios from 'axios';
 import styled from '@emotion/styled';
 import { useLoaderData } from '@remix-run/react';
@@ -49,6 +49,11 @@ const Index = () => {
   const [usData, setUsData] = useRecoilState(usTreeMapDataState);
   const [kData, setKData] = useRecoilState(kTreeMapDataState);
 
+  const setUsNameData = useSetRecoilState(usNameDataState);
+  const setKNameData = useSetRecoilState(kNameDataState);
+  const setUsTickerData = useSetRecoilState(usTickerDataState);
+  const setKTickerData = useSetRecoilState(kTickerDataState);
+
   const isHydrated = useHydrated();
   const { t } = useTranslation('index');
 
@@ -59,8 +64,8 @@ const Index = () => {
       .then(response => {
         const parsedData: ICPData = JSON.parse(response.data);
         setUsData({ ...parsedData });
-        localStorage.setItem('usNameData', JSON.stringify(parsedData.COMNAME));
-        localStorage.setItem('usTickerData', JSON.stringify(parsedData.SECURITYMASTERX_ID));
+        setUsNameData(Object.values(parsedData.COMNAME));
+        setUsTickerData(Object.values(parsedData.SECURITYMASTERX_ID));
       })
       .catch(error => {
         console.log(error);
@@ -70,8 +75,8 @@ const Index = () => {
       .then(response => {
         const parsedData: ICPData = JSON.parse(response.data);
         setKData({ ...parsedData });
-        localStorage.setItem('kNameData', JSON.stringify(parsedData.COMNAME));
-        localStorage.setItem('kTickerData', JSON.stringify(parsedData.SECURITYMASTERX_ID));
+        setKNameData(Object.values(parsedData.COMNAME));
+        setKTickerData(Object.values(parsedData.SECURITYMASTERX_ID));
       })
       .catch(error => {
         console.log(error);
