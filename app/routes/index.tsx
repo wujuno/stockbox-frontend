@@ -59,6 +59,8 @@ const Index = () => {
       .then(response => {
         const parsedData: ICPData = JSON.parse(response.data);
         setUsData({ ...parsedData });
+        localStorage.setItem('usNameData', JSON.stringify(parsedData.COMNAME));
+        localStorage.setItem('usTickerData', JSON.stringify(parsedData.SECURITYMASTERX_ID));
       })
       .catch(error => {
         console.log(error);
@@ -68,12 +70,13 @@ const Index = () => {
       .then(response => {
         const parsedData: ICPData = JSON.parse(response.data);
         setKData({ ...parsedData });
+        localStorage.setItem('kNameData', JSON.stringify(parsedData.COMNAME));
+        localStorage.setItem('kTickerData', JSON.stringify(parsedData.SECURITYMASTERX_ID));
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
-
   return (
     <Page>
       <Wrapper>

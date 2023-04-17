@@ -25,6 +25,7 @@ interface IBoardListData {
   data_updated: string;
   user_id: number;
 }
+
 //////chart//////
 
 export const usTreeMapDataState = atom<ICPData>({

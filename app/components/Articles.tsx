@@ -17,7 +17,6 @@ const Articles = () => {
   const aTitle: string[] = Object.values(aData.title);
   const aUrl: string[] = Object.values(aData.url);
   const articleArr = aTitle.map((title, index) => ({ title, url: aUrl[index], id: index }));
-  console.log(isSame);
   return (
     <Stack sx={{ overflowY: 'auto', maxHeight: '150px', mt: 2 }} spacing={2}>
       {isSame ? (
