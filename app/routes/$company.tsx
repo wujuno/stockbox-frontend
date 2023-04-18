@@ -15,6 +15,7 @@ import { useRecoilState } from 'recoil';
 import { useHydrated } from 'remix-utils';
 
 const LineChart = React.lazy(() => import('@/components/chart/LineChart'));
+
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
     const result = await loaderCommonInit(request);

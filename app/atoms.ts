@@ -22,8 +22,11 @@ interface IBoardListData {
   id: number;
   title: string;
   content: string;
-  data_updated: string;
-  user_id: number;
+  date_updated: string;
+  user: {
+    id: number;
+    nickname: string;
+  };
 }
 
 /////sideBar/////
