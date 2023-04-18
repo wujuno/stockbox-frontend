@@ -17,7 +17,6 @@ const BUILD_DIR = path.join(process.cwd(), 'build');
 const PORT = Number(process.env.PORT) || 3000;
 
 process.env.CACHE_UUID = uuidV4();
-process.env.COOKIE_SECRET = isDevEnv ? 'B015E55C3DA9408B9388A12FBF9D4EC8' : Buffer.from(parseUUID(uuidV4())).toString('hex').toUpperCase();
 
 const purgeRequireCache = () => {
   for (const key in require.cache) {
@@ -57,6 +56,7 @@ app.use(express.static('public', { maxAge: '1h' }));
 app.use(morgan('tiny'));
 
 if (isDevEnv) {
+  // app.use('/api/test2', createProxyMiddleware({ target: 'http://127.0.0.1:8081', changeOrigin: true }));
   app.use('/api', createProxyMiddleware({ target: process.env.API_URL, changeOrigin: true }));
 }
 
@@ -65,7 +65,6 @@ app.all(
   isDevEnv
     ? (req, res, next) => {
         purgeRequireCache();
-
         return createRequestHandler({
           build: require(BUILD_DIR),
           mode: process.env.NODE_ENV
