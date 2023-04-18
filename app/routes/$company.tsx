@@ -1,16 +1,17 @@
-import { coDataState, coNameState, kNameDataState, kTickerDataState, usNameDataState, usTickerDataState } from '@/atoms';
+import { coDataState, coNameState } from '@/atoms';
 import Articles from '@/components/Articles';
 import { Page } from '@/components/Layout';
+import PeriodBox from '@/components/chart/PeriodBox';
+import SideBar from '@/components/chart/Sidebar';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import styled from '@emotion/styled';
-import { Box, Button, ButtonGroup, Grid, Link, List, ListItem, Skeleton, Typography } from '@mui/material';
+import { Box, Grid, Skeleton } from '@mui/material';
 import { DataFunctionArgs, json } from '@remix-run/node';
-import { useNavigate, useParams } from '@remix-run/react';
+import { useParams } from '@remix-run/react';
 import axios from 'axios';
 import React, { Suspense } from 'react';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useHydrated } from 'remix-utils';
 
 const LineChart = React.lazy(() => import('@/components/chart/LineChart'));
@@ -26,9 +27,6 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   return json(null);
 };
 
-interface PeriodOption {
-  [key: string]: number;
-}
 interface IOneCPData {
   COMNAME: object;
   MARKETDATE: object;
@@ -38,29 +36,15 @@ interface IOneCPData {
 const ChartBox = styled.div`
   position: relative;
 `;
-const PeriodBox = styled.div`
-  position: absolute;
-  right: 160px;
-  top: 0;
-`;
 
 const Company = () => {
   const [coData, setCoData] = useRecoilState(coDataState);
   const [period, setPeriod] = useState(90);
   const [coName, setCoName] = useRecoilState(coNameState);
-
-  //Local Storage data state
-  const usNameData = useRecoilValue(usNameDataState);
-  const usTickerData = useRecoilValue(usTickerDataState);
-  const kNameData = useRecoilValue(kNameDataState);
-  const kTickerData = useRecoilValue(kTickerDataState);
-  //
   const [selected, setSelected] = useState<'해외' | '국내'>('해외');
 
   const { company } = useParams();
   const isHydrated = useHydrated();
-  const { t } = useTranslation('index');
-  const navigate = useNavigate();
 
   useEffect(() => {
     const today = new Date();
@@ -99,91 +83,16 @@ const Company = () => {
     company?.charAt(0) === '@' ? setSelected('국내') : setSelected('해외');
   }, [period, company]);
 
-  const periodOpt: PeriodOption = { '1 주': 7, '1 달': 30, '3 달': 90, '1년': 365 };
-  const IperiodOpt: Map<string, number> = new Map(Object.entries(periodOpt));
-
-  const periodHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setPeriod(Number(event.currentTarget.value));
-  };
-
-  const handleBarOption = (value: '해외' | '국내') => {
-    setSelected(value);
-  };
-
   return (
     <Page>
       <Grid container spacing={2}>
         <Grid item xs={2}>
-          <Box>
-            <ButtonGroup fullWidth>
-              <Button
-                onClick={() => handleBarOption('해외')}
-                sx={{
-                  fontWeight: selected === '해외' ? 'bold' : 'normal'
-                }}
-                variant={selected === '해외' ? 'contained' : 'outlined'}
-              >
-                {t('USA')}
-              </Button>
-              <Button
-                onClick={() => handleBarOption('국내')}
-                sx={{
-                  fontWeight: selected === '국내' ? 'bold' : 'normal'
-                }}
-                variant={selected === '국내' ? 'contained' : 'outlined'}
-              >
-                {t('KOR')}
-              </Button>
-            </ButtonGroup>
-            <Box sx={{ width: '100% ', overflow: 'auto', height: 'calc(100vh - 64px - 48px - 36px )' }}>
-              <List>
-                {selected === '해외'
-                  ? usNameData
-                    ? usNameData.map((n, i) => (
-                        <ListItem key={i} sx={{ pl: 0 }}>
-                          <Button
-                            fullWidth
-                            onClick={() => {
-                              navigate(`/${usTickerData[i]}`);
-                            }}
-                            variant="text"
-                          >
-                            <Typography variant="subtitle2">{n}</Typography>
-                          </Button>
-                        </ListItem>
-                      ))
-                    : null
-                  : kNameData
-                  ? kNameData.map((n, i) => (
-                      <ListItem key={i} sx={{ pl: 0 }}>
-                        <Button
-                          fullWidth
-                          onClick={() => {
-                            navigate(`/${kTickerData[i]}`);
-                          }}
-                          variant="text"
-                        >
-                          <Typography variant="subtitle2">{n}</Typography>
-                        </Button>
-                      </ListItem>
-                    ))
-                  : null}
-              </List>
-            </Box>
-          </Box>
+          <SideBar selected={selected} setSelected={setSelected} />
         </Grid>
         <Grid item xs={10}>
           <ChartBox>
             <Suspense>{isHydrated ? <LineChart data={coData} /> : <Skeleton variant="rounded" animation="wave" height={450} />}</Suspense>
-            <PeriodBox>
-              <ButtonGroup variant="outlined" size="small" aria-label="outlined button group">
-                {Array.from(IperiodOpt).map(([key, value]) => (
-                  <Button id={key} key={key} value={value} onClick={periodHandler}>
-                    {key}
-                  </Button>
-                ))}
-              </ButtonGroup>
-            </PeriodBox>
+            <PeriodBox setPeriod={setPeriod} />
           </ChartBox>
           <Box>
             <Suspense>{isHydrated ? <Articles /> : <Skeleton variant="rounded" animation="wave" />}</Suspense>
