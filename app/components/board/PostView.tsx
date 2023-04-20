@@ -1,6 +1,8 @@
+import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import styled from '@emotion/styled';
 import { Divider, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { DataFunctionArgs, json } from '@remix-run/node';
 import { useLocation } from '@remix-run/react';
 import ReactHtmlParser from 'react-html-parser';
 
