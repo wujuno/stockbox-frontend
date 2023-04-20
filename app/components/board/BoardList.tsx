@@ -1,5 +1,6 @@
 import { postListState } from '@/atoms';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { useNavigate } from '@remix-run/react';
 import { useRecoilValue } from 'recoil';
 
 interface IBoardListProps {
@@ -8,6 +9,8 @@ interface IBoardListProps {
 }
 
 const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum }) => {
+  const navigate = useNavigate();
+
   //읽기 전용 값 깊은 복사
   const postData = [...useRecoilValue(postListState)].sort((a, b) => b.id - a.id);
   const dividedData = [];
@@ -15,6 +18,10 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum }) => {
     dividedData.push(postData.slice(i, i + pageDivNum));
   }
   let viewData = dividedData[currPage - 1];
+
+  const listClickHandler = (id: number, content: string, title: string, nickname: string, userId: number, upDated: string) => {
+    navigate(`${id}`, { state: { content, title, nickname, userId, upDated } });
+  };
 
   return (
     <>
@@ -37,7 +44,12 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum }) => {
           </TableHead>
           <TableBody>
             {viewData?.map(post => (
-              <TableRow key={post.id} user_id={post.user.id}>
+              <TableRow
+                sx={{ cursor: 'pointer' }}
+                key={post.id}
+                user_id={post.user.id}
+                onClick={() => listClickHandler(post.id, post.content, post.title, post.user.nickname, post.user.id, post.date_updated)}
+              >
                 <TableCell>{post.id}</TableCell>
                 <TableCell sx={{ maxWidth: 300, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} align="center">
                   {post.title}

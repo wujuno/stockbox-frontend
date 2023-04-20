@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Divider, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { useLocation } from '@remix-run/react';
 import ReactHtmlParser from 'react-html-parser';
 
 const Wrapper = styled(Paper)`
@@ -10,33 +11,26 @@ const Wrapper = styled(Paper)`
   }
 `;
 
-type ViewProps = {
-  data: {
-    title: string;
-    content: string;
-  };
-  nickName: string;
-  createdAt: string;
-};
+const PostView = () => {
+  const { state } = useLocation();
 
-const PostView = ({ data, nickName, createdAt }: ViewProps) => {
   return (
     <Wrapper sx={{ p: 5 }} variant="outlined">
       <div>
         <Typography sx={{ mb: 5 }} variant="h4">
-          {data?.title}
+          {state.title}
         </Typography>
         <div className="user_created-box">
           <Typography sx={{ mb: 1 }} variant="body2">
-            {nickName}
+            {state.nickname}
           </Typography>
           <Typography sx={{ mb: 1 }} variant="body2">
-            {createdAt}
+            {state.upDated}
           </Typography>
         </div>
         <Divider />
       </div>
-      <Box sx={{ pt: 2, pb: 2 }}>{ReactHtmlParser(data?.content)}</Box>
+      <Box sx={{ pt: 2, pb: 2 }}>{ReactHtmlParser(state.content)}</Box>
     </Wrapper>
   );
 };
