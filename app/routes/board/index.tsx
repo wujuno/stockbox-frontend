@@ -35,7 +35,6 @@ const PostMain = () => {
       .get('/api/board/')
       .then(res => {
         setPostData(res.data);
-        console.log(res.data);
       })
       .catch(err => console.log(err));
   }, []);
@@ -43,9 +42,11 @@ const PostMain = () => {
   return (
     <Page>
       <Container maxWidth="md">
-        <Typography sx={{ mb: 5 }} variant="h3">
-          Board
-        </Typography>
+        <Box>
+          <Typography sx={{ mb: 5 }} variant="h3">
+            주식 종목 토론 게시판
+          </Typography>
+        </Box>
         <BoardList currPage={currPage} pageDivNum={PAGEDIVNUM} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
           <Button variant="contained" sx={{ mb: 1 }} onClick={() => navigate('userId/newpost')}>
