@@ -4,11 +4,11 @@ import { DataFunctionArgs, json } from '@remix-run/node';
 import { postListState } from '@/atoms';
 import { Page } from '@/components/Layout';
 import BoardList from '@/components/board/BoardList';
-import { Box, Button, Container, Pagination, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, Pagination, Popover, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from '@remix-run/react';
+import { useLoaderData, useNavigate } from '@remix-run/react';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -22,7 +22,20 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   return json(null);
 };
 
+interface IUserData {
+  user: {
+    exp: number;
+    iat: number;
+    jti: string;
+    nickname: string;
+    platform: string;
+    token_type: string;
+    user_id: number;
+  };
+}
+
 const PostMain = () => {
+  const { user } = useLoaderData<IUserData>();
   const [postData, setPostData] = useRecoilState(postListState);
   const [currPage, setCurrPage] = useState(1);
   //보여지는 list 개수
@@ -47,7 +60,7 @@ const PostMain = () => {
             주식 종목 토론 게시판
           </Typography>
         </Box>
-        <BoardList currPage={currPage} pageDivNum={PAGEDIVNUM} />
+        <BoardList currPage={currPage} pageDivNum={PAGEDIVNUM} user_id={user.user_id} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
           <Button variant="contained" sx={{ mb: 1 }} onClick={() => navigate('userId/newpost')}>
             게시물 등록
