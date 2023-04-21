@@ -26,7 +26,7 @@ const PostMain = () => {
   const [postData, setPostData] = useRecoilState(postListState);
   const [currPage, setCurrPage] = useState(1);
   //보여지는 list 개수
-  const PAGEDIVNUM = 3;
+  const PAGEDIVNUM = 8;
 
   const navigate = useNavigate();
 

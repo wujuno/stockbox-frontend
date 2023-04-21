@@ -1,6 +1,6 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Page } from '@/components/Layout';
-import { Skeleton, Typography } from '@mui/material';
+import { Box, Button, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
@@ -48,6 +48,7 @@ const Index = () => {
 
   const [usData, setUsData] = useRecoilState(usTreeMapDataState);
   const [kData, setKData] = useRecoilState(kTreeMapDataState);
+  const [selected, setSelected] = useState<'해외' | '국내'>('해외');
 
   const setUsNameData = useSetRecoilState(usNameDataState);
   const setKNameData = useSetRecoilState(kNameDataState);
@@ -82,16 +83,41 @@ const Index = () => {
         console.log(error);
       });
   }, []);
+
+  const handleBarOption = (value: '해외' | '국내') => {
+    setSelected(value);
+  };
   return (
     <Page>
       <Wrapper>
+        <Box width="100%" sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+          <Button
+            onClick={() => handleBarOption('해외')}
+            sx={{
+              fontWeight: selected === '해외' ? 'bold' : 'normal'
+            }}
+            variant={selected === '해외' ? 'contained' : 'outlined'}
+            size="large"
+          >
+            해외 주식
+          </Button>
+          <Button
+            onClick={() => handleBarOption('국내')}
+            sx={{
+              fontWeight: selected === '국내' ? 'bold' : 'normal'
+            }}
+            variant={selected === '국내' ? 'contained' : 'outlined'}
+            size="large"
+          >
+            국내 주식
+          </Button>
+        </Box>
         <div>
-          <Typography variant="h5">{t('USA')}</Typography>
-          <Suspense>{isHydrated ? <TreemapChart data={usData} width={1400} height={500} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
-        </div>
-        <div>
-          <Typography variant="h5">{t('KOR')}</Typography>
-          <Suspense>{isHydrated ? <TreemapChart data={kData} width={1400} height={500} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+          {selected === '해외' ? (
+            <Suspense>{isHydrated ? <TreemapChart data={usData} width={1400} height={500} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+          ) : (
+            <Suspense>{isHydrated ? <TreemapChart data={kData} width={1400} height={500} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+          )}
         </div>
       </Wrapper>
     </Page>
