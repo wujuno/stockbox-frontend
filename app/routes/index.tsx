@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { Page } from '@/components/Layout';
-import { Box, Button, Skeleton, Typography } from '@mui/material';
+import { Box, Button, Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
@@ -9,7 +9,6 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { kNameDataState, kTickerDataState, kTreeMapDataState, usNameDataState, usTickerDataState, usTreeMapDataState } from '@/atoms';
 import axios from 'axios';
 import styled from '@emotion/styled';
-import { useLoaderData } from '@remix-run/react';
 
 const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'));
 
@@ -44,8 +43,6 @@ interface ICPData {
 }
 
 const Index = () => {
-  const loaderData = useLoaderData();
-
   const [usData, setUsData] = useRecoilState(usTreeMapDataState);
   const [kData, setKData] = useRecoilState(kTreeMapDataState);
   const [selected, setSelected] = useState<'해외' | '국내'>('해외');
@@ -59,7 +56,6 @@ const Index = () => {
   const { t } = useTranslation('index');
 
   useEffect(() => {
-    console.log(loaderData);
     axios
       .get('/api/pairtrading/heatmap/?country=US&limit=50')
       .then(response => {

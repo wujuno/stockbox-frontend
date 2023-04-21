@@ -29,6 +29,18 @@ interface IBoardListData {
   };
 }
 
+interface IUserData {
+  user: {
+    exp: number | null;
+    iat: number | null;
+    jti: string | null;
+    nickname: string | null;
+    platform: string | null;
+    token_type: string | null;
+    user_id: number | null;
+  };
+}
+
 /////sideBar/////
 
 export const usNameDataState = atom<string[]>({
