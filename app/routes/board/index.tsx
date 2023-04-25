@@ -62,7 +62,7 @@ const PostMain = () => {
         </Box>
         <BoardList currPage={currPage} pageDivNum={PAGEDIVNUM} user_id={user.user_id} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-          <Button variant="contained" sx={{ mb: 1 }} onClick={() => navigate('userId/newpost')}>
+          <Button variant="contained" sx={{ mb: 1 }} onClick={() => navigate(`${user.user_id}/newpost`)}>
             게시물 등록
           </Button>
           <Stack spacing={2}>

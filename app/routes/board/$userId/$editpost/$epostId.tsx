@@ -1,10 +1,12 @@
+import { editContentsState } from '@/atoms';
 import { Page } from '@/components/Layout';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import { Alert, AlertTitle, Button, Skeleton } from '@mui/material';
 import { DataFunctionArgs, json } from '@remix-run/node';
-import { useNavigate } from '@remix-run/react';
+import { useNavigate, useParams } from '@remix-run/react';
 import axios from 'axios';
 import React, { Suspense, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useHydrated } from 'remix-utils';
 
 const TextEditor = React.lazy(() => import('@/components/board/TextEditor'));
@@ -21,26 +23,28 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   return json(null);
 };
 
-const NewPost = () => {
+const EditPost = () => {
+  const editData = useRecoilValue(editContentsState);
   const [contents, setContents] = useState({
-    title: '',
-    content: ''
+    title: `${editData?.title}`,
+    content: `${editData?.content}`
   });
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState(false);
 
   const isHydrated = useHydrated();
   const navigate = useNavigate();
+  const { epostId } = useParams();
 
-  const handleCreate = async () => {
+  const handleEdit = async () => {
     if (contents.title !== '' && contents.content !== '') {
       await axios
-        .post('/api/board/create', {
+        .put(`/api/board/update/${epostId}`, {
           title: contents.title,
           content: contents.content
         })
         .then(res => {
-          if (res.status === 201) {
+          if (res.status === 200) {
             setContents({ title: '', content: '' });
             setError(false);
             setShowAlert(true);
@@ -53,10 +57,11 @@ const NewPost = () => {
       setShowAlert(true);
     }
   };
+
   return (
     <Page>
       <Suspense>{isHydrated ? <TextEditor setContents={setContents} contents={contents} setShowAlert={setShowAlert} /> : <Skeleton />}</Suspense>
-      <Button sx={{ mt: 1 }} variant="contained" onClick={handleCreate}>
+      <Button sx={{ mt: 1 }} variant="contained" onClick={handleEdit}>
         등록하기
       </Button>
       {showAlert && (
@@ -69,4 +74,4 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
+export default EditPost;
