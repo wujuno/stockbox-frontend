@@ -29,16 +29,9 @@ interface IBoardListData {
   };
 }
 
-interface IUserData {
-  user: {
-    exp: number | null;
-    iat: number | null;
-    jti: string | null;
-    nickname: string | null;
-    platform: string | null;
-    token_type: string | null;
-    user_id: number | null;
-  };
+interface IEditContents {
+  title: string;
+  content: string;
 }
 
 /////sideBar/////
@@ -121,4 +114,9 @@ export const coTitleState = atom<string>({
 export const postListState = atom<IBoardListData[]>({
   key: uuidV4(),
   default: []
+});
+
+export const editContentsState = atom<IEditContents | null>({
+  key: uuidV4(),
+  default: null
 });

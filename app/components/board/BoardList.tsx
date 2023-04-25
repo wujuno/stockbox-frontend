@@ -1,11 +1,22 @@
-import { postListState } from '@/atoms';
-import { Box, Button, ClickAwayListener, Divider, Fab, IconButton, Paper, Popover, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { useNavigate } from '@remix-run/react';
-import { useRecoilValue } from 'recoil';
+import { editContentsState, postListState } from '@/atoms';
+import { Button, ClickAwayListener, Divider, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { useLoaderData, useNavigate } from '@remix-run/react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import axios from 'axios';
 
+interface IUserData {
+  user: {
+    exp: number;
+    iat: number;
+    jti: string;
+    nickname: string;
+    platform: string;
+    token_type: string;
+    user_id: number;
+  };
+}
 interface IBoardListProps {
   currPage: number;
   pageDivNum: number;
@@ -13,10 +24,12 @@ interface IBoardListProps {
 }
 
 const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id }) => {
+  const { user } = useLoaderData<IUserData>();
   const navigate = useNavigate();
 
   const [open, setOpen] = useState<boolean>(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>();
+  const setEditData = useSetRecoilState(editContentsState);
 
   //읽기 전용 값 깊은 복사
   const postData = [...useRecoilValue(postListState)].sort((a, b) => b.id - a.id);
@@ -56,6 +69,11 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
         })
         .catch(error => console.log(error));
     }
+  };
+  //edit
+  const editHandler = (id: number, title: string, content: string) => {
+    setEditData({ title, content });
+    navigate(`${user.user_id}/editpost/${id}`);
   };
 
   return (
@@ -110,7 +128,7 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
                   <ClickAwayListener onClickAway={handleClose}>
                     <Paper elevation={3} sx={{ position: 'absolute', left: '-50px', top: '10px' }}>
                       <Stack>
-                        <Button variant="text">
+                        <Button variant="text" onClick={() => editHandler(post.id, post.title, post.content)}>
                           <Typography variant="subtitle2" color="primary">
                             edit
                           </Typography>
