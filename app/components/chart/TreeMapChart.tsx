@@ -28,11 +28,17 @@ enum colors {
 
 type TreemapProps = {
   data: ICPData;
-  height?: number;
-  width?: number;
+  width?: string | number;
+  height?: string | number;
+  showToolbar?: boolean;
 };
 
-const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, width }) => {
+const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({
+  data,
+  width,
+  height,
+  showToolbar
+}) => {
   const navigate = useNavigate();
 
   //data는 parsed 된 형태로 전달.
@@ -77,9 +83,11 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
   const theme = useTheme();
 
   //종목 클릭 시 해당 티커 ID 가 파라미터인 페이지로 이동
-  const clickHandler = (event: React.MouseEvent<SVGElement>) => {
-    const index = Number(event.target.getAttribute('j'));
+  const clickHandler = (e: any, charts: any, options: any) => {
+    const index = Number(e.target.getAttribute('j'));
     navigate(`/${cpIdArr[index]}`);
+    // console.log(series[0].data[options.dataPointIndex]);
+    // navigate(`/${cpIdArr[options.dataPointIndex]}`);
   };
 
   return (
@@ -116,7 +124,10 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
           events: {
             click: clickHandler
           },
-          background: theme.palette.mode === 'dark' ? 'dark' : 'light'
+          background: theme.palette.mode === 'dark' ? 'dark' : 'light',
+          toolbar: {
+            show: showToolbar
+          }
         }
       }}
       series={series}
@@ -124,6 +135,10 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data, height, wid
       width={width}
     />
   );
+};
+
+TreeMapChart.defaultProps = {
+  showToolbar: false
 };
 
 export default TreeMapChart;

@@ -1,5 +1,4 @@
 {
-    "USA": "미국 주식",
-    "KOR": "한국 주식"
-
+  "domesticStocks": "한국 주식",
+  "foreignStocks": "해외 주식"
 }

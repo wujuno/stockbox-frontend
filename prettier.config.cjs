@@ -8,7 +8,7 @@ module.exports = {
   trailingComma: 'none',
   bracketSameLine: false,
   singleAttributePerLine: false,
-  printWidth: 200,
+  printWidth: 100,
   arrowParens: 'avoid',
   semi: true,
   bracketSpacing: true

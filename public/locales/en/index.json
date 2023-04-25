@@ -1,4 +1,4 @@
 {
-    "USA": "USA",
-    "KOR": "KOREA"
+  "domesticStocks": "Domestic Stocks",
+  "foreignStocks": "Foreign Stocks"
 }

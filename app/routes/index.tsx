@@ -6,7 +6,14 @@ import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { kNameDataState, kTickerDataState, kTreeMapDataState, usNameDataState, usTickerDataState, usTreeMapDataState } from '@/atoms';
+import {
+  kNameDataState,
+  kTickerDataState,
+  kTreeMapDataState,
+  usNameDataState,
+  usTickerDataState,
+  usTreeMapDataState
+} from '@/atoms';
 import axios from 'axios';
 import styled from '@emotion/styled';
 
@@ -27,8 +34,16 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
+  width: 100%;
+  height: 100%;
+
+  .chart-wrapper {
+    flex: 1;
+    overflow: hidden;
+    padding: 10px;
+  }
 `;
 
 interface ICPData {
@@ -42,10 +57,14 @@ interface ICPData {
   YIELD: object;
 }
 
+export const handle = {
+  i18n: 'index'
+};
+
 const Index = () => {
   const [usData, setUsData] = useRecoilState(usTreeMapDataState);
   const [kData, setKData] = useRecoilState(kTreeMapDataState);
-  const [selected, setSelected] = useState<'해외' | '국내'>('해외');
+  const [selected, setSelected] = useState<'domesticStocks' | 'foreignStocks'>('domesticStocks');
 
   const setUsNameData = useSetRecoilState(usNameDataState);
   const setKNameData = useSetRecoilState(kNameDataState);
@@ -80,7 +99,7 @@ const Index = () => {
       });
   }, []);
 
-  const handleBarOption = (value: '해외' | '국내') => {
+  const handleBarOption = (value: 'domesticStocks' | 'foreignStocks') => {
     setSelected(value);
   };
   return (
@@ -88,31 +107,43 @@ const Index = () => {
       <Wrapper>
         <Box width="100%" sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
           <Button
-            onClick={() => handleBarOption('해외')}
+            onClick={() => handleBarOption('foreignStocks')}
             sx={{
-              fontWeight: selected === '해외' ? 'bold' : 'normal'
+              fontWeight: selected === 'foreignStocks' ? 'bold' : 'normal'
             }}
-            variant={selected === '해외' ? 'contained' : 'outlined'}
+            variant={selected === 'foreignStocks' ? 'contained' : 'outlined'}
             size="large"
           >
-            해외 주식
+            {t('foreignStocks')}
           </Button>
           <Button
-            onClick={() => handleBarOption('국내')}
+            onClick={() => handleBarOption('domesticStocks')}
             sx={{
-              fontWeight: selected === '국내' ? 'bold' : 'normal'
+              fontWeight: selected === 'domesticStocks' ? 'bold' : 'normal'
             }}
-            variant={selected === '국내' ? 'contained' : 'outlined'}
+            variant={selected === 'domesticStocks' ? 'contained' : 'outlined'}
             size="large"
           >
-            국내 주식
+            {t('domesticStocks')}
           </Button>
         </Box>
-        <div>
-          {selected === '해외' ? (
-            <Suspense>{isHydrated ? <TreemapChart data={usData} width={1400} height={500} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+        <div className="chart-wrapper">
+          {selected === 'foreignStocks' ? (
+            <Suspense>
+              {isHydrated ? (
+                <TreemapChart className="treemap-chart" data={usData} width="100%" height="100%" />
+              ) : (
+                <Skeleton variant="rounded" animation="wave" />
+              )}
+            </Suspense>
           ) : (
-            <Suspense>{isHydrated ? <TreemapChart data={kData} width={1400} height={500} /> : <Skeleton variant="rounded" animation="wave" width={1200} height={500} />}</Suspense>
+            <Suspense>
+              {isHydrated ? (
+                <TreemapChart className="treemap-chart" data={kData} width="100%" height="100%" />
+              ) : (
+                <Skeleton variant="rounded" animation="wave" />
+              )}
+            </Suspense>
           )}
         </div>
       </Wrapper>

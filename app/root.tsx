@@ -1,6 +1,14 @@
-import { createContext, useEffect } from 'react';
+import { createContext, useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { DataFunctionArgs, json, MetaFunction, redirect } from '@remix-run/node';
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData
+} from '@remix-run/react';
 import { namedAction } from 'remix-utils';
 import { useTranslation } from 'react-i18next';
 import { RecoilRoot } from 'recoil';
@@ -8,6 +16,12 @@ import { GlobalStyle } from '@/components/Layout';
 import { langCookie, themeCookie, tokenCookie } from '@/cookies';
 import { PaletteMode } from '@mui/material';
 import i18next from '@/i18n/server';
+
+interface RootContextState {
+  themeMode: PaletteMode | undefined;
+  drawerOpen: boolean;
+  setDrawerOpen: Dispatch<SetStateAction<boolean>>;
+}
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -70,10 +84,19 @@ export const action = async ({ request }: DataFunctionArgs) => {
 
 export const handle = { i18n: 'common' };
 
-export const ThemeModeContext = createContext<PaletteMode | undefined>(undefined);
+const defaultRootContext = {
+  themeMode: undefined,
+  drawerOpen: false,
+  setDrawerOpen: (() => {}) as any
+};
+
+export const RootContext = createContext<RootContextState>(defaultRootContext);
 
 const App = () => {
   const { theme, locale, cacheUuid } = useLoaderData<typeof loader>();
+
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -89,11 +112,11 @@ const App = () => {
           <GlobalStyle />
         </head>
         <body>
-          <ThemeModeContext.Provider value={theme}>
+          <RootContext.Provider value={{ themeMode: theme, drawerOpen, setDrawerOpen }}>
             <div id="root">
               <Outlet />
             </div>
-          </ThemeModeContext.Provider>
+          </RootContext.Provider>
           <ScrollRestoration />
           <script
             dangerouslySetInnerHTML={{

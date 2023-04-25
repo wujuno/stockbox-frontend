@@ -8,5 +8,7 @@
   "signOut": "로그아웃",
   "signOutMessage": "로그아웃하시겠습니까?",
   "confirm": "확인",
-  "cancel": "닫기"
+  "cancel": "닫기",
+  "home": "홈",
+  "board": "게시판"
 }

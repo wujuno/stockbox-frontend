@@ -1,3 +1,4 @@
+import { useCallback, useContext, useRef } from 'react';
 import { AppBar, IconButton, Toolbar, Tooltip, Typography, useTheme } from '@mui/material';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
@@ -6,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useCallback, useRef } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
+import { RootContext } from '@/root';
 
 interface HeaderProps {
   user?: TokenBody;
@@ -16,6 +18,8 @@ const StyledToolbar = styled(Toolbar)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
 
   .header-left,
   .header-right {
@@ -37,6 +41,8 @@ const StyledToolbar = styled(Toolbar)`
 `;
 
 const Header = ({ user }: HeaderProps) => {
+  const { setDrawerOpen } = useContext(RootContext);
+
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -64,16 +70,33 @@ const Header = ({ user }: HeaderProps) => {
     <AppBar position="static">
       <StyledToolbar variant="dense">
         <div className="header-left">
-          <Typography className="header-logo" variant="h6" component="div" color="inherit" onClick={() => navigate('/')}>
+          <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
+            <MenuIcon width={24} height={24} />
+          </IconButton>
+          <Typography
+            className="header-logo"
+            variant="h6"
+            component="div"
+            color="inherit"
+            onClick={() => navigate('/')}
+          >
             StockBox
           </Typography>
         </div>
         <div className="header-right">
           <Form method="post" replace action="/?/changeTheme">
-            <input type="hidden" name="themeMode" value={theme.palette.mode === 'light' ? 'dark' : 'light'} />
+            <input
+              type="hidden"
+              name="themeMode"
+              value={theme.palette.mode === 'light' ? 'dark' : 'light'}
+            />
             <Tooltip title={`${t('theme')}: ${t(theme.palette.mode)}`}>
               <IconButton type="submit" color="inherit">
-                {theme.palette.mode === 'dark' ? <DarkModeIcon width={24} height={24} /> : <LightModeIcon width={24} height={24} />}
+                {theme.palette.mode === 'dark' ? (
+                  <DarkModeIcon width={24} height={24} />
+                ) : (
+                  <LightModeIcon width={24} height={24} />
+                )}
               </IconButton>
             </Tooltip>
           </Form>
@@ -87,17 +110,15 @@ const Header = ({ user }: HeaderProps) => {
             </Tooltip>
           </Form>
           {user && (
-            <>
-              <Tooltip title={t('signOut')}>
-                <IconButton color="inherit" onClick={handleClickSignOutButton}>
-                  <LogoutIcon width={24} height={24} />
-                </IconButton>
-              </Tooltip>
-              <Form ref={signOutFormRef} method="post" replace action="/?/signOut" />
-            </>
+            <Tooltip title={t('signOut')}>
+              <IconButton color="inherit" onClick={handleClickSignOutButton}>
+                <LogoutIcon width={24} height={24} />
+              </IconButton>
+            </Tooltip>
           )}
         </div>
       </StyledToolbar>
+      {user && <Form ref={signOutFormRef} method="post" replace action="/?/signOut" />}
     </AppBar>
   );
 };

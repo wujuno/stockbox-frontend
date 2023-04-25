@@ -8,5 +8,7 @@
   "signOut": "Sign Out",
   "signOutMessage": "Are you sure you want to sign out?",
   "confirm": "Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "home": "Home",
+  "board": "Board"
 }
