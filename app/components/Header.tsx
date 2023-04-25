@@ -69,10 +69,12 @@ const Header = ({ user }: HeaderProps) => {
   return (
     <AppBar position="static">
       <StyledToolbar variant="dense">
-        <div className="header-left">
-          <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
-            <MenuIcon width={24} height={24} />
-          </IconButton>
+        <div className="header-left" style={user ? undefined : { paddingLeft: '14px' }}>
+          {user && (
+            <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
+              <MenuIcon width={24} height={24} />
+            </IconButton>
+          )}
           <Typography
             className="header-logo"
             variant="h6"
