@@ -36,18 +36,17 @@ import PasswordRegx from '@/components/auth/RegExp';
 import axios from 'axios';
 import { useNavigate } from '@remix-run/react';
 
+export const handle = { i18n: 'signup' };
+
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
     const result = await loaderCommonInit(request);
     if (result) return result;
   } catch (err) {
     console.error(err);
-  } finally {
-    return json(null);
   }
+  return json({ env: process.env.NODE_ENV });
 };
-
-export const handle = { i18n: 'signup' };
 
 const Container = styled(Page)`
   .contents {
@@ -152,7 +151,8 @@ const SignUp = () => {
     setEmailDbcheckState(false);
     setEmailError('');
     setSEmail(event.currentTarget.value);
-    const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    const emailRegex =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
     if (!emailRegex.test(event.currentTarget.value)) {
       setEmailState(false);
       setEmailBtn(true);
@@ -214,8 +214,30 @@ const SignUp = () => {
 
   // submit possible handler
   useEffect(() => {
-    setSubmitPossible(!(nameState && nicknameState && nicknameDbcheckState && emailState && emailDbcheckState && passwordState && confirmPasswordState && !extraAddrError && checked));
-  }, [nameState, nicknameState, nicknameDbcheckState, emailState, emailDbcheckState, passwordState, confirmPasswordState, extraAddrError, checked]);
+    setSubmitPossible(
+      !(
+        nameState &&
+        nicknameState &&
+        nicknameDbcheckState &&
+        emailState &&
+        emailDbcheckState &&
+        passwordState &&
+        confirmPasswordState &&
+        !extraAddrError &&
+        checked
+      )
+    );
+  }, [
+    nameState,
+    nicknameState,
+    nicknameDbcheckState,
+    emailState,
+    emailDbcheckState,
+    passwordState,
+    confirmPasswordState,
+    extraAddrError,
+    checked
+  ]);
 
   // form Handdler
   const submitHanddler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -234,7 +256,17 @@ const SignUp = () => {
       birthday: data.get('birth')
     };
     console.log(joinData);
-    const { email, name, nickname, password, confirmPassword, phone, address, address_detail, birthday } = joinData;
+    const {
+      email,
+      name,
+      nickname,
+      password,
+      confirmPassword,
+      phone,
+      address,
+      address_detail,
+      birthday
+    } = joinData;
 
     // 이름 유효성 검사
     const nameRegex = /^[가-힣a-zA-Z]+$/;
@@ -317,7 +349,15 @@ const SignUp = () => {
           <LinearProgress />
         </Box>
         <Form onSubmit={submitHanddler} noValidate>
-          <TextField label={t('name')} name="name" variant="standard" autoFocus required fullWidth onChange={nameChangeHanddler} />
+          <TextField
+            label={t('name')}
+            name="name"
+            variant="standard"
+            autoFocus
+            required
+            fullWidth
+            onChange={nameChangeHanddler}
+          />
           <FormHelperText sx={{ color: 'red' }}>{nameError}</FormHelperText>
           <FormControl sx={{ width: '100%' }} variant="standard">
             <InputLabel htmlFor="standard-adornment-nickname">{t('nickname')} *</InputLabel>
@@ -336,7 +376,13 @@ const SignUp = () => {
                       {t('dbcheck')}
                     </LoadingButton>
                   ) : (
-                    <Button className="check-button" variant="outlined" size="small" onClick={nicknameDbcheckHandler} disabled={nicknameBtn}>
+                    <Button
+                      className="check-button"
+                      variant="outlined"
+                      size="small"
+                      onClick={nicknameDbcheckHandler}
+                      disabled={nicknameBtn}
+                    >
                       {t('dbcheck')}
                     </Button>
                   )}
@@ -364,7 +410,13 @@ const SignUp = () => {
                       {t('dbcheck')}
                     </LoadingButton>
                   ) : (
-                    <Button className="check-button" variant="outlined" size="small" onClick={emailDbcheckHandler} disabled={emailBtn}>
+                    <Button
+                      className="check-button"
+                      variant="outlined"
+                      size="small"
+                      onClick={emailDbcheckHandler}
+                      disabled={emailBtn}
+                    >
                       {t('dbcheck')}
                     </Button>
                   )}
@@ -385,17 +437,25 @@ const SignUp = () => {
               type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               }
             />
             <FormHelperText id="passwordRule-helper-text">{t('passwordRegex')}</FormHelperText>
-            <FormHelperText sx={{ color: 'green' }}>{passwordState && `${t('passworkOk')}`}</FormHelperText>
+            <FormHelperText sx={{ color: 'green' }}>
+              {passwordState && `${t('passworkOk')}`}
+            </FormHelperText>
           </FormControl>
           <FormControl sx={{ width: '100%' }} variant="standard">
-            <InputLabel htmlFor="standard-adornment-confirmPassword">{t('confirmPassword')} *</InputLabel>
+            <InputLabel htmlFor="standard-adornment-confirmPassword">
+              {t('confirmPassword')} *
+            </InputLabel>
             <Input
               id="standard-adornment-confirmPassword"
               required
@@ -418,10 +478,20 @@ const SignUp = () => {
               value={tfValue}
               endAdornment={
                 <InputAdornment position="end">
-                  <Button className="check-button" variant="outlined" size="small" onClick={postClickOpen}>
+                  <Button
+                    className="check-button"
+                    variant="outlined"
+                    size="small"
+                    onClick={postClickOpen}
+                  >
                     {t('searchPost')}
                   </Button>
-                  <Dialog fullWidth open={postModalOpen} onClose={postHandleClose} aria-labelledby="title">
+                  <Dialog
+                    fullWidth
+                    open={postModalOpen}
+                    onClose={postHandleClose}
+                    aria-labelledby="title"
+                  >
                     <DialogTitle id="title">{t('searchPost')}</DialogTitle>
                     <Divider />
                     <DialogContent>
@@ -432,7 +502,15 @@ const SignUp = () => {
               }
             />
           </FormControl>
-          <TextField sx={{ mb: 1 }} label={t('extraAddr')} name="extraAddr" error={Boolean(extraAddrError)} onChange={extraAddrHandler} variant="standard" size="small" />
+          <TextField
+            sx={{ mb: 1 }}
+            label={t('extraAddr')}
+            name="extraAddr"
+            error={Boolean(extraAddrError)}
+            onChange={extraAddrHandler}
+            variant="standard"
+            size="small"
+          />
           <FormHelperText sx={{ color: 'red' }}>{extraAddrError}</FormHelperText>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -445,10 +523,20 @@ const SignUp = () => {
             />
           </LocalizationProvider>
           <div>
-            <Button variant="text" color={checked ? 'success' : 'info'} onClick={handleClickOpen} fullWidth>
+            <Button
+              variant="text"
+              color={checked ? 'success' : 'info'}
+              onClick={handleClickOpen}
+              fullWidth
+            >
               {t('checkTerms')}
             </Button>
-            <Dialog open={modalOpen} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+            <Dialog
+              open={modalOpen}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
               <DialogTitle id="alert-dialog-title">{t('terms')}</DialogTitle>
               <Divider />
               <DialogContent>
@@ -466,7 +554,15 @@ const SignUp = () => {
               </DialogActions>
             </Dialog>
           </div>
-          <Button className="submit-button" type="submit" variant="contained" color="primary" size="large" fullWidth disabled={submitPossible}>
+          <Button
+            className="submit-button"
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            fullWidth
+            disabled={submitPossible}
+          >
             {t('signup')}
           </Button>
         </Form>
