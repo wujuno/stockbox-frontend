@@ -19,6 +19,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 interface IUserData {
   user: {
@@ -40,6 +41,7 @@ interface IBoardListProps {
 const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id }) => {
   const { user } = useLoaderData<IUserData>();
   const navigate = useNavigate();
+  const { t } = useTranslation('boardList');
 
   const [open, setOpen] = useState<boolean>(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>();
@@ -102,15 +104,15 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>No.</TableCell>
+            <TableCell>{t('no')}</TableCell>
             <TableCell sx={{ minWidth: 250 }} align="center">
-              title
+              {t('title')}
             </TableCell>
             <TableCell sx={{ minWidth: 100 }} align="right">
-              nickname
+              {t('nickname')}
             </TableCell>
             <TableCell sx={{ minWidth: 100 }} align="right">
-              createdAt
+              {t('createdAt')}
             </TableCell>
             <TableCell></TableCell>
           </TableRow>
@@ -171,13 +173,13 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
                           onClick={() => editHandler(post.id, post.title, post.content)}
                         >
                           <Typography variant="subtitle2" color="primary">
-                            edit
+                            {t('edit')}
                           </Typography>
                         </Button>
                         <Divider />
                         <Button variant="text" onClick={() => deleteHandler(post.id)}>
                           <Typography variant="subtitle2" color="error">
-                            delete
+                            {t('delete')}
                           </Typography>
                         </Button>
                       </Stack>

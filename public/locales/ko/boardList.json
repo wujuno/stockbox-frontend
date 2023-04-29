@@ -1,0 +1,15 @@
+{
+    "headTitle":"주식 종목 토론 게시판",
+    "no":"번호",
+    "title":"제목",
+    "nickname":"닉네임",
+    "createdAt":"게시시간",
+    "createPost":"게시물 등록",
+    "create":"등록하기",
+    "fail":"실패 !",
+    "success": "성공 !",
+    "failMessage":"제목과 내용을 입력해주세요.",
+    "successMessage":"게시물을 등록했습니다!",
+    "edit":"수정",
+    "delete":"삭제"
+}

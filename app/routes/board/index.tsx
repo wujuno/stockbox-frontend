@@ -6,9 +6,10 @@ import { Page } from '@/components/Layout';
 import BoardList from '@/components/board/BoardList';
 import { Box, Button, Container, Pagination, Popover, Stack, Typography } from '@mui/material';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { useRecoilState } from 'recoil';
 import { useLoaderData, useNavigate } from '@remix-run/react';
+import { useTranslation } from 'react-i18next';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -42,6 +43,7 @@ const PostMain = () => {
   const PAGEDIVNUM = 8;
 
   const navigate = useNavigate();
+  const { t } = useTranslation('boardList');
 
   useEffect(() => {
     axios
@@ -57,16 +59,24 @@ const PostMain = () => {
       <Container maxWidth="md">
         <Box>
           <Typography sx={{ mb: 5 }} variant="h3">
-            주식 종목 토론 게시판
+            {t('headTitle')}
           </Typography>
         </Box>
         <BoardList currPage={currPage} pageDivNum={PAGEDIVNUM} user_id={user.user_id} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-          <Button variant="contained" sx={{ mb: 1 }} onClick={() => navigate(`${user.user_id}/newpost`)}>
-            게시물 등록
+          <Button
+            variant="contained"
+            sx={{ mb: 1 }}
+            onClick={() => navigate(`${user.user_id}/newpost`)}
+          >
+            {t('createPost')}
           </Button>
           <Stack spacing={2}>
-            <Pagination count={Math.ceil(postData.length / PAGEDIVNUM)} color="primary" onChange={(e, value) => setCurrPage(value)} />
+            <Pagination
+              count={Math.ceil(postData.length / PAGEDIVNUM)}
+              color="primary"
+              onChange={(e, value) => setCurrPage(value)}
+            />
           </Stack>
         </Box>
       </Container>
