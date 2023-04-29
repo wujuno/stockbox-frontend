@@ -44,7 +44,21 @@ const SideBar: React.FC<ISideBarProps> = ({ selected, setSelected }) => {
           {t('KOR')}
         </Button>
       </ButtonGroup>
-      <Box sx={{ width: '100% ', overflow: 'auto', height: 'calc(100vh - 64px - 48px - 36px )' }}>
+      <Box
+        sx={{
+          width: '100% ',
+          overflow: 'auto',
+          height: 'calc(100vh - 64px - 48px - 36px )',
+          '&::-webkit-scrollbar': {
+            width: '6px',
+            backgroundColor: '#F5F5F5'
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#888',
+            borderRadius: '3px'
+          }
+        }}
+      >
         <List>
           {selected === '해외'
             ? usNameData

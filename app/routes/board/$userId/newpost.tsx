@@ -55,7 +55,13 @@ const NewPost = () => {
   };
   return (
     <Page>
-      <Suspense>{isHydrated ? <TextEditor setContents={setContents} contents={contents} setShowAlert={setShowAlert} /> : <Skeleton />}</Suspense>
+      <Suspense>
+        {isHydrated ? (
+          <TextEditor setContents={setContents} contents={contents} setShowAlert={setShowAlert} />
+        ) : (
+          <Skeleton />
+        )}
+      </Suspense>
       <Button sx={{ mt: 1 }} variant="contained" onClick={handleCreate}>
         등록하기
       </Button>
