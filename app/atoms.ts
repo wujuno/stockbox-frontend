@@ -95,7 +95,8 @@ export const coArticleState = atom({
   key: uuidV4(),
   default: {
     title: {},
-    url: {}
+    url: {},
+    img_url: {}
   }
 });
 

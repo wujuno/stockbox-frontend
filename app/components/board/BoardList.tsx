@@ -1,5 +1,19 @@
 import { editContentsState, postListState } from '@/atoms';
-import { Button, ClickAwayListener, Divider, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {
+  Button,
+  ClickAwayListener,
+  Divider,
+  IconButton,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
+} from '@mui/material';
 import { useLoaderData, useNavigate } from '@remix-run/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -39,7 +53,14 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
   }
   let viewData = dividedData[currPage - 1];
 
-  const listClickHandler = (id: number, content: string, title: string, nickname: string, userId: number, upDated: string) => {
+  const listClickHandler = (
+    id: number,
+    content: string,
+    title: string,
+    nickname: string,
+    userId: number,
+    upDated: string
+  ) => {
     navigate(`${id}`, { state: { content, title, nickname, userId, upDated } });
   };
   // popover
@@ -110,11 +131,28 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
                   }
                 }}
                 align="center"
-                onClick={() => listClickHandler(post.id, post.content, post.title, post.user.nickname, post.user.id, post.date_updated)}
+                onClick={() =>
+                  listClickHandler(
+                    post.id,
+                    post.content,
+                    post.title,
+                    post.user.nickname,
+                    post.user.id,
+                    post.date_updated
+                  )
+                }
               >
                 {post.title}
               </TableCell>
-              <TableCell sx={{ maxWidth: 100, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} align="right">
+              <TableCell
+                sx={{
+                  maxWidth: 100,
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap'
+                }}
+                align="right"
+              >
                 {post.user.nickname}
               </TableCell>
               <TableCell align="right">{post.date_updated.slice(0, 10)}</TableCell>
@@ -128,7 +166,10 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
                   <ClickAwayListener onClickAway={handleClose}>
                     <Paper elevation={3} sx={{ position: 'absolute', left: '-50px', top: '10px' }}>
                       <Stack>
-                        <Button variant="text" onClick={() => editHandler(post.id, post.title, post.content)}>
+                        <Button
+                          variant="text"
+                          onClick={() => editHandler(post.id, post.title, post.content)}
+                        >
                           <Typography variant="subtitle2" color="primary">
                             edit
                           </Typography>
