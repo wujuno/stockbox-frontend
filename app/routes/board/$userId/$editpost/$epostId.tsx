@@ -6,6 +6,7 @@ import { DataFunctionArgs, json } from '@remix-run/node';
 import { useNavigate, useParams } from '@remix-run/react';
 import axios from 'axios';
 import React, { Suspense, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 import { useHydrated } from 'remix-utils';
 
@@ -35,6 +36,7 @@ const EditPost = () => {
   const isHydrated = useHydrated();
   const navigate = useNavigate();
   const { epostId } = useParams();
+  const { t } = useTranslation('boardList');
 
   const handleEdit = async () => {
     if (contents.title !== '' && contents.content !== '') {
@@ -60,14 +62,20 @@ const EditPost = () => {
 
   return (
     <Page>
-      <Suspense>{isHydrated ? <TextEditor setContents={setContents} contents={contents} setShowAlert={setShowAlert} /> : <Skeleton />}</Suspense>
+      <Suspense>
+        {isHydrated ? (
+          <TextEditor setContents={setContents} contents={contents} setShowAlert={setShowAlert} />
+        ) : (
+          <Skeleton />
+        )}
+      </Suspense>
       <Button sx={{ mt: 1 }} variant="contained" onClick={handleEdit}>
-        등록하기
+        {t('create')}
       </Button>
       {showAlert && (
         <Alert severity={error ? 'error' : 'success'} onClose={() => setShowAlert(false)}>
-          <AlertTitle>{error ? '실패!' : '성공!'}</AlertTitle>
-          {error ? '제목과 내용을 입력해주세요.' : '게시물을 등록했습니다!'}
+          <AlertTitle>{error ? `${t('fail')}` : `${t('success')}`}</AlertTitle>
+          {error ? `${t('failMessage')}` : `${t('successMessage')}`}
         </Alert>
       )}
     </Page>

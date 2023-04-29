@@ -1,0 +1,16 @@
+{   
+    "headTitle":"Stock ticker discussion board",
+    "no":"No.",
+    "title":"title",
+    "nickname":"nickname",
+    "createdAt":"createdAt",
+    "createPost":"Create post",
+    "create":"create",
+    "fail":"Fail !",
+    "success":"Success !",
+    "failMessage":"Please enter the title and content.",
+    "successMessage":"Post registered!",
+    "edit":"Edit",
+    "delete":"Delete"
+
+}
