@@ -33,7 +33,7 @@ services:
     - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
-    - /etc/letsencrypt/archive/stockbox.kro.kr:/etc/letsencrypt/archive/stockbox.kro.kr:ro
+    - /etc/letsencrypt:/etc/letsencrypt:ro
     restart: always
 networks:
   custom:

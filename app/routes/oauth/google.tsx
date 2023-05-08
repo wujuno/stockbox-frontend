@@ -6,9 +6,13 @@ import { tokenCookie } from '@/cookies';
 import { getQsObjFromURL, getTokenBody } from '@/lib/utils';
 
 const getTokens = async (code: string, isDevEnv: boolean) => {
-  const query = qs.stringify(isDevEnv ? { code, env: 'development' } : { code }, { addQueryPrefix: false });
+  const query = qs.stringify(isDevEnv ? { code, env: 'development' } : { code }, {
+    addQueryPrefix: false
+  });
   console.log(`${process.env.API_URL}/api/auth/redirect/google?${query}`);
-  const { access, refresh } = await axios.get(`${process.env.API_URL}/api/auth/redirect/google?${query}`).then(({ data }) => data);
+  const { access, refresh } = await axios
+    .get(`${process.env.API_URL}/api/auth/redirect/google?${query}`)
+    .then(({ data }) => data);
   const body: TokenBody = getTokenBody(access);
   return { accessToken: access, refreshToken: refresh, body };
 };
