@@ -2,16 +2,6 @@ import { useTheme } from '@mui/material';
 import { useNavigate } from '@remix-run/react';
 import ApexCharts from 'react-apexcharts';
 
-interface ICPData {
-  BEFORE_PRICE: object;
-  COMNAME: object;
-  EXCHNAME: object;
-  MARKETCAP: object;
-  MARKETDATE: object;
-  PRICE: object;
-  SECURITYMASTERX_ID: object;
-  YIELD: object;
-}
 interface IxyObj {
   x: string;
   y: number;
@@ -27,7 +17,7 @@ enum colors {
 }
 
 type TreemapProps = {
-  data: ICPData;
+  data: companyData[];
   width?: string | number;
   height?: string | number;
   showToolbar?: boolean;
@@ -41,22 +31,22 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  //data는 parsed 된 형태로 전달.
-  const cpNameArr: string[] = Object.values(data.COMNAME);
-  const cpCapArr: number[] = Object.values(data.MARKETCAP);
-  const cpIdArr: string[] = Object.values(data.SECURITYMASTERX_ID);
+  const comapanyNames = data.map(obj => obj.COMNAME);
+  const companyCaps = data.map(obj => obj.MARKETCAP);
+  const companyId = data.map(obj => obj.SECURITYMASTERX_ID);
+
   const obj = { x: '', y: 0 };
   const sArr: IxyObj[] = [];
   // xyData 배열에 obj가 순서대로 나열되도록 한다. 중첩 배열이므로 평탄화해야함.
-  const xyData = cpNameArr
+  const xyData = comapanyNames
     .map(name => {
       return sArr.concat({ ...obj, x: name });
     })
     .flat();
   //xyData 배열의 각 객체의 y의 값을 추가한다.
-  cpCapArr.map((cap, index) => (xyData[index].y = cap));
+  companyCaps.map((cap, index) => (xyData[index].y = cap));
 
-  const yieldVlaue: number[] = Object.values(data.YIELD);
+  const yieldVlaue: number[] = data.map(obj => obj.YIELD);
   //YIELD 퍼센트 값을 소숫점 둘째 자리까지 나타낸다.
   const yieldData = yieldVlaue.map(x => +(x * 100).toFixed(2));
   //  yieldData를 enum colors의 index값에 맞게 조정한다.
@@ -85,7 +75,7 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({
   //종목 클릭 시 해당 티커 ID 가 파라미터인 페이지로 이동
   const clickHandler = (e: any, charts: any, options: any) => {
     const index = Number(e.target.getAttribute('j'));
-    navigate(`/${cpIdArr[index]}`);
+    navigate(`/${companyId[index]}`);
     // console.log(series[0].data[options.dataPointIndex]);
     // navigate(`/${cpIdArr[options.dataPointIndex]}`);
   };

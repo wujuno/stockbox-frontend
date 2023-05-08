@@ -5,3 +5,4 @@
 /app/assets
 /scripts/**/*
 /stories/example
+/package.json

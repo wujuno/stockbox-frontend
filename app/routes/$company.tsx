@@ -64,20 +64,34 @@ const Company = () => {
     const year = daysAgo.getFullYear();
     const month = daysAgo.getMonth() + 1;
     const day = daysAgo.getDate();
-    const formattedDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+    const formattedDate =
+      year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
     // 국내,해외 나누어 api 요청
     if (company?.charAt(0) === '@') {
-      axios.get(`/api/pairtrading/price/?country=KOR&start_date=${formattedDate}&securitymasterx_id=${encodeURIComponent(company || 0)}`).then(res => {
-        const originalData: IOneCPData = JSON.parse(res.data);
-        setCoData({ ...originalData });
-        setCoName(Object.values(originalData.COMNAME)[0]);
-      });
+      axios
+        .get(
+          `/api/pairtrading/price/?country=KOR&start_date=${formattedDate}&securitymasterx_id=${encodeURIComponent(
+            company || 0
+          )}`
+        )
+        .then(res => {
+          console.log(res.data);
+          const originalData: IOneCPData = JSON.parse(res.data);
+          setCoData({ ...originalData });
+          setCoName(Object.values(originalData.COMNAME)[0]);
+        });
     } else {
-      axios.get(`/api/pairtrading/price/?country=US&start_date=${formattedDate}&securitymasterx_id=${encodeURIComponent(company || 0)}`).then(res => {
-        const originalData: IOneCPData = JSON.parse(res.data);
-        setCoData({ ...originalData });
-        setCoName(Object.values(originalData.COMNAME)[0]);
-      });
+      axios
+        .get(
+          `/api/pairtrading/price/?country=US&start_date=${formattedDate}&securitymasterx_id=${encodeURIComponent(
+            company || 0
+          )}`
+        )
+        .then(res => {
+          const originalData: IOneCPData = JSON.parse(res.data);
+          setCoData({ ...originalData });
+          setCoName(Object.values(originalData.COMNAME)[0]);
+        });
     }
 
     // 사이드 메뉴 상태 설정
@@ -92,11 +106,19 @@ const Company = () => {
         </Grid>
         <Grid item xs={10}>
           <ChartBox>
-            <Suspense>{isHydrated ? <LineChart data={coData} /> : <Skeleton variant="rounded" animation="wave" height={450} />}</Suspense>
+            <Suspense>
+              {isHydrated ? (
+                <LineChart data={coData} />
+              ) : (
+                <Skeleton variant="rounded" animation="wave" height={450} />
+              )}
+            </Suspense>
             <PeriodBox setPeriod={setPeriod} />
           </ChartBox>
           <Box>
-            <Suspense>{isHydrated ? <Articles /> : <Skeleton variant="rounded" animation="wave" />}</Suspense>
+            <Suspense>
+              {isHydrated ? <Articles /> : <Skeleton variant="rounded" animation="wave" />}
+            </Suspense>
           </Box>
         </Grid>
       </Grid>
