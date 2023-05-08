@@ -1,17 +1,6 @@
 import { atom } from 'recoil';
 import { v4 as uuidV4 } from 'uuid';
 
-interface ICPData {
-  BEFORE_PRICE: object;
-  COMNAME: object;
-  EXCHNAME: object;
-  MARKETCAP: object;
-  MARKETDATE: object;
-  PRICE: object;
-  SECURITYMASTERX_ID: object;
-  YIELD: object;
-}
-
 interface IOneCPData {
   COMNAME: object;
   MARKETDATE: object;
@@ -55,31 +44,13 @@ export const kTickerDataState = atom<string[]>({
 
 //////chart//////
 
-export const usTreeMapDataState = atom<ICPData>({
+export const usTreeMapDataState = atom<companyData[]>({
   key: uuidV4(),
-  default: {
-    BEFORE_PRICE: {},
-    COMNAME: {},
-    EXCHNAME: {},
-    MARKETCAP: {},
-    MARKETDATE: {},
-    PRICE: {},
-    SECURITYMASTERX_ID: {},
-    YIELD: {}
-  }
+  default: []
 });
-export const kTreeMapDataState = atom<ICPData>({
+export const kTreeMapDataState = atom<companyData[]>({
   key: uuidV4(),
-  default: {
-    BEFORE_PRICE: {},
-    COMNAME: {},
-    EXCHNAME: {},
-    MARKETCAP: {},
-    MARKETDATE: {},
-    PRICE: {},
-    SECURITYMASTERX_ID: {},
-    YIELD: {}
-  }
+  default: []
 });
 
 export const coDataState = atom<IOneCPData>({

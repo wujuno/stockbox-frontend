@@ -46,17 +46,6 @@ const Wrapper = styled.div`
   }
 `;
 
-interface ICPData {
-  BEFORE_PRICE: object;
-  COMNAME: object;
-  EXCHNAME: object;
-  MARKETCAP: object;
-  MARKETDATE: object;
-  PRICE: object;
-  SECURITYMASTERX_ID: object;
-  YIELD: object;
-}
-
 export const handle = {
   i18n: 'index'
 };
@@ -78,10 +67,10 @@ const Index = () => {
     axios
       .get('/api/pairtrading/heatmap/?country=US&limit=50')
       .then(response => {
-        const parsedData: ICPData = JSON.parse(response.data);
-        setUsData({ ...parsedData });
-        setUsNameData(Object.values(parsedData.COMNAME));
-        setUsTickerData(Object.values(parsedData.SECURITYMASTERX_ID));
+        console.log(response.data);
+        setUsData([...response.data]);
+        setUsNameData(response.data.map((obj: companyData) => obj.COMNAME));
+        setUsTickerData(response.data.map((obj: companyData) => obj.SECURITYMASTERX_ID));
       })
       .catch(error => {
         console.log(error);
@@ -89,10 +78,9 @@ const Index = () => {
     axios
       .get('/api/pairtrading/heatmap/?country=KOR&limit=50')
       .then(response => {
-        const parsedData: ICPData = JSON.parse(response.data);
-        setKData({ ...parsedData });
-        setKNameData(Object.values(parsedData.COMNAME));
-        setKTickerData(Object.values(parsedData.SECURITYMASTERX_ID));
+        setKData([...response.data]);
+        setKNameData(response.data.map((obj: companyData) => obj.COMNAME));
+        setKTickerData(response.data.map((obj: companyData) => obj.SECURITYMASTERX_ID));
       })
       .catch(error => {
         console.log(error);
