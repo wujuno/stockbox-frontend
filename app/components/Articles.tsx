@@ -1,11 +1,11 @@
-import { coArticleState, coNameState, coTitleState } from '@/atoms';
+import { coArticleState, companyNameState, coTitleState } from '@/atoms';
 import { Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 const Articles = () => {
-  const coName = useRecoilValue(coNameState);
+  const coName = useRecoilValue(companyNameState);
   const [aData, setAdata] = useRecoilState(coArticleState);
   const coTitle = useRecoilValue(coTitleState);
   const [isSame, setIsSame] = useState<boolean>();

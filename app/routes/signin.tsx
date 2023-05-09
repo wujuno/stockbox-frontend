@@ -151,14 +151,39 @@ const SignIn = () => {
 
   return (
     <Container>
-      <form ref={formRef} className="signin-form" onChange={handleFormChange} onSubmit={handleFormSubmit}>
+      <form
+        ref={formRef}
+        className="signin-form"
+        onChange={handleFormChange}
+        onSubmit={handleFormSubmit}
+      >
         <Typography className="signin-title" variant="h4">
           StockBox
         </Typography>
-        <TextField type="email" variant="standard" id="email" name="email" label={t('email')} autoFocus required />
-        <TextField type="password" variant="standard" id="pwd" name="pwd" label={t('password')} required />
+        <TextField
+          type="email"
+          variant="standard"
+          id="email"
+          name="email"
+          label={t('email')}
+          autoFocus
+          required
+        />
+        <TextField
+          type="password"
+          variant="standard"
+          id="pwd"
+          name="pwd"
+          label={t('password')}
+          required
+        />
         <div className="auto-signin-wrapper">
-          <Checkbox name="autosignin" id="auto-signin" size="small" classes={{ root: 'auto-signin-chkbox-root' }} />
+          <Checkbox
+            name="autosignin"
+            id="auto-signin"
+            size="small"
+            classes={{ root: 'auto-signin-chkbox-root' }}
+          />
           <Typography variant="caption" component="label" htmlFor="auto-signin">
             {t('maintainSignInStatus')}
           </Typography>
@@ -176,13 +201,21 @@ const SignIn = () => {
         </div>
         <Divider />
         <div className="social-signin-wrapper">
-          <button type="button" className="social-signin-btn google-btn" onClick={() => (window.location.href = `/api/auth/login/google${signinQueryString}`)}>
+          <button
+            type="button"
+            className="social-signin-btn google-btn"
+            onClick={() => (window.location.href = `/api/auth/login/google${signinQueryString}`)}
+          >
             <img src={GoogleSymbolImg} alt="Kakao signin Symbol" />
             <Typography color="#000" component="span">
               {t('googleSignIn')}
             </Typography>
           </button>
-          <button type="button" className="social-signin-btn kakao-btn" onClick={() => (window.location.href = `/api/auth/login/kakao${signinQueryString}`)}>
+          <button
+            type="button"
+            className="social-signin-btn kakao-btn"
+            onClick={() => (window.location.href = `/api/auth/login/kakao${signinQueryString}`)}
+          >
             <img src={KakaoSymbolImg} alt="Kakao signin Symbol" />
             <Typography color="#000" component="span">
               {t('kakaoSignIn')}

@@ -1,9 +1,10 @@
-import { coDataState, coNameState } from '@/atoms';
+import { companyHistoryDataState, companyNameState } from '@/atoms';
 import Articles from '@/components/Articles';
 import { Page } from '@/components/Layout';
 import PeriodBox from '@/components/chart/PeriodBox';
 import SideBar from '@/components/chart/Sidebar';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
+import { companyHistoryType } from '@/types/type';
 import styled from '@emotion/styled';
 import { Box, Grid, Skeleton } from '@mui/material';
 import { DataFunctionArgs, json } from '@remix-run/node';
@@ -28,20 +29,15 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   return json(null);
 };
 
-interface IOneCPData {
-  COMNAME: object;
-  MARKETDATE: object;
-  PRICE: object;
-}
-
 const ChartBox = styled.div`
   position: relative;
 `;
 
 const Company = () => {
-  const [coData, setCoData] = useRecoilState(coDataState);
+  const [companyHistoryData, setCompanyHistoryData] =
+    useRecoilState<companyHistoryType[]>(companyHistoryDataState);
   const [period, setPeriod] = useState(90);
-  const [coName, setCoName] = useRecoilState(coNameState);
+  const [coName, setCoName] = useRecoilState(companyNameState);
   const [selected, setSelected] = useState<'해외' | '국내'>('해외');
 
   const { company } = useParams();
@@ -74,11 +70,9 @@ const Company = () => {
             company || 0
           )}`
         )
-        .then(res => {
-          console.log(res.data);
-          const originalData: IOneCPData = JSON.parse(res.data);
-          setCoData({ ...originalData });
-          setCoName(Object.values(originalData.COMNAME)[0]);
+        .then(response => {
+          setCompanyHistoryData([...response.data.history]);
+          setCoName(response.data.name);
         });
     } else {
       axios
@@ -87,10 +81,9 @@ const Company = () => {
             company || 0
           )}`
         )
-        .then(res => {
-          const originalData: IOneCPData = JSON.parse(res.data);
-          setCoData({ ...originalData });
-          setCoName(Object.values(originalData.COMNAME)[0]);
+        .then(response => {
+          setCompanyHistoryData([...response.data.history]);
+          setCoName(response.data.name);
         });
     }
 
@@ -108,7 +101,7 @@ const Company = () => {
           <ChartBox>
             <Suspense>
               {isHydrated ? (
-                <LineChart data={coData} />
+                <LineChart data={companyHistoryData} />
               ) : (
                 <Skeleton variant="rounded" animation="wave" height={450} />
               )}
