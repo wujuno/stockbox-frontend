@@ -120,7 +120,7 @@ const Index = () => {
           {selected === 'foreignStocks' ? (
             <Suspense>
               {isHydrated ? (
-                <TreemapChart className="treemap-chart" data={usData} width="100%" height="100%" />
+                <TreemapChart className="treemap-chart" data={usData} />
               ) : (
                 <Skeleton variant="rounded" animation="wave" />
               )}
@@ -128,7 +128,7 @@ const Index = () => {
           ) : (
             <Suspense>
               {isHydrated ? (
-                <TreemapChart className="treemap-chart" data={kData} width="100%" height="100%" />
+                <TreemapChart className="treemap-chart" data={kData} />
               ) : (
                 <Skeleton variant="rounded" animation="wave" />
               )}
