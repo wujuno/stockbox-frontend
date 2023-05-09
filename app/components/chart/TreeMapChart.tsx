@@ -31,6 +31,8 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({
   showToolbar
 }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
+
   //TODO: xyData 만드는 함수 생성
   const comapanyNames = data.map(obj => obj.COMNAME);
   const companyCaps = data.map(obj => obj.MARKETCAP);
@@ -69,9 +71,6 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({
     let text: string = colors[x];
     return text;
   });
-
-  const series = [{ data: xyData }];
-  const theme = useTheme();
 
   //종목 클릭 시 해당 티커 ID 가 파라미터인 페이지로 이동
   const clickHandler = (e: any, charts: any, options: any) => {
@@ -121,7 +120,7 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({
           }
         }
       }}
-      series={series}
+      series={[{ data: xyData }]}
       height={height}
       width={width}
     />

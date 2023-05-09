@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { v4 as uuidV4 } from 'uuid';
-import { companyData, companyHistoryType } from './types/type';
+import { companyArticleType, companyData, companyHistoryType } from './types/type';
 
 interface IBoardListData {
   id: number;
@@ -53,21 +53,12 @@ export const companyHistoryDataState = atom<companyHistoryType[]>({
   default: []
 });
 
-export const coArticleState = atom({
+export const companyArticleState = atom<companyArticleType[]>({
   key: uuidV4(),
-  default: {
-    title: {},
-    url: {},
-    img_url: {}
-  }
+  default: []
 });
 
 export const companyNameState = atom<string>({
-  key: uuidV4(),
-  default: ''
-});
-
-export const coTitleState = atom<string>({
   key: uuidV4(),
   default: ''
 });
