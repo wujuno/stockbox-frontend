@@ -18,3 +18,8 @@ export type companyArticleType = {
   title: string;
   url: string;
 };
+
+export type xyDataType = {
+  x: string;
+  y: number;
+};
