@@ -4,9 +4,8 @@ import { Page } from '@/components/Layout';
 import PeriodBox from '@/components/chart/PeriodBox';
 import SideBar from '@/components/chart/Sidebar';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
-import { companyHistoryType } from '@/types/type';
 import styled from '@emotion/styled';
-import { Box, Grid, Skeleton } from '@mui/material';
+import { Box, Grid, Skeleton, Typography } from '@mui/material';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { useParams } from '@remix-run/react';
 import axios from 'axios';
@@ -34,8 +33,7 @@ const ChartBox = styled.div`
 `;
 
 const Company = () => {
-  const [companyHistoryData, setCompanyHistoryData] =
-    useRecoilState<companyHistoryType[]>(companyHistoryDataState);
+  const [companyHistoryData, setCompanyHistoryData] = useRecoilState(companyHistoryDataState);
   const [period, setPeriod] = useState(90);
   const [coName, setCoName] = useRecoilState(companyNameState);
   const [selected, setSelected] = useState<'해외' | '국내'>('해외');
@@ -109,6 +107,7 @@ const Company = () => {
             <PeriodBox setPeriod={setPeriod} />
           </ChartBox>
           <Box>
+            <Typography variant="h6">관련 기사</Typography>
             <Suspense>
               {isHydrated ? <Articles /> : <Skeleton variant="rounded" animation="wave" />}
             </Suspense>

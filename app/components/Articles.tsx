@@ -1,32 +1,22 @@
-import { coArticleState, companyNameState, coTitleState } from '@/atoms';
+import { companyArticleState, companyNameState } from '@/atoms';
 import { Stack, Typography } from '@mui/material';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 const Articles = () => {
-  const coName = useRecoilValue(companyNameState);
-  const [aData, setAdata] = useRecoilState(coArticleState);
-  const coTitle = useRecoilValue(coTitleState);
-  const [isSame, setIsSame] = useState<boolean>();
-
+  const companyName = useRecoilValue(companyNameState);
+  const [articleData, setArticledata] = useRecoilState(companyArticleState);
+  //TODO: 상수화
   useEffect(() => {
-    coName &&
+    companyName &&
       axios
-        .get(`api/pairtrading/crawling/?query=${encodeURIComponent(coName)}&news_num=10`)
-        .then(res => setAdata(JSON.parse(res.data)));
-    setIsSame(coName === coTitle);
-  }, [coName]);
-  const aTitle: string[] = Object.values(aData.title);
-  const aUrl: string[] = Object.values(aData.url);
-  const imgUrl: string[] = Object.values(aData.img_url);
-  const articleArr = aTitle.map((title, index) => ({
-    title,
-    url: aUrl[index],
-    id: index,
-    img: imgUrl[index]
-  }));
-  console.log(aData);
+        .get(`api/pairtrading/crawling/?query=${encodeURIComponent(companyName)}&news_num=10`)
+        .then(response => {
+          setArticledata(response.data);
+        });
+  }, [companyName]);
+
   return (
     <Stack
       sx={{
@@ -44,24 +34,26 @@ const Articles = () => {
       }}
       spacing={2}
     >
-      {isSame ? (
-        articleArr.map(obj => (
-          <a href={obj.url} style={{ textDecoration: 'none' }} key={obj.id}>
-            <Typography
-              variant="subtitle2"
-              sx={{
-                '&:hover': {
-                  color: 'blue'
-                }
-              }}
-            >
-              {obj.title}
-            </Typography>
-          </a>
-        ))
-      ) : (
-        <p>로딩 중입니다</p>
-      )}
+      {articleData?.map((obj, index) => (
+        <a
+          href={obj.url}
+          style={{ textDecoration: 'none' }}
+          target="_blank"
+          rel="noopener noreferrer"
+          key={index}
+        >
+          <Typography
+            variant="subtitle2"
+            sx={{
+              '&:hover': {
+                color: 'blue'
+              }
+            }}
+          >
+            {obj.title}
+          </Typography>
+        </a>
+      ))}
     </Stack>
   );
 };

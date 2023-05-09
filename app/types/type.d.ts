@@ -13,3 +13,8 @@ export type companyHistoryType = {
   date: string;
   price: number;
 };
+
+export type companyArticleType = {
+  title: string;
+  url: string;
+};
