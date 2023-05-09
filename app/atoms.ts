@@ -1,11 +1,6 @@
 import { atom } from 'recoil';
 import { v4 as uuidV4 } from 'uuid';
-
-interface IOneCPData {
-  COMNAME: object;
-  MARKETDATE: object;
-  PRICE: object;
-}
+import { companyData, companyHistoryType } from './types/type';
 
 interface IBoardListData {
   id: number;
@@ -53,13 +48,9 @@ export const kTreeMapDataState = atom<companyData[]>({
   default: []
 });
 
-export const coDataState = atom<IOneCPData>({
+export const companyHistoryDataState = atom<companyHistoryType[]>({
   key: uuidV4(),
-  default: {
-    COMNAME: {},
-    MARKETDATE: {},
-    PRICE: {}
-  }
+  default: []
 });
 
 export const coArticleState = atom({
@@ -71,7 +62,7 @@ export const coArticleState = atom({
   }
 });
 
-export const coNameState = atom<string>({
+export const companyNameState = atom<string>({
   key: uuidV4(),
   default: ''
 });

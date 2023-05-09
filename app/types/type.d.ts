@@ -1,4 +1,4 @@
-declare type companyData = {
+export type companyData = {
   BEFORE_PRICE: number;
   COMNAME: string;
   EXCHNAME: string;
@@ -7,4 +7,9 @@ declare type companyData = {
   PRICE: number;
   SECURITYMASTERX_ID: string;
   YIELD: number;
+};
+
+export type companyHistoryType = {
+  date: string;
+  price: number;
 };

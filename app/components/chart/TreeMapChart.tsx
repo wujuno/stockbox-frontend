@@ -1,3 +1,4 @@
+import { companyData } from '@/types/type';
 import { useTheme } from '@mui/material';
 import { useNavigate } from '@remix-run/react';
 import ApexCharts from 'react-apexcharts';
@@ -30,7 +31,7 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({
   showToolbar
 }) => {
   const navigate = useNavigate();
-
+  //TODO: xyData 만드는 함수 생성
   const comapanyNames = data.map(obj => obj.COMNAME);
   const companyCaps = data.map(obj => obj.MARKETCAP);
   const companyId = data.map(obj => obj.SECURITYMASTERX_ID);
@@ -43,9 +44,9 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({
       return sArr.concat({ ...obj, x: name });
     })
     .flat();
-  //xyData 배열의 각 객체의 y의 값을 추가한다.
   companyCaps.map((cap, index) => (xyData[index].y = cap));
 
+  //TODO: sColors 만드는 함수 생성
   const yieldVlaue: number[] = data.map(obj => obj.YIELD);
   //YIELD 퍼센트 값을 소숫점 둘째 자리까지 나타낸다.
   const yieldData = yieldVlaue.map(x => +(x * 100).toFixed(2));

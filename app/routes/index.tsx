@@ -16,6 +16,7 @@ import {
 } from '@/atoms';
 import axios from 'axios';
 import styled from '@emotion/styled';
+import { companyData } from '@/types/type';
 
 const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'));
 
@@ -64,10 +65,10 @@ const Index = () => {
   const { t } = useTranslation('index');
 
   useEffect(() => {
+    // TODO: api관련 함수 생성
     axios
       .get('/api/pairtrading/heatmap/?country=US&limit=50')
       .then(response => {
-        console.log(response.data);
         setUsData([...response.data]);
         setUsNameData(response.data.map((obj: companyData) => obj.COMNAME));
         setUsTickerData(response.data.map((obj: companyData) => obj.SECURITYMASTERX_ID));
