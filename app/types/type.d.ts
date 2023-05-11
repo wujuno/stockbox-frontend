@@ -23,3 +23,5 @@ export type xyDataType = {
   x: string;
   y: number;
 };
+
+export type countryType = 'US' | 'KOR';
