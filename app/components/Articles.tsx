@@ -4,18 +4,24 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+const SHOW_MAX_NUM = 10;
+
 const Articles = () => {
   const companyName = useRecoilValue(companyNameState);
   const [articleData, setArticledata] = useRecoilState(companyArticleState);
-  //TODO: 상수화
+
   useEffect(() => {
     companyName &&
       axios
-        .get(`api/pairtrading/crawling/?query=${encodeURIComponent(companyName)}&news_num=10`)
+        .get(
+          `api/pairtrading/crawling/?query=${encodeURIComponent(
+            companyName
+          )}&news_num=${SHOW_MAX_NUM}`
+        )
         .then(response => {
           setArticledata(response.data);
         });
-  }, [companyName]);
+  }, [companyName, setArticledata]);
 
   return (
     <Stack

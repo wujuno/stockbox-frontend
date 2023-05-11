@@ -37,8 +37,8 @@ export class TreeMapChartData {
       return index;
     };
 
-    const sColor = colorData.map(getColorIndex).map(x => colors[x]);
-    return sColor;
+    const convertedHexColors = colorData.map(getColorIndex).map(x => colors[x]);
+    return convertedHexColors;
   }
 
   private getCompanyIds() {
