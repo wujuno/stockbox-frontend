@@ -1,22 +1,12 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Page } from '@/components/Layout';
 import { Box, Button, Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import {
-  kNameDataState,
-  kTickerDataState,
-  kTreeMapDataState,
-  usNameDataState,
-  usTickerDataState,
-  usTreeMapDataState
-} from '@/atoms';
-import axios from 'axios';
 import styled from '@emotion/styled';
-import { companyData } from '@/types/type';
+import { useTreeMapData } from '@/hooks/useTreeMapData';
 
 const TreemapChart = React.lazy(() => import('@/components/chart/TreeMapChart'));
 
@@ -52,41 +42,12 @@ export const handle = {
 };
 
 const Index = () => {
-  const [usData, setUsData] = useRecoilState(usTreeMapDataState);
-  const [kData, setKData] = useRecoilState(kTreeMapDataState);
+  const usData = useTreeMapData('US');
+  const kData = useTreeMapData('KOR');
   const [selected, setSelected] = useState<'domesticStocks' | 'foreignStocks'>('domesticStocks');
-
-  const setUsNameData = useSetRecoilState(usNameDataState);
-  const setKNameData = useSetRecoilState(kNameDataState);
-  const setUsTickerData = useSetRecoilState(usTickerDataState);
-  const setKTickerData = useSetRecoilState(kTickerDataState);
 
   const isHydrated = useHydrated();
   const { t } = useTranslation('index');
-
-  useEffect(() => {
-    // TODO: api관련 함수 생성
-    axios
-      .get('/api/pairtrading/heatmap/?country=US&limit=50')
-      .then(response => {
-        setUsData([...response.data]);
-        setUsNameData(response.data.map((obj: companyData) => obj.COMNAME));
-        setUsTickerData(response.data.map((obj: companyData) => obj.SECURITYMASTERX_ID));
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    axios
-      .get('/api/pairtrading/heatmap/?country=KOR&limit=50')
-      .then(response => {
-        setKData([...response.data]);
-        setKNameData(response.data.map((obj: companyData) => obj.COMNAME));
-        setKTickerData(response.data.map((obj: companyData) => obj.SECURITYMASTERX_ID));
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
 
   const handleBarOption = (value: 'domesticStocks' | 'foreignStocks') => {
     setSelected(value);
