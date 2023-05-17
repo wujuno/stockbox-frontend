@@ -28,7 +28,7 @@ import {
 import styled from '@emotion/styled';
 import { useRecoilValueLoadable } from 'recoil';
 import { useHydrated } from 'remix-utils';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash';
 import qs from 'qs';
 import { ComData, CountryType, comSelectorFamily } from '@/modules/pairtrading';
 import { RootContext } from '@/root';
