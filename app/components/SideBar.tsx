@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { IconButton, Theme, Tooltip } from '@mui/material';
 import { useNavigate } from '@remix-run/react';
+import { useTranslation } from 'react-i18next';
 import HomeIcon from '@mui/icons-material/Home';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { useTranslation } from 'react-i18next';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 
 interface SideBarProps {
   theme?: Theme;
@@ -41,6 +42,11 @@ const SideBar = ({ className, style, theme }: DefaultProps & SideBarProps) => {
       <Tooltip title={t('board')} placement="right">
         <IconButton className="side-bar-btn" onClick={() => navigate('/board')}>
           <AssignmentIcon className="side-bar-icon" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={t('pairtrading')} placement="right">
+        <IconButton className="side-bar-btn" onClick={() => navigate('/pairtrading')}>
+          <CompareArrowsIcon className="side-bar-icon" />
         </IconButton>
       </Tooltip>
     </Container>

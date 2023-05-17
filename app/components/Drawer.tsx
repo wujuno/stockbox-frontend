@@ -10,10 +10,11 @@ import {
   Typography
 } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import HomeIcon from '@mui/icons-material/Home';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useNavigate } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
+import HomeIcon from '@mui/icons-material/Home';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 
 interface GlobalDrawerProps {
   open: boolean;
@@ -57,6 +58,12 @@ const GlobalDrawer = ({ className, style, open, onClose }: DefaultProps & Global
           <ListItemButton className="drawer-item-btn" onClick={() => movePage('/board')}>
             <AssignmentIcon />
             <Typography>{t('board')}</Typography>
+          </ListItemButton>
+        </ListItem>
+        <ListItem className="drawer-item">
+          <ListItemButton className="drawer-item-btn" onClick={() => movePage('/pairtrading')}>
+            <CompareArrowsIcon />
+            <Typography>{t('pairtrading')}</Typography>
           </ListItemButton>
         </ListItem>
       </List>
