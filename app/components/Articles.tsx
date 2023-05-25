@@ -1,26 +1,24 @@
 import { companyArticleState, companyNameState } from '@/atoms';
+import { getArticlesDataAPI } from '@/services/chart/getArticles';
 import { Stack, Typography } from '@mui/material';
-import axios from 'axios';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
-const SHOW_MAX_NUM = 10;
 
 const Articles = () => {
   const companyName = useRecoilValue(companyNameState);
   const [articleData, setArticledata] = useRecoilState(companyArticleState);
 
   useEffect(() => {
-    companyName &&
-      axios
-        .get(
-          `api/pairtrading/crawling/?query=${encodeURIComponent(
-            companyName
-          )}&news_num=${SHOW_MAX_NUM}`
-        )
-        .then(response => {
-          setArticledata(response.data);
-        });
+    const fetchData = async () => {
+      try {
+        const response = await getArticlesDataAPI(companyName);
+        setArticledata(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    companyName && fetchData();
   }, [companyName, setArticledata]);
 
   return (

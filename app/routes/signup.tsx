@@ -33,8 +33,10 @@ import DaumPostcodeEmbed from 'react-daum-postcode';
 import { LoadingButton } from '@mui/lab';
 import Terms from '@/components/auth/Terms';
 import PasswordRegx from '@/components/auth/RegExp';
-import axios from 'axios';
 import { useNavigate } from '@remix-run/react';
+import { callNicknameAPI } from '@/services/auth/callNickname';
+import { callEmailAPI } from '@/services/auth/callEmail';
+import { createUserAPI } from '@/services/auth/createUser';
 
 export const handle = { i18n: 'signup' };
 
@@ -133,18 +135,17 @@ const SignUp = () => {
   };
   //별명 중복 체크 중복시 setError
   const nicknameDbcheckHandler = async () => {
-    await axios
-      .get(`/api/auth/duplicate/nickname/${sNickname}`)
-      .then(response => {
-        console.log(response.data);
+    try {
+      const { status } = await callNicknameAPI(sNickname);
+      if (status === 200) {
         setNicknameError('');
         setNicknameDbcheckState(nicknameState);
-      })
-      .catch(error => {
-        console.log(error);
-        setNicknameError('중복된 별명 입니다.');
-        setNicknameDbcheckState(false);
-      });
+      }
+    } catch (error) {
+      console.log(error);
+      setNicknameError('중복된 별명입니다.');
+      setNicknameDbcheckState(false);
+    }
   };
   // 이메일 변경 및 유효성 체크
   const emailChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,18 +164,16 @@ const SignUp = () => {
   };
   //이메일 중복 체크 중복시 setError
   const emailDbcheckHandler = async () => {
-    await axios
-      .get(`/api/auth/duplicate/email/${sEmail}`)
-      .then(response => {
-        console.log(response.data);
+    try {
+      const { status } = await callEmailAPI(sEmail);
+      if (status === 200) {
         setEmailError('');
         setEmailDbcheckState(true);
-      })
-      .catch(error => {
-        console.log(error);
-        setEmailError('중복된 이메일 입니다.');
-        setEmailDbcheckState(false);
-      });
+      }
+    } catch (error) {
+      setEmailError('중복된 이메일 입니다.');
+      setEmailDbcheckState(false);
+    }
   };
   // 비밀번호 변경 및 정규식 체크
   const passwordChangeHanddler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -268,7 +267,6 @@ const SignUp = () => {
       birthday
     } = joinData;
 
-    // 이름 유효성 검사
     const nameRegex = /^[가-힣a-zA-Z]+$/;
     if (!nameRegex.test(name) || name.length < 1) {
       setNameError(`${t('nameError')}`);
@@ -276,7 +274,6 @@ const SignUp = () => {
       setNameError('');
     }
 
-    // 비밀번호 같은지 체크
     if (password !== confirmPassword) {
       setPasswordError(`${t('confirmPasswordError')}`);
     } else {
@@ -284,26 +281,23 @@ const SignUp = () => {
     }
 
     if (!nameError && !passwordError) {
-      await axios
-        .post('/api/auth/signup/stock', {
-          name,
-          nickname,
-          email,
-          password,
-          phone,
-          address,
-          address_detail,
-          birthday
-        })
-        .then(response => {
-          console.log(response.data);
-          console.log('회원가입완료');
-          navigate('/signin', { replace: true });
-        })
-        .catch(error => {
-          console.log(error);
-          console.log('회원가입 불가');
-        });
+      const userData = {
+        name,
+        nickname,
+        email,
+        password,
+        phone,
+        address,
+        address_detail,
+        birthday
+      };
+
+      try {
+        const { status } = await createUserAPI(userData);
+        if (status === 201) navigate('/signin', { replace: true });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   // post 모달 창 open/close

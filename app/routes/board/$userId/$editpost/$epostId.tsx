@@ -1,10 +1,10 @@
 import { editContentsState } from '@/atoms';
 import { Page } from '@/components/Layout';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
+import { editBoardAPI } from '@/services/board/editBoard';
 import { Alert, AlertTitle, Button, Skeleton } from '@mui/material';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { useNavigate, useParams } from '@remix-run/react';
-import axios from 'axios';
 import React, { Suspense, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
@@ -35,25 +35,22 @@ const EditPost = () => {
 
   const isHydrated = useHydrated();
   const navigate = useNavigate();
-  const { epostId } = useParams();
+  const { postId } = useParams();
   const { t } = useTranslation('boardList');
 
   const handleEdit = async () => {
-    if (contents.title !== '' && contents.content !== '') {
-      await axios
-        .put(`/api/board/update/${epostId}`, {
-          title: contents.title,
-          content: contents.content
-        })
-        .then(res => {
-          if (res.status === 200) {
-            setContents({ title: '', content: '' });
-            setError(false);
-            setShowAlert(true);
-            setTimeout(() => navigate('/board'), 1000);
-          }
-        })
-        .catch(err => console.log(err));
+    if (contents.title !== '' && contents.content !== '' && postId !== undefined) {
+      try {
+        const response = await editBoardAPI(postId, contents.title, contents.content);
+        if (response.status === 200) {
+          setContents({ title: '', content: '' });
+          setError(false);
+          setShowAlert(true);
+          setTimeout(() => navigate('/board'), 1000);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       setError(true);
       setShowAlert(true);

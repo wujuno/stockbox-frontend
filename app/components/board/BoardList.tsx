@@ -18,8 +18,8 @@ import { useLoaderData, useNavigate } from '@remix-run/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { deleteBoardAPI } from '@/services/board/deleteBoard';
 
 interface IUserData {
   user: {
@@ -79,22 +79,20 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
     setSelectedPostId(null);
   };
 
-  // delete post
-  const deleteHandler = async (id: number) => {
+  const clickDeleteHandler = async (id: number) => {
     const confirmDelete = window.confirm('삭제 하시겠습니까?');
     if (confirmDelete) {
-      await axios
-        .delete(`/api/board/delete/${id}`)
-        .then(res => {
-          if (res.status === 204) {
-            window.location.reload();
-          }
-        })
-        .catch(error => console.log(error));
+      try {
+        const response = await deleteBoardAPI(id);
+        if (response.status === 204) {
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
-  //edit
-  const editHandler = (id: number, title: string, content: string) => {
+  const clickEditHandler = (id: number, title: string, content: string) => {
     setEditData({ title, content });
     navigate(`${user.user_id}/editpost/${id}`);
   };
@@ -170,14 +168,14 @@ const BoardList: React.FC<IBoardListProps> = ({ currPage, pageDivNum, user_id })
                       <Stack>
                         <Button
                           variant="text"
-                          onClick={() => editHandler(post.id, post.title, post.content)}
+                          onClick={() => clickEditHandler(post.id, post.title, post.content)}
                         >
                           <Typography variant="subtitle2" color="primary">
                             {t('edit')}
                           </Typography>
                         </Button>
                         <Divider />
-                        <Button variant="text" onClick={() => deleteHandler(post.id)}>
+                        <Button variant="text" onClick={() => clickDeleteHandler(post.id)}>
                           <Typography variant="subtitle2" color="error">
                             {t('delete')}
                           </Typography>

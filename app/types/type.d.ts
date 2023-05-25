@@ -25,3 +25,18 @@ export type xyDataType = {
 };
 
 export type countryType = 'US' | 'KOR';
+
+export type ApiResponseStatusType = {
+  status: number;
+};
+
+export type userDataType = {
+  name: string;
+  nickname: FormDataEntryValue | null;
+  email: string;
+  password: FormDataEntryValue | null;
+  phone: FormDataEntryValue | null;
+  address: FormDataEntryValue | null;
+  address_detail: FormDataEntryValue | null;
+  birthday: FormDataEntryValue | null;
+};

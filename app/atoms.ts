@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 import { v4 as uuidV4 } from 'uuid';
 import { companyArticleType, companyData, companyHistoryType } from './types/type';
 
-interface IBoardListData {
+export interface IBoardListData {
   id: number;
   title: string;
   content: string;
