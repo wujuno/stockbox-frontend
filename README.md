@@ -1,51 +1,81 @@
-# Welcome to Remix!
+# Stock Box
 
-- [Remix Docs](https://remix.run/docs)
+> 국내,해외 주식 가격 현황을 히트맵과 라인 차트로 보여주며, 이용자들을 위한 커뮤니티 게시판을 지원하는 서비스
 
-## Development
+<br/>
 
-Start the Remix development asset server and the Express server by running:
+## 사용한 라이브러리
 
-```sh
-npm run dev
+<div align =center>
+
+|     Area     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Tech Stack                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| **Frontend** | <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=for-the-badge&logo=TypeScript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/Remix-000000.svg?&style=for-the-badge&logo=remix&logoColor=white"> <img src="https://img.shields.io/badge/Lodash-3492FF.svg?&style=for-the-badge&logo=Lodash&logoColor=white"> <img src="https://img.shields.io/badge/Express-000000.svg?&style=for-the-badge&logo=Express&logoColor=white"> <img src="https://img.shields.io/badge/Axios-5A29E4.svg?&style=for-the-badge&logo=axios&logoColor=white"> <img src="https://img.shields.io/badge/Nginx-009639?&style=for-the-badge&logo=Nginx&logoColor=white"> <img src="https://img.shields.io/badge/Recoil-4776DE?&style=for-the-badge&logo=Recoil&logoColor=white"> <img src="https://img.shields.io/badge/i18next-26A69A?&style=for-the-badge&logo=i18next&logoColor=white"> <img src="https://img.shields.io/badge/ApexChart-387DE8?&style=for-the-badge&logo=apexchart&logoColor=white"> <img src="https://img.shields.io/badge/Storybook-FF4785?&style=for-the-badge&logo=storybook&logoColor=white"> <img src="https://img.shields.io/badge/MUI-007FFF?&style=for-the-badge&logo=MUI&logoColor=white"> <img src="https://img.shields.io/badge/ESLINT-4B32C3?&style=for-the-badge&logo=ESLint&logoColor=white"> <img src="https://img.shields.io/badge/PRETTIER-F7B93E?&style=for-the-badge&logo=Prettier&logoColor=white"> <img src="https://img.shields.io/badge/Docker-2496ED?&style=for-the-badge&logo=Docker&logoColor=white"> |
+
+</div>
+
+<br/>
+
+## 배포 링크
+
+https://stockbox.kro.kr/
+
+<br/>
+
+## 프로젝트 구조
+
+```
+📦app
+ ┣ 📂assets
+ ┣ 📂components
+ ┃ ┣ 📂auth
+ ┃ ┣ 📂board
+ ┃ ┣ 📂chart
+ ┣ 📂hooks
+ ┣ 📂i18n
+ ┣ 📂lib
+ ┣ 📂routes
+ ┃ ┣ 📂board
+ ┃ ┣ 📂oauth
+ ┃ ┣ 📂pairtrading
+ ┃ ┣ 📜$company.tsx
+ ┃ ┣ 📜findaccount.tsx
+ ┃ ┣ 📜index.tsx
+ ┃ ┣ 📜signin.tsx
+ ┃ ┗ 📜signup.tsx
+ ┣ 📂services
+ ┃ ┣ 📂auth
+ ┃ ┣ 📂board
+ ┃ ┗ 📂chart
+ ┣ 📂types
+ ┣ 📂utils
+ ┣ 📜atoms.ts
+ ┣ 📜cookies.ts
+ ┣ 📜entry.client.tsx
+ ┣ 📜entry.server.tsx
+ ┗ 📜root.tsx
 ```
 
-This starts your app in development mode, which will purge the server require cache when Remix rebuilds assets so you don't need a process manager restarting the express server.
+<br/>
 
-## Deployment
+## 프로젝트 실행 방법
 
-First, build your app for production:
+레파지토리 클론
 
-```sh
-npm run build
+```bash
+$ git clone https://gitlab.com/stockbox/front-end.git
 ```
 
-Then run the app in production mode:
+패키지 설치
 
-```sh
-npm start
+```bash
+$ npm install
 ```
 
-Now you'll need to pick a host to deploy it to.
+애플리케이션 실행
 
-### DIY
-
-If you're familiar with deploying express applications you should be right at home just make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
+```bash
+$ npm run dev
 ```
+
+<br/>
