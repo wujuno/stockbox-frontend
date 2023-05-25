@@ -1,51 +1,39 @@
-# Welcome to Remix!
+## 사용한 라이브러리
 
-- [Remix Docs](https://remix.run/docs)
+<div align =center>
 
-## Development
+|     Area     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Tech Stack                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| :----------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| **Frontend** | <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=for-the-badge&logo=TypeScript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/Remix-000000.svg?&style=for-the-badge&logo=remix&logoColor=white"> <img src="https://img.shields.io/badge/Axios-5A29E4.svg?&style=for-the-badge&logo=axios&logoColor=white"> <img src="https://img.shields.io/badge/Nginx-009639?&style=for-the-badge&logo=Nginx&logoColor=white"> <img src="https://img.shields.io/badge/Storybook-FF4785?&style=for-the-badge&logo=storybook&logoColor=white"> <img src="https://img.shields.io/badge/MUI-007FFF?&style=for-the-badge&logo=MUI&logoColor=white"> <img src="https://img.shields.io/badge/ESLINT-4B32C3?&style=for-the-badge&logo=ESLint&logoColor=white"> <img src="https://img.shields.io/badge/PRETTIER-F7B93E?&style=for-the-badge&logo=Prettier&logoColor=white"> <img src="https://img.shields.io/badge/Docker-2496ED?&style=for-the-badge&logo=Docker&logoColor=white"> |
 
-Start the Remix development asset server and the Express server by running:
+</div>
 
-```sh
-npm run dev
+<br/>
+
+## 배포 링크
+
+https://stockbox.kro.kr/
+
+<br/>
+
+## 프로젝트 실행 방법
+
+레파지토리 클론
+
+```bash
+$ git clone https://gitlab.com/stockbox/front-end.git
 ```
 
-This starts your app in development mode, which will purge the server require cache when Remix rebuilds assets so you don't need a process manager restarting the express server.
+패키지 설치
 
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
+```bash
+$ npm install
 ```
 
-Then run the app in production mode:
+애플리케이션 실행
 
-```sh
-npm start
+```bash
+$ npm run dev
 ```
 
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying express applications you should be right at home just make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```
+<br/>
