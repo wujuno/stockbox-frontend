@@ -1,4 +1,11 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Stack, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Stack,
+  Typography
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +14,11 @@ const Terms = () => {
   return (
     <div>
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
           <Stack direction="row" spacing={1}>
             <Typography>{t('Agreement to Terms of Use')}</Typography>
           </Stack>
@@ -92,7 +103,11 @@ const Terms = () => {
         </AccordionDetails>
       </Accordion>
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1b-content" id="panel1b-header">
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1b-content"
+          id="panel1b-header"
+        >
           <Stack direction="row" spacing={1}>
             <Typography>{t('Consent to Collection and Use of Personal Information')}</Typography>
           </Stack>
@@ -108,10 +123,18 @@ const Terms = () => {
               <br />
               3. {t('Purpose of Collection and Use of Personal Information')}
               <br /> 4. {t('Personal Information Items Collected')} <br />
-              5. {t('Installation, Operation, and Refusal of Automatic Personal Information Collection Devices')} <br />
+              5.{' '}
+              {t(
+                'Installation, Operation, and Refusal of Automatic Personal Information Collection Devices'
+              )}{' '}
+              <br />
               6. {t('Provision of Personal Information to Third Parties and Unauthorized Use')}
               <br /> 7. {t('Access to and Correction of Personal Information')} <br />
-              8. {t('Withdrawal of Consent to Collection, Use, and Provision of Personal Information')} <br />
+              8.{' '}
+              {t(
+                'Withdrawal of Consent to Collection, Use, and Provision of Personal Information'
+              )}{' '}
+              <br />
               9. {t('Retention and Use Period of Personal Information')} <br />
               10. {t('Procedures and Methods for Destruction of Personal Information')}
               <br /> 11. {t('Technical Measures for Protection of Personal Information')}
@@ -162,7 +185,10 @@ const Terms = () => {
               2) {t('pI4-contents2')}
             </Typography>
             <Typography mt={1} mb={1}>
-              5. {t('Installation, Operation, and Refusal of Automatic Personal Information Collection Devices')}
+              5.{' '}
+              {t(
+                'Installation, Operation, and Refusal of Automatic Personal Information Collection Devices'
+              )}
             </Typography>
             <Typography variant="subtitle2">
               {t('pI5-header')}
@@ -196,7 +222,8 @@ const Terms = () => {
               {t('pI7-header2')}
             </Typography>
             <Typography mt={1} mb={1}>
-              8. {t('Withdrawal of Consent to Collection, Use, and Provision of Personal Information')}
+              8.{' '}
+              {t('Withdrawal of Consent to Collection, Use, and Provision of Personal Information')}
             </Typography>
             <Typography variant="subtitle2">
               {t('pI8-contents1')}

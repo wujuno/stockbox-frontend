@@ -6,7 +6,7 @@ import {
   usTickerDataState,
   usTreeMapDataState
 } from '@/atoms';
-import { getTreeMapDataAPI } from '@/services/chart';
+import { getTreeMapDataAPI } from '@/services/treemapChart';
 import { companyData, countryType } from '@/types/type';
 import { useEffect } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';

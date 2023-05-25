@@ -36,7 +36,15 @@ const TextEditor = ({ setContents, contents, setShowAlert }: ITextEditorProps) =
 
   return (
     <Wrapper>
-      <TextField sx={{ mb: 1 }} type="text" fullWidth placeholder="제목을 작성해주세요." onChange={getTitle} name="title" defaultValue={editData ? editData.title : null} />
+      <TextField
+        sx={{ mb: 1 }}
+        type="text"
+        fullWidth
+        placeholder="제목을 작성해주세요."
+        onChange={getTitle}
+        name="title"
+        defaultValue={editData ? editData.title : null}
+      />
       <CKEditor
         editor={ClassicEditor}
         data={editData ? editData.content : ''}
