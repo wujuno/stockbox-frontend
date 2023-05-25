@@ -20,21 +20,34 @@ https://stockbox.kro.kr/
 
 ```
 📦app
-├── 📂assets
-├── 📂components
-│   ├── 📂auth
-│   ├── 📂board
-│   └── 📂chart
-├── 📂i18n
-├── 📂hooks
-├── 📂lib
-├── 📂routes
-│   ├── 📂board
-│   ├── 📂oauth
-│   └── 📂pairtrading
-├── 📂services
-├── 📂types
-└── 📂utils
+ ┣ 📂assets
+ ┣ 📂components
+ ┃ ┣ 📂auth
+ ┃ ┣ 📂board
+ ┃ ┣ 📂chart
+ ┣ 📂hooks
+ ┣ 📂i18n
+ ┣ 📂lib
+ ┣ 📂routes
+ ┃ ┣ 📂board
+ ┃ ┣ 📂oauth
+ ┃ ┣ 📂pairtrading
+ ┃ ┣ 📜$company.tsx
+ ┃ ┣ 📜findaccount.tsx
+ ┃ ┣ 📜index.tsx
+ ┃ ┣ 📜signin.tsx
+ ┃ ┗ 📜signup.tsx
+ ┣ 📂services
+ ┃ ┣ 📂auth
+ ┃ ┣ 📂board
+ ┃ ┗ 📂chart
+ ┣ 📂types
+ ┣ 📂utils
+ ┣ 📜atoms.ts
+ ┣ 📜cookies.ts
+ ┣ 📜entry.client.tsx
+ ┣ 📜entry.server.tsx
+ ┗ 📜root.tsx
 ```
 
 <br/>
