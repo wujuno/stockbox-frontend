@@ -2,7 +2,7 @@ const CORRECT_NUMBER = 1;
 const SUNDAY = 0;
 const SATURDAY = 6;
 
-export const getStartDate = (period: number): Record<string, string> => {
+export const getStartDate = (period: number): Record<'startDate', string> => {
   const today = new Date();
   const daysAgo = new Date();
   daysAgo.setDate(today.getDate() - CORRECT_NUMBER);

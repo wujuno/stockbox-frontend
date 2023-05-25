@@ -31,7 +31,11 @@ const FindAccount = () => {
   return (
     <Container>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={tabNum} onChange={(e, newTabNum) => setTabNum(newTabNum)} aria-label="find account tabs">
+        <Tabs
+          value={tabNum}
+          onChange={(e, newTabNum) => setTabNum(newTabNum)}
+          aria-label="find account tabs"
+        >
           <Tab label={t('findEmail')} />
           <Tab label={t('findPassword')} />
         </Tabs>

@@ -1,15 +1,14 @@
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import { DataFunctionArgs, json } from '@remix-run/node';
-
 import { postListState } from '@/atoms';
 import { Page } from '@/components/Layout';
 import BoardList from '@/components/board/BoardList';
-import { Box, Button, Container, Pagination, Popover, Stack, Typography } from '@mui/material';
-import axios from 'axios';
-import { useEffect, useState, useTransition } from 'react';
+import { Box, Button, Container, Pagination, Stack, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useLoaderData, useNavigate } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
+import { getBoardListAPI } from '@/services/board/getBoard';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -46,12 +45,16 @@ const PostMain = () => {
   const { t } = useTranslation('boardList');
 
   useEffect(() => {
-    axios
-      .get('/api/board/')
-      .then(res => {
-        setPostData(res.data);
-      })
-      .catch(err => console.log(err));
+    const fetchData = async () => {
+      try {
+        const { data } = await getBoardListAPI();
+        setPostData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (

@@ -1,10 +1,11 @@
 import { Page } from '@/components/Layout';
 import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
+import { createBoardAPI } from '@/services/board/createBoard';
 import { Alert, AlertTitle, Button, Skeleton } from '@mui/material';
 import { DataFunctionArgs, json } from '@remix-run/node';
 import { useNavigate } from '@remix-run/react';
 import axios from 'axios';
-import React, { Suspense, useState, useTransition } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHydrated } from 'remix-utils';
 
@@ -36,20 +37,17 @@ const NewPost = () => {
 
   const handleCreate = async () => {
     if (contents.title !== '' && contents.content !== '') {
-      await axios
-        .post('/api/board/create', {
-          title: contents.title,
-          content: contents.content
-        })
-        .then(res => {
-          if (res.status === 201) {
-            setContents({ title: '', content: '' });
-            setError(false);
-            setShowAlert(true);
-            setTimeout(() => navigate('/board'), 1000);
-          }
-        })
-        .catch(err => console.log(err));
+      try {
+        const response = await createBoardAPI(contents.title, contents.content);
+        if (response.status === 201) {
+          setContents({ title: '', content: '' });
+          setError(false);
+          setShowAlert(true);
+          setTimeout(() => navigate('/board'), 1000);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       setError(true);
       setShowAlert(true);
