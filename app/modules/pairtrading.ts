@@ -36,12 +36,14 @@ export const runSelectorFamily = selectorFamily<
   { country: CountryType; comname1: string; comname2: string }
 >({
   key: 'runSelectorFamily',
-  get: params => async () => {
-    const { data } = await axios<any, AxiosResponse<RunData>>({
-      method: 'GET',
-      url: `/api/pairtrading/${params.country === 'KOR' ? 'kor' : 'us'}_run/`,
-      params
-    });
-    return data;
-  }
+  get:
+    ({ country, comname1, comname2 }) =>
+    async () => {
+      const { data } = await axios<any, AxiosResponse<RunData>>({
+        method: 'GET',
+        url: `/api/pairtrading/${country === 'KOR' ? 'kor' : 'us'}_run/`,
+        params: { comname1, comname2 }
+      });
+      return data;
+    }
 });
