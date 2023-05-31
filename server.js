@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const { createRequestHandler } = require('@remix-run/express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { v4: uuidV4, parse: parseUUID } = require('uuid');
+const timeout = require('connect-timeout');
 const path = require('path');
 const http = require('http');
 
@@ -51,13 +52,22 @@ const server = http.createServer(app);
 
 // app.use(helmet(helmetOptions));
 app.use(compression());
+app.use(timeout('300s'));
 app.use('/build', express.static('public/build', { immutable: true, maxAge: '1y' }));
 app.use(express.static('public', { maxAge: '1h' }));
 app.use(morgan('tiny'));
 
 if (isDevEnv) {
   // app.use('/api/test2', createProxyMiddleware({ target: 'http://127.0.0.1:8081', changeOrigin: true }));
-  app.use('/api', createProxyMiddleware({ target: process.env.API_URL, changeOrigin: true }));
+  app.use(
+    '/api',
+    createProxyMiddleware({
+      target: process.env.API_URL,
+      changeOrigin: true,
+      timeout: 300000,
+      proxyTimeout: 300000
+    })
+  );
 }
 
 app.all(

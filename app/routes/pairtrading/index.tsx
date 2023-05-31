@@ -244,10 +244,16 @@ const PairTrading = () => {
   }, []);
 
   const handleClickCompareButton = useCallback(() => {
-    const query = qs.stringify({ country, comId1: selectedComId1, comId2: selectedComId2 });
+    const query = qs.stringify({
+      country,
+      comId1: selectedComId1,
+      comId2: selectedComId2,
+      comname1: comSearchText1,
+      comname2: comSearchText2
+    });
     console.log(query);
     navigate(`/pairtrading/compare?${query}`);
-  }, [country, selectedComId1, selectedComId2, navigate]);
+  }, [country, selectedComId1, selectedComId2, comSearchText1, comSearchText2, navigate]);
 
   const handleClickResetButton = useCallback(() => {
     if (comSearchInput1.current) comSearchInput1.current.value = '';
@@ -305,6 +311,7 @@ const PairTrading = () => {
                 className="com-search"
                 variant="outlined"
                 size="small"
+                disabled={!!selectedComId1}
                 onChange={e => handleChangeComSearch(e, 'left')}
               />
             </ListSubheader>
@@ -353,6 +360,7 @@ const PairTrading = () => {
                 className="com-search"
                 variant="outlined"
                 size="small"
+                disabled={!!selectedComId2}
                 onChange={e => handleChangeComSearch(e, 'right')}
               />
             </ListSubheader>

@@ -52,6 +52,7 @@ const Index = () => {
   const handleBarOption = (value: 'domesticStocks' | 'foreignStocks') => {
     setSelected(value);
   };
+
   return (
     <Page>
       <Wrapper>

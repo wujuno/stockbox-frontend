@@ -8,6 +8,17 @@ export interface ComData {
   name: string;
 }
 
+export interface RunData {
+  stockprice: string;
+  cummulative: string;
+  cointegration: string;
+  ratio: string;
+  'z-score': string;
+  buysell1: string;
+  buysell2: string;
+  simulation: string;
+}
+
 export const comSelectorFamily = selectorFamily<ComData[], CountryType>({
   key: 'comSelectorFamily',
   get: country => async () => {
@@ -15,6 +26,21 @@ export const comSelectorFamily = selectorFamily<ComData[], CountryType>({
       method: 'GET',
       url: '/api/pairtrading/com',
       params: { country }
+    });
+    return data;
+  }
+});
+
+export const runSelectorFamily = selectorFamily<
+  RunData,
+  { country: CountryType; comname1: string; comname2: string }
+>({
+  key: 'runSelectorFamily',
+  get: params => async () => {
+    const { data } = await axios<any, AxiosResponse<RunData>>({
+      method: 'GET',
+      url: `/api/pairtrading/${params.country === 'KOR' ? 'kor' : 'us'}_run/`,
+      params
     });
     return data;
   }

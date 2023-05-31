@@ -1,9 +1,11 @@
-import { DataFunctionArgs, redirect } from '@remix-run/node';
+import { DataFunctionArgs, json, redirect } from '@remix-run/node';
 import axios from 'axios';
 import qs from 'qs';
 import { loaderCommonInit } from '@/lib/loaderCommon';
 import { tokenCookie } from '@/cookies';
 import { getQsObjFromURL, getTokenBody } from '@/lib/utils';
+import { useNavigate } from '@remix-run/react';
+import { useEffect } from 'react';
 
 const getTokens = async (code: string, isDevEnv: boolean) => {
   const query = qs.stringify(isDevEnv ? { code, env: 'development' } : { code }, {
@@ -27,7 +29,7 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 
     const tokens = await getTokens(code as string, env === 'development');
     console.log(tokens);
-    return redirect('/', {
+    return json(null, {
       headers: {
         'Set-Cookie': await tokenCookie.serialize(tokens)
       }
@@ -38,5 +40,14 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   }
 };
 
-const GoogleOAuthCheck = () => null;
+const GoogleOAuthCheck = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/', { replace: true });
+  }, []);
+
+  return null;
+};
+
 export default GoogleOAuthCheck;
