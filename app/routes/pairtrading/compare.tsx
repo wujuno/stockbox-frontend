@@ -109,63 +109,65 @@ const Compare = () => {
           )}
         </Paper>
         {runDataLoadable.state === 'hasValue' && (
-          <SwipeableViews
-            // axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            className="chart-img-wrapper"
-            autoPlay
-            index={activeStep}
-            enableMouseEvents
-            onChangeIndex={handleStepChange}
-          >
-            {chartLabels.map(d => (
-              <div key={d}>
-                <Box
-                  component="img"
-                  sx={{
-                    // height: 255,
-                    display: 'block',
-                    // maxWidth: 400,
-                    overflow: 'hidden',
-                    width: '100%'
-                  }}
-                  src={runDataLoadable.contents[d as keyof RunData]}
-                  alt={d}
-                />
-              </div>
-            ))}
-          </SwipeableViews>
-        )}
-        <MobileStepper
-          steps={chartLabels.length}
-          position="static"
-          activeStep={activeStep}
-          sx={{
-            justifyContent: 'center',
-            gap: '30px'
-          }}
-          nextButton={
-            <Button
-              size="small"
-              onClick={handleClickNextButton}
-              disabled={
-                activeStep === chartLabels.length - 1 || runDataLoadable.state !== 'hasValue'
+          <>
+            <SwipeableViews
+              // axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+              className="chart-img-wrapper"
+              autoPlay
+              index={activeStep}
+              enableMouseEvents
+              onChangeIndex={handleStepChange}
+            >
+              {chartLabels.map(d => (
+                <div key={d}>
+                  <Box
+                    component="img"
+                    sx={{
+                      // height: 255,
+                      display: 'block',
+                      // maxWidth: 400,
+                      overflow: 'hidden',
+                      width: '100%'
+                    }}
+                    src={runDataLoadable.contents[d as keyof RunData]}
+                    alt={d}
+                  />
+                </div>
+              ))}
+            </SwipeableViews>
+            <MobileStepper
+              steps={chartLabels.length}
+              position="static"
+              activeStep={activeStep}
+              sx={{
+                justifyContent: 'center',
+                gap: '30px'
+              }}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={handleClickNextButton}
+                  disabled={
+                    activeStep === chartLabels.length - 1 || runDataLoadable.state !== 'hasValue'
+                  }
+                >
+                  Next
+                  <KeyboardArrowRight />
+                </Button>
               }
-            >
-              Next
-              <KeyboardArrowRight />
-            </Button>
-          }
-          backButton={
-            <Button
-              size="small"
-              onClick={handleClickPrevButton}
-              disabled={activeStep === 0 || runDataLoadable.state !== 'hasValue'}
-            >
-              <KeyboardArrowLeft />
-              Back
-            </Button>
-          }
-        />
+              backButton={
+                <Button
+                  size="small"
+                  onClick={handleClickPrevButton}
+                  disabled={activeStep === 0 || runDataLoadable.state !== 'hasValue'}
+                >
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
+          </>
+        )}
       </ChartWrapper>
     </Page>
   );
