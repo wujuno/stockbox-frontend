@@ -5,7 +5,7 @@ import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import { useLoaderData, useNavigate } from '@remix-run/react';
 import { useRecoilValueLoadable } from 'recoil';
 import { CountryType, RunData, runSelectorFamily } from '@/modules/pairtrading';
-import { Box, Button, MobileStepper, Paper, Typography, useTheme } from '@mui/material';
+import { Box, Button, MobileStepper, Paper, Skeleton, Typography, useTheme } from '@mui/material';
 import SwipeableViews from 'react-swipeable-views';
 import styled from '@emotion/styled';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -104,7 +104,11 @@ const CompareCarousel = ({ country, comId1, comId2, comname1, comname2 }: Compar
         }}
       >
         {comname1 && comname2 && <Typography variant="h4">{`${comname1}, ${comname2}`}</Typography>}
-        {chartLabels.length > 0 && <Typography variant="h5">{chartLabels[activeStep]}</Typography>}
+        {chartLabels.length > 0 ? (
+          <Typography variant="h5">{chartLabels[activeStep]}</Typography>
+        ) : (
+          <Skeleton variant="rounded" animation="wave" height="32px" />
+        )}
       </Paper>
       {runDataLoadable.state === 'hasValue' && (
         <>
@@ -177,6 +181,9 @@ const CompareCarousel = ({ country, comId1, comId2, comname1, comname2 }: Compar
             }
           />
         </>
+      )}
+      {runDataLoadable.state === 'loading' && (
+        <Skeleton variant="rounded" animation="wave" height="100%" />
       )}
     </div>
   );
