@@ -32,14 +32,14 @@ export const comSelectorFamily = selectorFamily<ComData[], CountryType>({
 });
 
 export const runSelectorFamily = selectorFamily<
-  RunData,
+  { light: RunData; dark: RunData },
   { country: CountryType; comname1: string; comname2: string }
 >({
   key: 'runSelectorFamily',
   get:
     ({ country, comname1, comname2 }) =>
     async () => {
-      const { data } = await axios<any, AxiosResponse<RunData>>({
+      const { data } = await axios<any, AxiosResponse<{ light: RunData; dark: RunData }>>({
         method: 'GET',
         url: `/api/pairtrading/${country === 'KOR' ? 'kor' : 'us'}_run/`,
         params: { comname1, comname2 }

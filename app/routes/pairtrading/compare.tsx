@@ -5,7 +5,7 @@ import { getUser, loaderCommonInit } from '@/lib/loaderCommon';
 import { useLoaderData, useNavigate } from '@remix-run/react';
 import { useRecoilValueLoadable } from 'recoil';
 import { CountryType, RunData, runSelectorFamily } from '@/modules/pairtrading';
-import { Box, Button, MobileStepper, Paper, Typography } from '@mui/material';
+import { Box, Button, MobileStepper, Paper, Typography, useTheme } from '@mui/material';
 import SwipeableViews from 'react-swipeable-views';
 import styled from '@emotion/styled';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -62,14 +62,20 @@ const Container = styled(Page)`
 const CompareCarousel = ({ country, comId1, comId2, comname1, comname2 }: CompareCarouselProps) => {
   const [activeStep, setActiveStep] = useState(0);
 
+  const theme = useTheme();
+
   const runDataLoadable = useRecoilValueLoadable(
-    runSelectorFamily({ country, comname1: comId1, comname2: comId2 })
+    runSelectorFamily({
+      country,
+      comname1: comId1,
+      comname2: comId2
+    })
   );
 
   const chartLabels = useMemo(() => {
     if (runDataLoadable.state !== 'hasValue') return [];
-    return Object.keys(runDataLoadable.contents);
-  }, [runDataLoadable]);
+    return Object.keys(runDataLoadable.contents[theme.palette.mode]);
+  }, [theme, runDataLoadable]);
 
   const handleStepChange = useCallback((step: number) => {
     setActiveStep(step);
@@ -128,7 +134,9 @@ const CompareCarousel = ({ country, comId1, comId2, comname1, comname2 }: Compar
                     width: '100%',
                     height: '100%',
                     overflow: 'hidden',
-                    backgroundImage: `url('${runDataLoadable.contents[d as keyof RunData]}')`,
+                    backgroundImage: `url('${
+                      runDataLoadable.contents[theme.palette.mode][d as keyof RunData]
+                    }')`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
                     backgroundSize: 'contain'
