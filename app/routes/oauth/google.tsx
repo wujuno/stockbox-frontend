@@ -6,6 +6,7 @@ import { tokenCookie } from '@/cookies';
 import { getQsObjFromURL, getTokenBody } from '@/lib/utils';
 import { useNavigate } from '@remix-run/react';
 import { useEffect } from 'react';
+import { userSessionStorage } from '@/sessions';
 
 const getTokens = async (code: string, isDevEnv: boolean) => {
   const query = qs.stringify(isDevEnv ? { code, env: 'development' } : { code }, {
@@ -28,6 +29,14 @@ export const loader = async ({ request }: DataFunctionArgs) => {
     if (!code) return redirect('/signin');
 
     const tokens = await getTokens(code as string, env === 'development');
+
+    const session = await userSessionStorage.getSession();
+    session.set('user', tokens.body);
+
+    const headers = new Headers();
+    headers.append('Set-Cookie', await tokenCookie.serialize(tokens));
+    headers.append('Set-Cookie', await userSessionStorage.commitSession(session));
+
     console.log(tokens);
     return json(null, {
       headers: {

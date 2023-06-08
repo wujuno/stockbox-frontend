@@ -35,6 +35,7 @@ declare global {
   interface TokenCookie {
     accessToken: string;
     refreshToken: string;
+    autoSignin?: string;
     body: TokenBody;
   }
 }

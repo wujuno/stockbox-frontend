@@ -1,13 +1,16 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataFunctionArgs, json } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData, useNavigate } from '@remix-run/react';
 import styled from '@emotion/styled';
 import { Button, Checkbox, Divider, TextField, Typography } from '@mui/material';
+import qs from 'qs';
 import { loaderCommonInit } from '@/lib/loaderCommon';
 import { Page } from '@/components/Layout';
 import GoogleSymbolImg from '@/assets/img/google_symbol.png';
 import KakaoSymbolImg from '@/assets/img/kakao_symbol.png';
+import Swal from 'sweetalert2';
+import { login } from '@/services/auth/login';
 
 export const loader = async ({ request }: DataFunctionArgs) => {
   try {
@@ -143,9 +146,36 @@ const SignIn = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const { t } = useTranslation('signin');
+  const navigate = useNavigate();
 
   const handleFormChange = () => setIsValidForm(formRef.current?.checkValidity() ?? false);
-  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = e => e.preventDefault();
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
+    async e => {
+      e.preventDefault();
+
+      const email = e.currentTarget.email?.value;
+      const password = e.currentTarget.pwd?.value;
+      const autoSignin = e.currentTarget.autosignin?.checked;
+
+      try {
+        const tokens = await login(email, password);
+        console.log({ ...tokens, autoSignin });
+        navigate(`/oauth/stockbox?${qs.stringify({ ...tokens, autoSignin })}`, { replace: true });
+      } catch (err) {
+        console.error(err);
+        Swal.fire({
+          icon: 'error',
+          title: t('signin') as string,
+          text: t('signinFail') as string,
+          showConfirmButton: false,
+          showCancelButton: true,
+          cancelButtonText: t('cancel') as string,
+          heightAuto: false
+        });
+      }
+    },
+    [t]
+  );
 
   const signinQueryString = useMemo(() => (env === 'production' ? '' : '?env=development'), [env]);
 
