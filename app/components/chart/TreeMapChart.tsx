@@ -17,7 +17,7 @@ const TreeMapChart: React.FC<DefaultProps & TreemapProps> = ({ data }) => {
 
   const handleNavigate = (e: any) => {
     const index = Number(e.target.getAttribute('j'));
-    navigate(`/${companyIds[index]}`);
+    navigate(`/company/${companyIds[index]}`);
   };
 
   return (

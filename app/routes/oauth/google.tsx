@@ -37,12 +37,8 @@ export const loader = async ({ request }: DataFunctionArgs) => {
     headers.append('Set-Cookie', await tokenCookie.serialize(tokens));
     headers.append('Set-Cookie', await userSessionStorage.commitSession(session));
 
-    console.log(tokens);
-    return json(null, {
-      headers: {
-        'Set-Cookie': await tokenCookie.serialize(tokens)
-      }
-    });
+    console.log('TOKENS:::', tokens);
+    return json(null, { headers });
   } catch (err) {
     console.error(err + '');
     return redirect('/');

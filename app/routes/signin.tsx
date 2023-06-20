@@ -222,8 +222,8 @@ const SignIn = () => {
           {t('signin')}
         </Button>
         <div className="link-wrapper">
-          <Link to="/findaccount">
-            <Typography variant="caption">{t('findAccount')}</Typography>
+          <Link to="/findpassword">
+            <Typography variant="caption">{t('findPassword')}</Typography>
           </Link>
           <Link to="/signup">
             <Typography variant="caption">{t('createAccount')}</Typography>

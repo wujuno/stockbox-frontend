@@ -8,7 +8,7 @@ export const getArticlesDataAPI = async (
 ): Promise<AxiosResponse<companyArticleType[], any>> => {
   try {
     const response = await axios.get(
-      `api/pairtrading/crawling/?query=${encodeURIComponent(companyName)}&news_num=${SHOW_MAX_NUM}`
+      `/api/pairtrading/crawling/?query=${encodeURIComponent(companyName)}&news_num=${SHOW_MAX_NUM}`
     );
     return response;
   } catch (error) {
